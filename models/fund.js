@@ -8,4 +8,4 @@ const Fund = mongoose.model("fund", {
   time: String,
 });
 
-export default Fund;
+module.exports = Fund;

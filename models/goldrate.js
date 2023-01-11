@@ -1,11 +1,26 @@
 const mongoose = require("mongoose");
 
 const GoldRate = mongoose.model("goldRate", {
-  rate: String,
-  type: String,
-  state: String,
-  date: String,
-  time: String,
+  rate: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: String,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
 });
 
-export default GoldRate;
+module.exports = GoldRate;

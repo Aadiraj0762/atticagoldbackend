@@ -17,4 +17,4 @@ const Ornament = mongoose.model("ornament", {
   emp_id: String,
 });
 
-export default Ornament;
+module.exports = Ornament;

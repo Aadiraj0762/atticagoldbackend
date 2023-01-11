@@ -9,4 +9,4 @@ const Expense = mongoose.model("expense", {
   username: String,
 });
 
-export default Expense;
+module.exports = Expense;

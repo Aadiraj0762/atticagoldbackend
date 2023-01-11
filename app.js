@@ -5,8 +5,9 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 require("dotenv/config");
 require("./config/db");
-require("./middlewares/password");
+require("./config/password");
 
+var superAdminRouter = require("./routes/super-admin");
 var adminRouter = require("./routes/admin");
 var employeeRouter = require("./routes/employee");
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/api/v1.0/super-admin", superAdminRouter);
 app.use("/api/v1.0/admin", adminRouter);
 app.use("/api/v1.0/employee", employeeRouter);
 

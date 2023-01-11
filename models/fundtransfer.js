@@ -9,4 +9,4 @@ const FundTransfer = mongoose.model("fundTransfer", {
   time: String,
 });
 
-export default FundTransfer;
+module.exports = FundTransfer;

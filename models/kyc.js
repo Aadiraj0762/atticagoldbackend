@@ -44,4 +44,4 @@ const Kyc = mongoose.model("kyc", {
   sendingDate: String,
 });
 
-export default Kyc;
+module.exports = Kyc;

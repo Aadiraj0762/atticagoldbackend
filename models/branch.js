@@ -4,15 +4,40 @@ const Branch = mongoose.model("branch", {
   branchid: {
     type: String,
     unique: true,
+    required: true,
   },
-  branch: String,
-  addr: String,
-  city: String,
-  state: String,
-  pincode: String,
-  landmark: String,
-  date: String,
-  time: String,
+  branch: {
+    type: String,
+    required: true,
+  },
+  addr: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  pincode: {
+    type: String,
+    required: true,
+  },
+  landmark: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: String,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
 });
 
-export default Branch;
+module.exports = Branch;

@@ -9,4 +9,4 @@ const Upload = mongoose.model("upload", {
   time: String,
 });
 
-export default Upload;
+module.exports = Upload;

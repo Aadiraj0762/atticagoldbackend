@@ -9,11 +9,9 @@ passport.use(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.SECRET,
-      issuer: process.env.ISSUER,
-      audience: process.env.AUDIENCE,
     },
     function (payload, done) {
-      User.findOne({ username: payload.username }, function (err, user) {
+      User.findById(payload.sub, function (err, user) {
         if (err) {
           return done(err, false);
         }
@@ -41,7 +39,7 @@ passport.use(
           }
 
           return cb(null, user, {
-            message: "Logged In Successfully",
+            message: "Logged in Successfully.",
           });
         })
         .catch((err) => {

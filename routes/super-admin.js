@@ -3,12 +3,12 @@ var router = express.Router();
 var authRouter = express.Router();
 var adminRouter = express.Router();
 const passport = require("passport");
-const { login } = require("../controllers/admin/auth");
-const goldRate = require("../controllers/admin/goldrate");
-const branch = require("../controllers/admin/branch");
-const user = require("../controllers/admin/user");
-const employee = require("../controllers/admin/employee");
-const { isAdmin } = require("../middlewares/authorization");
+const { login } = require("../controllers/super-admin/auth");
+const goldRate = require("../controllers/super-admin/goldrate");
+const branch = require("../controllers/super-admin/branch");
+const user = require("../controllers/super-admin/user");
+const employee = require("../controllers/super-admin/employee");
+const { isSuperAdmin } = require("../middlewares/authorization");
 
 authRouter.post("/auth/login", login);
 
@@ -71,7 +71,7 @@ router.use(
       return next();
     })(req, res, next);
   },
-  isAdmin,
+  isSuperAdmin,
   adminRouter
 );
 

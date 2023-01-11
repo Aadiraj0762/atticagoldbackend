@@ -21,4 +21,4 @@ const Employee = mongoose.model("employee", {
   time: String,
 });
 
-export default Employee;
+module.exports = Employee;
