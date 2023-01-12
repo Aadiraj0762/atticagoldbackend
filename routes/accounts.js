@@ -7,6 +7,7 @@ const { login } = require("../controllers/accounts/auth");
 const goldRate = require("../controllers/accounts/goldrate");
 const branch = require("../controllers/accounts/branch");
 const expense = require("../controllers/accounts/expense");
+const profile = require("../controllers/accounts/profile");
 const { isAccounts } = require("../middlewares/authorization");
 
 authRouter.post("/auth/login", login);
@@ -30,13 +31,8 @@ accountsRouter.post("/expense/create", expense.create);
 accountsRouter.post("/expense/update/:id", expense.update);
 accountsRouter.post("/expense/delete/:id", expense.remove);
 
-accountsRouter.get("/profile", function (req, res) {
-  res.json({
-    status: true,
-    message: "",
-    data: req.user,
-  });
-});
+accountsRouter.get("/profile", profile.get);
+accountsRouter.post("/profile/change-password", profile.changePassword);
 
 router.use(authRouter);
 router.use(

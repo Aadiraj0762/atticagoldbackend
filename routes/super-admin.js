@@ -8,6 +8,9 @@ const goldRate = require("../controllers/super-admin/goldrate");
 const branch = require("../controllers/super-admin/branch");
 const user = require("../controllers/super-admin/user");
 const employee = require("../controllers/super-admin/employee");
+const fund = require("../controllers/super-admin/fund");
+const expense = require("../controllers/super-admin/expense");
+const profile = require("../controllers/super-admin/profile");
 const { isSuperAdmin } = require("../middlewares/authorization");
 
 authRouter.post("/auth/login", login);
@@ -40,13 +43,18 @@ adminRouter.post("/employee/create", employee.create);
 adminRouter.post("/employee/update/:id", employee.update);
 adminRouter.post("/employee/delete/:id", employee.remove);
 
-adminRouter.get("/profile", function (req, res) {
-  res.json({
-    status: true,
-    message: "",
-    data: req.user,
-  });
-});
+adminRouter.get("/expense/get", expense.find);
+adminRouter.get("/expense/get/:id", expense.findById);
+adminRouter.post("/expense/update/:id", expense.update);
+adminRouter.post("/expense/delete/:id", expense.remove);
+
+adminRouter.get("/fund/get", fund.find);
+adminRouter.get("/fund/get/:id", fund.findById);
+adminRouter.post("/fund/update/:id", fund.update);
+adminRouter.post("/fund/delete/:id", fund.remove);
+
+adminRouter.get("/profile", profile.get);
+adminRouter.post("/profile/change-password", profile.changePassword);
 
 router.use(authRouter);
 router.use(

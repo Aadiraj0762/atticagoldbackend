@@ -34,4 +34,16 @@ function isAccounts(req, res, next) {
   });
 }
 
-module.exports = { isSuperAdmin, isAdmin, isAccounts };
+function isBranch(req, res, next) {
+  if (req.user.type.toLowerCase() === "branch") {
+    return next();
+  }
+
+  return res.status(401).json({
+    status: false,
+    message: "Unauthorized",
+    data: {},
+  });
+}
+
+module.exports = { isSuperAdmin, isAdmin, isAccounts, isBranch };

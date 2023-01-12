@@ -8,6 +8,7 @@ const goldRate = require("../controllers/admin/goldrate");
 const branch = require("../controllers/admin/branch");
 const user = require("../controllers/admin/user");
 const employee = require("../controllers/admin/employee");
+const profile = require("../controllers/admin/profile");
 const { isAdmin } = require("../middlewares/authorization");
 
 authRouter.post("/auth/login", login);
@@ -40,13 +41,8 @@ adminRouter.post("/employee/create", employee.create);
 adminRouter.post("/employee/update/:id", employee.update);
 adminRouter.post("/employee/delete/:id", employee.remove);
 
-adminRouter.get("/profile", function (req, res) {
-  res.json({
-    status: true,
-    message: "",
-    data: req.user,
-  });
-});
+adminRouter.get("/profile", profile.get);
+adminRouter.post("/profile/change-password", profile.changePassword);
 
 router.use(authRouter);
 router.use(
