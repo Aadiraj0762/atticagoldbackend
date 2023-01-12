@@ -22,4 +22,16 @@ function isAdmin(req, res, next) {
   });
 }
 
-module.exports = { isSuperAdmin, isAdmin };
+function isAccounts(req, res, next) {
+  if (req.user.type.toLowerCase() === "accounts") {
+    return next();
+  }
+
+  return res.status(401).json({
+    status: false,
+    message: "Unauthorized",
+    data: {},
+  });
+}
+
+module.exports = { isSuperAdmin, isAdmin, isAccounts };

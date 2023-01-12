@@ -9,7 +9,7 @@ require("./config/password");
 
 var superAdminRouter = require("./routes/super-admin");
 var adminRouter = require("./routes/admin");
-var employeeRouter = require("./routes/employee");
+var accountsRouter = require("./routes/accounts");
 
 var app = express();
 
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/v1.0/super-admin", superAdminRouter);
 app.use("/api/v1.0/admin", adminRouter);
-app.use("/api/v1.0/employee", employeeRouter);
+app.use("/api/v1.0/accounts", accountsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
