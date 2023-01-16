@@ -44,14 +44,7 @@ router.use(
       if (err) {
         return res.status(400).json({
           status: false,
-          message: err,
-          data: {},
-        });
-      }
-      if (!user) {
-        return res.status(401).json({
-          status: false,
-          message: "Unauthorized",
+          message: err ?? "Unauthorized",
           data: {},
         });
       }

@@ -1,11 +1,7 @@
 const mongoose = require("mongoose");
 
-const Fund = mongoose.model("fund", {
-  amount: {
-    type: String,
-    required: true,
-  },
-  from: {
+const Attendance = mongoose.model("attendance", {
+  empid: {
     type: String,
     required: true,
   },
@@ -13,15 +9,7 @@ const Fund = mongoose.model("fund", {
     type: String,
     required: true,
   },
-  to: {
-    type: String,
-    required: true,
-  },
-  note: {
-    type: String,
-    required: true,
-  },
-  status: {
+  proof: {
     type: String,
     required: true,
   },
@@ -35,4 +23,4 @@ const Fund = mongoose.model("fund", {
   },
 });
 
-module.exports = Fund;
+module.exports = Attendance;

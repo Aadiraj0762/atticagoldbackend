@@ -1,27 +1,19 @@
 const mongoose = require("mongoose");
 
-const Fund = mongoose.model("fund", {
-  amount: {
-    type: String,
-    required: true,
-  },
-  from: {
-    type: String,
-    required: true,
-  },
+const UploadProof = mongoose.model("uploadproof", {
   type: {
     type: String,
     required: true,
   },
-  to: {
+  typeid: {
     type: String,
     required: true,
   },
-  note: {
+  filetype: {
     type: String,
     required: true,
   },
-  status: {
+  file: {
     type: String,
     required: true,
   },
@@ -35,4 +27,4 @@ const Fund = mongoose.model("fund", {
   },
 });
 
-module.exports = Fund;
+module.exports = UploadProof;

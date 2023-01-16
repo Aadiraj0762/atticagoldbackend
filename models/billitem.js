@@ -1,27 +1,31 @@
 const mongoose = require("mongoose");
 
-const Fund = mongoose.model("fund", {
-  amount: {
+const BillItem = mongoose.model("billitem", {
+  ornaments: {
     type: String,
     required: true,
   },
-  from: {
+  count: {
     type: String,
     required: true,
   },
-  type: {
+  grossweight: {
     type: String,
     required: true,
   },
-  to: {
+  stone: {
     type: String,
     required: true,
   },
-  note: {
+  netWeight: {
     type: String,
     required: true,
   },
-  status: {
+  purity: {
+    type: String,
+    required: true,
+  },
+  billid: {
     type: String,
     required: true,
   },
@@ -35,4 +39,4 @@ const Fund = mongoose.model("fund", {
   },
 });
 
-module.exports = Fund;
+module.exports = BillItem;

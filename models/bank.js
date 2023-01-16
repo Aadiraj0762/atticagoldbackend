@@ -1,27 +1,35 @@
 const mongoose = require("mongoose");
 
-const Fund = mongoose.model("fund", {
-  amount: {
+const Bank = mongoose.model("bank", {
+  cusid: {
     type: String,
     required: true,
   },
-  from: {
+  accno: {
     type: String,
     required: true,
   },
-  type: {
+  accname: {
     type: String,
     required: true,
   },
-  to: {
+  ifsccode: {
     type: String,
     required: true,
   },
-  note: {
+  bank: {
     type: String,
     required: true,
   },
-  status: {
+  branch: {
+    type: String,
+    required: true,
+  },
+  prooftype: {
+    type: String,
+    required: true,
+  },
+  proofupload: {
     type: String,
     required: true,
   },
@@ -35,4 +43,4 @@ const Fund = mongoose.model("fund", {
   },
 });
 
-module.exports = Fund;
+module.exports = Bank;

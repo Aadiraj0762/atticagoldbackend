@@ -1,11 +1,7 @@
 const mongoose = require("mongoose");
 
-const Fund = mongoose.model("fund", {
-  amount: {
-    type: String,
-    required: true,
-  },
-  from: {
+const Leave = mongoose.model("leaves", {
+  empid: {
     type: String,
     required: true,
   },
@@ -13,7 +9,11 @@ const Fund = mongoose.model("fund", {
     type: String,
     required: true,
   },
-  to: {
+  dates: {
+    type: String,
+    required: true,
+  },
+  proof: {
     type: String,
     required: true,
   },
@@ -22,6 +22,10 @@ const Fund = mongoose.model("fund", {
     required: true,
   },
   status: {
+    type: String,
+    required: true,
+  },
+  branchid: {
     type: String,
     required: true,
   },
@@ -35,4 +39,4 @@ const Fund = mongoose.model("fund", {
   },
 });
 
-module.exports = Fund;
+module.exports = Leave;

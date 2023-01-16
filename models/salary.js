@@ -1,23 +1,39 @@
 const mongoose = require("mongoose");
 
-const Fund = mongoose.model("fund", {
-  amount: {
+const Salary = mongoose.model("salary", {
+  empid: {
     type: String,
     required: true,
   },
-  from: {
+  salarydays: {
     type: String,
     required: true,
   },
-  type: {
+  leaves: {
     type: String,
     required: true,
   },
-  to: {
+  allowances: {
     type: String,
     required: true,
   },
-  note: {
+  deductions: {
+    type: String,
+    required: true,
+  },
+  salary: {
+    type: String,
+    required: true,
+  },
+  advance: {
+    type: String,
+    required: true,
+  },
+  payable: {
+    type: String,
+    required: true,
+  },
+  month: {
     type: String,
     required: true,
   },
@@ -35,4 +51,4 @@ const Fund = mongoose.model("fund", {
   },
 });
 
-module.exports = Fund;
+module.exports = Salary;

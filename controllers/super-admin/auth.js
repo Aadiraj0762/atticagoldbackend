@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 function login(req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
-    if (err || !user) {
+    if (err) {
       return res.status(400).json({
         status: false,
         message: info ? info.message : "Login failed.",
@@ -21,16 +21,16 @@ function login(req, res, next) {
 
     req.login(user, { session: false }, (err) => {
       if (err) {
-        res.send(err);
+        return res.send(err);
       }
 
       const token = jwt.sign(
         {
           sub: user._id,
           iat: new Date().getTime(),
-          exp: new Date().setDate(new Date().getDate() + 1),
         },
-        process.env.SECRET
+        process.env.SECRET,
+        { expiresIn: "1d" }
       );
 
       return res.json({

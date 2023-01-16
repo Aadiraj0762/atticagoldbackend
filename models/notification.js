@@ -1,27 +1,19 @@
 const mongoose = require("mongoose");
 
-const Fund = mongoose.model("fund", {
-  amount: {
+const Notification = mongoose.model("notifications", {
+  notificationtype: {
     type: String,
     required: true,
   },
-  from: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    required: true,
-  },
-  to: {
-    type: String,
-    required: true,
-  },
-  note: {
+  desc: {
     type: String,
     required: true,
   },
   status: {
+    type: String,
+    required: true,
+  },
+  dates: {
     type: String,
     required: true,
   },
@@ -35,4 +27,4 @@ const Fund = mongoose.model("fund", {
   },
 });
 
-module.exports = Fund;
+module.exports = Notification;
