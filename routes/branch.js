@@ -8,6 +8,7 @@ const fund = require("../controllers/branch/fund");
 const expense = require("../controllers/branch/expense");
 const employee = require("../controllers/branch/employee");
 const profile = require("../controllers/branch/profile");
+const sales = require("../controllers/branch/sales");
 const { isBranch } = require("../middlewares/authorization");
 
 authRouter.post("/auth/login", login);
@@ -27,6 +28,12 @@ fundRouter.get("/fund/get/:id", fund.findById);
 fundRouter.post("/fund/create", fund.create);
 fundRouter.post("/fund/update/:id", fund.update);
 fundRouter.post("/fund/delete/:id", fund.remove);
+
+fundRouter.get("/sales/get", sales.find);
+fundRouter.get("/sales/get/:id", sales.findById);
+fundRouter.post("/sales/create", sales.create);
+fundRouter.post("/sales/update/:id", sales.update);
+fundRouter.post("/sales/delete/:id", sales.remove);
 
 fundRouter.get("/employee/get", employee.find);
 fundRouter.get("/employee/get/:id", employee.findById);

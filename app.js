@@ -5,7 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 require("dotenv/config");
 require("./config/db");
-require("./config/password");
+require("./config/passport");
 
 var superAdminRouter = require("./routes/super-admin");
 var adminRouter = require("./routes/admin");
