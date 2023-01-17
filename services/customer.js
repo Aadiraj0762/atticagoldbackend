@@ -1,8 +1,8 @@
-const BillItem = require("../models/billitem");
+const Customer = require("../models/customer");
 
 async function find(query = {}) {
   try {
-    return await BillItem.find(query).exec();
+    return await Customer.find(query).exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +10,7 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await BillItem.findById(id).exec();
+    return await Customer.findById(id).exec();
   } catch (err) {
     throw err;
   }
@@ -18,7 +18,7 @@ async function findById(id) {
 
 async function create(payload) {
   try {
-    let goldRate = new BillItem(payload);
+    let goldRate = new Customer(payload);
     return await goldRate.save();
   } catch (err) {
     throw err;
@@ -27,7 +27,7 @@ async function create(payload) {
 
 async function update(id, payload) {
   try {
-    return await BillItem.findByIdAndUpdate(id, payload).exec();
+    return await Customer.findByIdAndUpdate(id, payload).exec();
   } catch (err) {
     throw err;
   }
@@ -35,7 +35,7 @@ async function update(id, payload) {
 
 async function remove(id) {
   try {
-    return await BillItem.findByIdAndDelete(id).exec();
+    return await Customer.findByIdAndDelete(id).exec();
   } catch (err) {
     throw err;
   }

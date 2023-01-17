@@ -1,20 +1,24 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const User = require("../../models/user");
 
 function login(req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err) {
       return res.status(400).json({
         status: false,
-        message: info ? info.message : "Login failed.",
+        message: info ? info.message : "Invalid username or password.",
         data: {},
       });
     }
 
-    if (user.type.toLowerCase() !== "branch") {
+    if (
+      user.userType.toLowerCase() != "admin" &&
+      user.employeeId !== req.body.employeeId
+    ) {
       return res.status(400).json({
         status: false,
-        message: "You are not allowed to login.",
+        message: "Invalid username or password.",
         data: {},
       });
     }
@@ -42,4 +46,24 @@ function login(req, res, next) {
   })(req, res, next);
 }
 
-module.exports = { login };
+function getUserType(req, res, next) {
+  User.findOne({ username: req.body.username })
+    .then(function (user) {
+      return res.json({
+        status: true,
+        message: "",
+        data: {
+          userType: user.userType,
+        },
+      });
+    })
+    .catch(function (err) {
+      return res.json({
+        status: false,
+        message: "Invalid username",
+        data: [],
+      });
+    });
+}
+
+module.exports = { login, getUserType };

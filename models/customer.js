@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
 
-const Employee = mongoose.model("employees", {
-  employeeId: {
+const Customer = mongoose.model("customers", {
+  customerId: {
     type: String,
     unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
   },
   name: {
     type: String,
@@ -28,11 +32,25 @@ const Employee = mongoose.model("employees", {
     type: String,
     required: true,
   },
-  designation: {
+  maritalStatus: {
     type: String,
     required: true,
   },
-  proofDocument: {
+  employment: mongoose.Schema({
+    employmentType: {
+      type: String,
+      required: true,
+    },
+    organisation: {
+      type: String,
+      required: true,
+    },
+    annualIncome: {
+      type: String,
+      required: true,
+    },
+  }),
+  documentId: mongoose.Schema({
     documentType: {
       type: String,
       required: true,
@@ -45,6 +63,14 @@ const Employee = mongoose.model("employees", {
       type: String,
       required: true,
     },
+  }),
+  signature: {
+    type: String,
+    required: true,
+  },
+  otp: {
+    type: String,
+    required: true,
   },
   address: [
     mongoose.Schema({
@@ -76,6 +102,10 @@ const Employee = mongoose.model("employees", {
         type: String,
         required: true,
       },
+      label: {
+        type: String,
+        required: true,
+      },
       addressProof: {
         documentType: {
           type: String,
@@ -99,6 +129,14 @@ const Employee = mongoose.model("employees", {
       },
     }),
   ],
+  source: {
+    type: String,
+    required: true,
+  },
+  label: {
+    type: String,
+    required: true,
+  },
   status: {
     type: String,
     required: true,
@@ -112,4 +150,4 @@ const Employee = mongoose.model("employees", {
   },
 });
 
-module.exports = Employee;
+module.exports = Customer;

@@ -26,7 +26,7 @@ async function update(req, res) {
   } catch (err) {
     res.json({
       status: false,
-      message: err.message,
+      message: err.errors ?? err.message,
       data: {},
     });
   }
@@ -42,7 +42,7 @@ async function remove(req, res) {
   } catch (err) {
     res.json({
       status: false,
-      message: err.message,
+      message: err.errors ?? err.message,
       data: {},
     });
   }

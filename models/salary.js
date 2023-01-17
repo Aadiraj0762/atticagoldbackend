@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const Salary = mongoose.model("salary", {
-  empid: {
+const Salary = mongoose.model("salaries", {
+  employeeId: {
     type: String,
     required: true,
   },
-  salarydays: {
+  salaryDays: {
     type: String,
     required: true,
   },
@@ -21,19 +21,19 @@ const Salary = mongoose.model("salary", {
     type: String,
     required: true,
   },
+  advanceSalary: {
+    type: String,
+    required: true,
+  },
   salary: {
     type: String,
     required: true,
   },
-  advance: {
+  payableSalary: {
     type: String,
     required: true,
   },
-  payable: {
-    type: String,
-    required: true,
-  },
-  month: {
+  salaryMonth: {
     type: String,
     required: true,
   },
@@ -41,13 +41,12 @@ const Salary = mongoose.model("salary", {
     type: String,
     required: true,
   },
-  date: {
-    type: String,
+  createdAt: {
+    type: Date,
     required: true,
   },
-  time: {
-    type: String,
-    required: true,
+  updatedAt: {
+    type: Date,
   },
 });
 

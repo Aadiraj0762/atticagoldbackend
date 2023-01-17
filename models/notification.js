@@ -1,13 +1,19 @@
 const mongoose = require("mongoose");
 
 const Notification = mongoose.model("notifications", {
-  notificationtype: {
+  notificationType: {
     type: String,
     required: true,
   },
-  desc: {
+  notification: {
     type: String,
     required: true,
+  },
+  branchId: {
+    type: String,
+  },
+  employeeId: {
+    type: String,
   },
   status: {
     type: String,
@@ -17,13 +23,12 @@ const Notification = mongoose.model("notifications", {
     type: String,
     required: true,
   },
-  date: {
-    type: String,
+  createdAt: {
+    type: Date,
     required: true,
   },
-  time: {
-    type: String,
-    required: true,
+  updatedAt: {
+    type: Date,
   },
 });
 

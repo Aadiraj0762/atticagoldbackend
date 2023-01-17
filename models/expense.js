@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
-const Expense = mongoose.model("expense", {
+const Expense = mongoose.model("expenses", {
+  branchId: {
+    type: String,
+    required: true,
+  },
   amount: {
     type: String,
     required: true,
@@ -9,13 +13,8 @@ const Expense = mongoose.model("expense", {
     type: String,
     required: true,
   },
-  upload: {
+  uploadProof: {
     type: String,
-    required: true,
-  },
-  branch: {
-    type: String,
-    required: true,
   },
   note: {
     type: String,
@@ -25,13 +24,12 @@ const Expense = mongoose.model("expense", {
     type: String,
     required: true,
   },
-  date: {
-    type: String,
+  createdAt: {
+    type: Date,
     required: true,
   },
-  time: {
-    type: String,
-    required: true,
+  updatedAt: {
+    type: Date,
   },
 });
 

@@ -1,5 +1,5 @@
-function isSuperAdmin(req, res, next) {
-  if (req.user.type.toLowerCase() === "super-admin") {
+function isAdmin(req, res, next) {
+  if (req.user.userType.toLowerCase() === "admin") {
     return next();
   }
 
@@ -10,8 +10,8 @@ function isSuperAdmin(req, res, next) {
   });
 }
 
-function isAdmin(req, res, next) {
-  if (req.user.type.toLowerCase() === "admin") {
+function isHr(req, res, next) {
+  if (req.user.userType.toLowerCase() === "hr") {
     return next();
   }
 
@@ -23,7 +23,7 @@ function isAdmin(req, res, next) {
 }
 
 function isAccounts(req, res, next) {
-  if (req.user.type.toLowerCase() === "accounts") {
+  if (req.user.userType.toLowerCase() === "accounts") {
     return next();
   }
 
@@ -35,7 +35,7 @@ function isAccounts(req, res, next) {
 }
 
 function isBranch(req, res, next) {
-  if (req.user.type.toLowerCase() === "branch") {
+  if (req.user.userType.toLowerCase() === "branch") {
     return next();
   }
 
@@ -46,4 +46,4 @@ function isBranch(req, res, next) {
   });
 }
 
-module.exports = { isSuperAdmin, isAdmin, isAccounts, isBranch };
+module.exports = { isAdmin, isHr, isAccounts, isBranch };

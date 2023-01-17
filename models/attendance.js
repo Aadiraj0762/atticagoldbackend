@@ -1,25 +1,20 @@
 const mongoose = require("mongoose");
 
-const Attendance = mongoose.model("attendance", {
-  empid: {
+const Attendance = mongoose.model("attendances", {
+  employeeId: {
     type: String,
     required: true,
   },
-  type: {
+  employeePhoto: {
     type: String,
     required: true,
   },
-  proof: {
-    type: String,
+  createdAt: {
+    type: Date,
     required: true,
   },
-  date: {
-    type: String,
-    required: true,
-  },
-  time: {
-    type: String,
-    required: true,
+  updatedAt: {
+    type: Date,
   },
 });
 

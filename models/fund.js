@@ -25,13 +25,12 @@ const Fund = mongoose.model("fund", {
     type: String,
     required: true,
   },
-  date: {
-    type: String,
+  createdAt: {
+    type: Date,
     required: true,
   },
-  time: {
-    type: String,
-    required: true,
+  updatedAt: {
+    type: Date,
   },
 });
 

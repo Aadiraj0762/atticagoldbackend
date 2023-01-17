@@ -1,18 +1,26 @@
 const mongoose = require("mongoose");
 
 const Leave = mongoose.model("leaves", {
-  empid: {
+  employeeId: {
     type: String,
     required: true,
   },
-  type: {
+  branchId: {
     type: String,
     required: true,
   },
-  dates: {
+  leaveType: {
     type: String,
     required: true,
   },
+  dates: [
+    mongoose.Schema({
+      date: {
+        type: Date,
+        required: true,
+      },
+    }),
+  ],
   proof: {
     type: String,
     required: true,
@@ -25,17 +33,12 @@ const Leave = mongoose.model("leaves", {
     type: String,
     required: true,
   },
-  branchid: {
-    type: String,
+  createdAt: {
+    type: Date,
     required: true,
   },
-  date: {
-    type: String,
-    required: true,
-  },
-  time: {
-    type: String,
-    required: true,
+  updatedAt: {
+    type: Date,
   },
 });
 

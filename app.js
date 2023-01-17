@@ -7,8 +7,9 @@ require("dotenv/config");
 require("./config/db");
 require("./config/passport");
 
-var superAdminRouter = require("./routes/super-admin");
+var authRouter = require("./routes/auth");
 var adminRouter = require("./routes/admin");
+var hrRouter = require("./routes/hr");
 var accountsRouter = require("./routes/accounts");
 var branchRouter = require("./routes/branch");
 
@@ -24,8 +25,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api/v1.0/super-admin", superAdminRouter);
+app.use("/api/v1.0/auth", authRouter);
 app.use("/api/v1.0/admin", adminRouter);
+app.use("/api/v1.0/hr", hrRouter);
 app.use("/api/v1.0/accounts", accountsRouter);
 app.use("/api/v1.0/branch", branchRouter);
 

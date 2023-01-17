@@ -3,14 +3,11 @@ var router = express.Router();
 var authRouter = express.Router();
 var accountsRouter = express.Router();
 const passport = require("passport");
-const { login } = require("../controllers/accounts/auth");
 const goldRate = require("../controllers/accounts/goldrate");
 const branch = require("../controllers/accounts/branch");
 const expense = require("../controllers/accounts/expense");
 const profile = require("../controllers/accounts/profile");
 const { isAccounts } = require("../middlewares/authorization");
-
-authRouter.post("/auth/login", login);
 
 accountsRouter.get("/", function (req, res, next) {
   res.send("Home Page");
@@ -34,7 +31,6 @@ accountsRouter.post("/expense/delete/:id", expense.remove);
 accountsRouter.get("/profile", profile.get);
 accountsRouter.post("/profile/change-password", profile.changePassword);
 
-router.use(authRouter);
 router.use(
   function (req, res, next) {
     passport.authenticate("jwt", { session: false }, (err, user, info) => {
