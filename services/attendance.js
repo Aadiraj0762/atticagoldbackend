@@ -27,7 +27,9 @@ async function create(payload) {
 
 async function update(id, payload) {
   try {
-    return await Attendance.findByIdAndUpdate(id, payload).exec();
+    return await Attendance.findByIdAndUpdate(id, payload, {
+      returnDocument: "after",
+    }).exec();
   } catch (err) {
     throw err;
   }

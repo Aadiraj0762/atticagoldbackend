@@ -4,6 +4,7 @@ var branchRouter = express.Router();
 const passport = require("passport");
 const fund = require("../controllers/branch/fund");
 const expense = require("../controllers/branch/expense");
+const customer = require("../controllers/branch/customer");
 const employee = require("../controllers/branch/employee");
 const profile = require("../controllers/branch/profile");
 const sales = require("../controllers/branch/sales");
@@ -32,6 +33,12 @@ branchRouter.get("/sales/get/:id", sales.findById);
 branchRouter.post("/sales/create", sales.create);
 branchRouter.post("/sales/update/:id", sales.update);
 branchRouter.post("/sales/delete/:id", sales.remove);
+
+branchRouter.get("/customer/get", customer.find);
+branchRouter.get("/customer/get/:id", customer.findById);
+branchRouter.post("/customer/create", customer.create);
+branchRouter.post("/customer/update/:id", customer.update);
+branchRouter.post("/customer/delete/:id", customer.remove);
 
 branchRouter.get("/employee/get", employee.find);
 branchRouter.get("/employee/get/:id", employee.findById);

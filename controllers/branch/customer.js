@@ -1,10 +1,10 @@
-const fundService = require("../../services/fund");
+const customerService = require("../../services/customer");
 
 async function find(req, res) {
   res.json({
     status: true,
     message: "",
-    data: await fundService.find(),
+    data: await customerService.find(),
   });
 }
 
@@ -12,7 +12,7 @@ async function findById(req, res) {
   res.json({
     status: true,
     message: "",
-    data: await fundService.findById(req.params.id),
+    data: await customerService.findById(req.params.id),
   });
 }
 
@@ -21,7 +21,7 @@ async function create(req, res) {
     res.json({
       status: true,
       message: "",
-      data: await fundService.create(req.body),
+      data: await customerService.create(req.body),
     });
   } catch (err) {
     res.json({
@@ -37,7 +37,7 @@ async function update(req, res) {
     res.json({
       status: true,
       message: "",
-      data: await fundService.update(req.params.id, req.body),
+      data: await customerService.update(req.params.id, req.body),
     });
   } catch (err) {
     res.json({
@@ -53,7 +53,7 @@ async function remove(req, res) {
     res.json({
       status: true,
       message: "",
-      data: await fundService.remove(req.params.id),
+      data: await customerService.remove(req.params.id),
     });
   } catch (err) {
     res.json({

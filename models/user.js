@@ -15,6 +15,7 @@ const User = mongoose.model(
       },
       employeeId: {
         type: String,
+        unique: true,
       },
       userType: {
         type: String,

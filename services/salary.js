@@ -27,7 +27,9 @@ async function create(payload) {
 
 async function update(id, payload) {
   try {
-    return await Salary.findByIdAndUpdate(id, payload).exec();
+    return await Salary.findByIdAndUpdate(id, payload, {
+      returnDocument: "after",
+    }).exec();
   } catch (err) {
     throw err;
   }
