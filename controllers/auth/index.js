@@ -66,4 +66,22 @@ function getUserType(req, res, next) {
     });
 }
 
-module.exports = { login, getUserType };
+function getBranchUser(req, res, next) {
+  User.find({ username: req.body.username }, { employeeId: 1 })
+    .then(function (data) {
+      return res.json({
+        status: true,
+        message: "",
+        data: data,
+      });
+    })
+    .catch(function (err) {
+      return res.json({
+        status: false,
+        message: "Invalid username",
+        data: [],
+      });
+    });
+}
+
+module.exports = { login, getUserType, getBranchUser };
