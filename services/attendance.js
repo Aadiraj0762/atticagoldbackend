@@ -37,7 +37,11 @@ async function update(id, payload) {
 
 async function remove(id) {
   try {
-    return await Attendance.findByIdAndDelete(id).exec();
+    return await Attendance.deleteMany({
+      _id: {
+        $in: id.split(","),
+      },
+    }).exec();
   } catch (err) {
     throw err;
   }
