@@ -1,27 +1,19 @@
-const expenseService = require("../../services/expense");
+const leaveService = require("../../services/leave");
 
 async function find(req, res) {
   res.json({
     status: true,
     message: "",
-    data: await expenseService.find(),
+    data: await leaveService.find(),
   });
 }
 
 async function findById(req, res) {
-  try {
-    res.json({
-      status: true,
-      message: "",
-      data: await expenseService.findById(req.params.id),
-    });
-  } catch (err) {
-    res.json({
-      status: false,
-      message: err.errors ?? err.message,
-      data: {},
-    });
-  }
+  res.json({
+    status: true,
+    message: "",
+    data: await leaveService.findById(req.params.id),
+  });
 }
 
 async function update(req, res) {
@@ -29,7 +21,7 @@ async function update(req, res) {
     res.json({
       status: true,
       message: "",
-      data: await expenseService.update(req.params.id, req.body),
+      data: await leaveService.update(req.params.id, req.body),
     });
   } catch (err) {
     res.json({
@@ -45,7 +37,7 @@ async function remove(req, res) {
     res.json({
       status: true,
       message: "",
-      data: await expenseService.remove(req.params.id),
+      data: await leaveService.remove(req.params.id),
     });
   } catch (err) {
     res.json({

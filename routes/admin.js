@@ -9,7 +9,10 @@ const employee = require("../controllers/admin/employee");
 const fund = require("../controllers/admin/fund");
 const expense = require("../controllers/admin/expense");
 const profile = require("../controllers/admin/profile");
+const leave = require("../controllers/admin/leave");
+const attendance = require("../controllers/admin/attendance");
 const { isAdmin } = require("../middlewares/authorization");
+const multer = require("../config/multer");
 
 adminRouter.get("/", function (req, res, next) {
   res.send("Home Page");
@@ -48,6 +51,20 @@ adminRouter.get("/fund/get", fund.find);
 adminRouter.get("/fund/get/:id", fund.findById);
 adminRouter.post("/fund/update/:id", fund.update);
 adminRouter.post("/fund/delete/:id", fund.remove);
+
+adminRouter.get("/attendance/get", attendance.find);
+adminRouter.get("/attendance/get/:id", attendance.findById);
+adminRouter.post("/attendance/update/:id", attendance.update);
+adminRouter.post("/attendance/delete/:id", attendance.remove);
+
+adminRouter.get("/leave/get", leave.find);
+adminRouter.get("/leave/get/:id", leave.findById);
+adminRouter.post(
+  "/leave/update/:id",
+  multer.single("employeePhoto"),
+  leave.update
+);
+adminRouter.post("/leave/delete/:id", leave.remove);
 
 adminRouter.get("/profile", profile.get);
 adminRouter.post("/profile/change-password", profile.changePassword);

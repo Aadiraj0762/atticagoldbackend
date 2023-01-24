@@ -16,14 +16,7 @@ const Leave = mongoose.model(
         type: String,
         required: true,
       },
-      dates: [
-        mongoose.Schema({
-          date: {
-            type: Date,
-            required: true,
-          },
-        }),
-      ],
+      dates: [Date],
       proof: {
         type: String,
         required: true,
