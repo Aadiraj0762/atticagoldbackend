@@ -1,10 +1,10 @@
-const goldRateService = require("../../services/goldrate");
+const leaveService = require("../../services/leave");
 
 async function find(req, res) {
   res.json({
     status: true,
     message: "",
-    data: await goldRateService.find(),
+    data: await leaveService.find(),
   });
 }
 
@@ -12,24 +12,8 @@ async function findById(req, res) {
   res.json({
     status: true,
     message: "",
-    data: await goldRateService.findById(req.params.id),
+    data: await leaveService.findById(req.params.id),
   });
-}
-
-async function create(req, res) {
-  try {
-    res.json({
-      status: true,
-      message: "",
-      data: await goldRateService.create(req.body),
-    });
-  } catch (err) {
-    res.json({
-      status: false,
-      message: err.errors ?? err.message,
-      data: {},
-    });
-  }
 }
 
 async function update(req, res) {
@@ -37,7 +21,7 @@ async function update(req, res) {
     res.json({
       status: true,
       message: "",
-      data: await goldRateService.update(req.params.id, req.body),
+      data: await leaveService.update(req.params.id, req.body),
     });
   } catch (err) {
     res.json({
@@ -53,7 +37,7 @@ async function remove(req, res) {
     res.json({
       status: true,
       message: "",
-      data: await goldRateService.remove(req.params.id),
+      data: await leaveService.remove(req.params.id),
     });
   } catch (err) {
     res.json({
@@ -64,4 +48,4 @@ async function remove(req, res) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+module.exports = { find, findById, update, remove };
