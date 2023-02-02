@@ -1,10 +1,10 @@
 var express = require("express");
 var router = express.Router();
-var authRouter = express.Router();
 var accountsRouter = express.Router();
 const passport = require("passport");
 const goldRate = require("../controllers/accounts/goldrate");
 const branch = require("../controllers/accounts/branch");
+const fund = require("../controllers/accounts/fund.js");
 const expense = require("../controllers/accounts/expense");
 const profile = require("../controllers/accounts/profile");
 const { isAccounts } = require("../middlewares/authorization");
@@ -21,6 +21,11 @@ accountsRouter.post("/goldrate/delete/:id", goldRate.remove);
 
 accountsRouter.get("/branch/get", branch.find);
 accountsRouter.get("/branch/get/:id", branch.findById);
+
+accountsRouter.get("/fund/get", fund.find);
+accountsRouter.get("/fund/get/:id", fund.findById);
+accountsRouter.post("/fund/update/:id", fund.update);
+accountsRouter.post("/fund/delete/:id", fund.remove);
 
 accountsRouter.get("/expense/get", expense.find);
 accountsRouter.get("/expense/get/:id", expense.findById);
