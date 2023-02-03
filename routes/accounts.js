@@ -6,6 +6,7 @@ const goldRate = require("../controllers/accounts/goldrate");
 const branch = require("../controllers/accounts/branch");
 const fund = require("../controllers/accounts/fund.js");
 const expense = require("../controllers/accounts/expense");
+const sales = require("../controllers/accounts/sales");
 const profile = require("../controllers/accounts/profile");
 const { isAccounts } = require("../middlewares/authorization");
 
@@ -32,6 +33,11 @@ accountsRouter.get("/expense/get/:id", expense.findById);
 accountsRouter.post("/expense/create", expense.create);
 accountsRouter.post("/expense/update/:id", expense.update);
 accountsRouter.post("/expense/delete/:id", expense.remove);
+
+accountsRouter.get("/sales/get", sales.find);
+accountsRouter.get("/sales/get/:id", sales.findById);
+accountsRouter.post("/sales/update/:id", sales.update);
+accountsRouter.post("/sales/delete/:id", sales.remove);
 
 accountsRouter.get("/profile", profile.get);
 accountsRouter.post("/profile/change-password", profile.changePassword);

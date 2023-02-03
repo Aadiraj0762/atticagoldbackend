@@ -11,6 +11,7 @@ const expense = require("../controllers/admin/expense");
 const profile = require("../controllers/admin/profile");
 const leave = require("../controllers/admin/leave");
 const attendance = require("../controllers/admin/attendance");
+const sales = require("../controllers/admin/sales");
 const { isAdmin } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
@@ -56,6 +57,11 @@ adminRouter.get("/attendance/get", attendance.find);
 adminRouter.get("/attendance/get/:id", attendance.findById);
 adminRouter.post("/attendance/update/:id", attendance.update);
 adminRouter.post("/attendance/delete/:id", attendance.remove);
+
+adminRouter.get("/sales/get", sales.find);
+adminRouter.get("/sales/get/:id", sales.findById);
+adminRouter.post("/sales/update/:id", sales.update);
+adminRouter.post("/sales/delete/:id", sales.remove);
 
 adminRouter.get("/leave/get", leave.find);
 adminRouter.get("/leave/get/:id", leave.findById);
