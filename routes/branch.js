@@ -49,8 +49,16 @@ branchRouter.post("/employee/delete/:id", employee.remove);
 
 branchRouter.get("/attendance/get", attendance.find);
 branchRouter.get("/attendance/get/:id", attendance.findById);
-branchRouter.post("/attendance/create", attendance.create);
-branchRouter.post("/attendance/update/:id", attendance.update);
+branchRouter.post(
+  "/attendance/create",
+  multer.single("employeePhoto"),
+  attendance.create
+);
+branchRouter.post(
+  "/attendance/update/:id",
+  multer.single("employeePhoto"),
+  attendance.update
+);
 branchRouter.post("/attendance/delete/:id", attendance.remove);
 
 branchRouter.get("/leave/get", leave.find);

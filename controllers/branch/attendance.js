@@ -1,3 +1,4 @@
+const fs = require("fs");
 const attendanceService = require("../../services/attendance");
 
 async function find(req, res) {
@@ -18,6 +19,11 @@ async function findById(req, res) {
 
 async function create(req, res) {
   try {
+    if (req.file) {
+      req.body.employeePhoto = `images/attendance/${req.file.originalname}`;
+      fs.writeFileSync(`./public/${req.body.employeePhoto}`, req.file.buffer);
+    }
+
     res.json({
       status: true,
       message: "",
@@ -34,6 +40,16 @@ async function create(req, res) {
 
 async function update(req, res) {
   try {
+    if (req.file) {
+      req.body.employeePhoto = `images/attendance/${req.file.originalname}`;
+      fs.writeFileSync(`./public/${req.body.employeePhoto}`, req.file.buffer);
+      let oldFile = await attendanceService.findById(req.params.id);
+      if (oldFile.employeePhoto) {
+        fs.unlink(`./public/${oldFile.employeePhoto}`, function (err) {
+          // File not deleted
+        });
+      }
+    }
     res.json({
       status: true,
       message: "",
@@ -50,6 +66,12 @@ async function update(req, res) {
 
 async function remove(req, res) {
   try {
+    let oldFile = await attendanceService.findById(req.params.id);
+    if (oldFile.employeePhoto) {
+      fs.unlink(`./public/${oldFile.employeePhoto}`, function (err) {
+        // File not deleted
+      });
+    }
     res.json({
       status: true,
       message: "",

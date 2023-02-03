@@ -55,7 +55,11 @@ adminRouter.post("/fund/delete/:id", fund.remove);
 
 adminRouter.get("/attendance/get", attendance.find);
 adminRouter.get("/attendance/get/:id", attendance.findById);
-adminRouter.post("/attendance/update/:id", attendance.update);
+adminRouter.post(
+  "/attendance/update/:id",
+  multer.single("employeePhoto"),
+  attendance.update
+);
 adminRouter.post("/attendance/delete/:id", attendance.remove);
 
 adminRouter.get("/sales/get", sales.find);
