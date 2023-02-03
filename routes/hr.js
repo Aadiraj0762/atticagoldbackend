@@ -40,11 +40,7 @@ hrRouter.post("/attendance/delete/:id", attendance.remove);
 
 hrRouter.get("/leave/get", leave.find);
 hrRouter.get("/leave/get/:id", leave.findById);
-hrRouter.post(
-  "/leave/update/:id",
-  multer.single("employeePhoto"),
-  leave.update
-);
+hrRouter.post("/leave/update/:id", multer.single("proof"), leave.update);
 hrRouter.post("/leave/delete/:id", leave.remove);
 
 hrRouter.get("/profile", profile.get);

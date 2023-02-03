@@ -65,11 +65,7 @@ adminRouter.post("/sales/delete/:id", sales.remove);
 
 adminRouter.get("/leave/get", leave.find);
 adminRouter.get("/leave/get/:id", leave.findById);
-adminRouter.post(
-  "/leave/update/:id",
-  multer.single("employeePhoto"),
-  leave.update
-);
+adminRouter.post("/leave/update/:id", multer.single("proof"), leave.update);
 adminRouter.post("/leave/delete/:id", leave.remove);
 
 adminRouter.get("/profile", profile.get);

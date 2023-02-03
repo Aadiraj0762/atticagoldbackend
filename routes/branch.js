@@ -11,6 +11,7 @@ const sales = require("../controllers/branch/sales");
 const attendance = require("../controllers/branch/attendance");
 const leave = require("../controllers/branch/leave");
 const { isBranch } = require("../middlewares/authorization");
+const multer = require("../config/multer");
 
 branchRouter.get("/", function (req, res, next) {
   res.send("Home Page");
@@ -54,8 +55,8 @@ branchRouter.post("/attendance/delete/:id", attendance.remove);
 
 branchRouter.get("/leave/get", leave.find);
 branchRouter.get("/leave/get/:id", leave.findById);
-branchRouter.post("/leave/create", leave.create);
-branchRouter.post("/leave/update/:id", leave.update);
+branchRouter.post("/leave/create", multer.single("proof"), leave.create);
+branchRouter.post("/leave/update/:id", multer.single("proof"), leave.update);
 branchRouter.post("/leave/delete/:id", leave.remove);
 
 branchRouter.get("/profile", profile.get);
