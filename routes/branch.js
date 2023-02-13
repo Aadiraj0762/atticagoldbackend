@@ -6,6 +6,7 @@ const fund = require("../controllers/branch/fund");
 const expense = require("../controllers/branch/expense");
 const customer = require("../controllers/branch/customer");
 const customerAddress = require("../controllers/branch/customer-address");
+const customerBank = require("../controllers/branch/customer-bank");
 const employee = require("../controllers/branch/employee");
 const profile = require("../controllers/branch/profile");
 const sales = require("../controllers/branch/sales");
@@ -45,6 +46,10 @@ branchRouter.post("/customer/delete/:id", customer.remove);
 branchRouter.get("/customer-address/get/:id", customerAddress.findById);
 branchRouter.post("/customer-address/create", customerAddress.create);
 branchRouter.post("/customer-address/delete/:id", customerAddress.remove);
+
+branchRouter.get("/customer-bank/get/:id", customerBank.findById);
+branchRouter.post("/customer-bank/create", customerBank.create);
+branchRouter.post("/customer-bank/delete/:id", customerBank.remove);
 
 branchRouter.get("/employee/get", employee.find);
 branchRouter.get("/employee/get/:id", employee.findById);

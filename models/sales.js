@@ -180,40 +180,13 @@ const Sales = mongoose.model(
         type: String,
         required: true,
       },
-      bankAmount: {
+      bankId: {
         type: String,
         required: true,
       },
-      bankDetail: mongoose.Schema({
-        accountNo: {
-          type: String,
-          required: true,
-        },
-        accountHolderName: {
-          type: String,
-          required: true,
-        },
-        ifscCode: {
-          type: String,
-          required: true,
-        },
-        bankName: {
-          type: String,
-          required: true,
-        },
-        branch: {
-          type: String,
-          required: true,
-        },
-        proofType: {
-          type: String,
-          required: true,
-        },
-        proofFile: {
-          type: String,
-          required: true,
-        },
-      }),
+      bankAmount: {
+        type: String,
+      },
       proofDocument: [
         mongoose.Schema({
           documentType: {

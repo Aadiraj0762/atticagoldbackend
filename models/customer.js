@@ -128,6 +128,38 @@ const Customer = mongoose.model(
           { timestamps: true }
         ),
       ],
+      bank: [
+        mongoose.Schema({
+          accountNo: {
+            type: String,
+            required: true,
+          },
+          accountHolderName: {
+            type: String,
+            required: true,
+          },
+          ifscCode: {
+            type: String,
+            required: true,
+          },
+          bankName: {
+            type: String,
+            required: true,
+          },
+          branch: {
+            type: String,
+            required: true,
+          },
+          proofType: {
+            type: String,
+            required: true,
+          },
+          proofFile: {
+            type: String,
+            required: true,
+          },
+        }),
+      ],
       source: {
         type: String,
         required: true,
