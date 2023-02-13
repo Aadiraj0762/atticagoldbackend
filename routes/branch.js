@@ -10,6 +10,7 @@ const customerBank = require("../controllers/branch/customer-bank");
 const employee = require("../controllers/branch/employee");
 const profile = require("../controllers/branch/profile");
 const sales = require("../controllers/branch/sales");
+const release = require("../controllers/branch/release");
 const attendance = require("../controllers/branch/attendance");
 const leave = require("../controllers/branch/leave");
 const { isBranch } = require("../middlewares/authorization");
@@ -36,6 +37,13 @@ branchRouter.get("/sales/get/:id", sales.findById);
 branchRouter.post("/sales/create", sales.create);
 branchRouter.post("/sales/update/:id", sales.update);
 branchRouter.post("/sales/delete/:id", sales.remove);
+
+branchRouter.get("/release/get", release.find);
+branchRouter.post("/release/get", release.find);
+branchRouter.get("/release/get/:id", release.findById);
+branchRouter.post("/release/create", release.create);
+branchRouter.post("/release/update/:id", release.update);
+branchRouter.post("/release/delete/:id", release.remove);
 
 branchRouter.get("/customer/get", customer.find);
 branchRouter.get("/customer/get/:id", customer.findById);
