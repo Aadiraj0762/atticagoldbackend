@@ -52,11 +52,7 @@ const Sales = mongoose.model(
           netAmount: {
             type: String,
             required: true,
-          },
-          ornamentBill: {
-            type: String,
-            required: true,
-          },
+          }
         }),
       ],
       dop: {
