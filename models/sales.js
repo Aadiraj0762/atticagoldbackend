@@ -100,7 +100,6 @@ const Sales = mongoose.model(
           },
           documentNo: {
             type: String,
-            required: true,
           },
           documentFile: {
             type: String,
