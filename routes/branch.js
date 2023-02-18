@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var branchRouter = express.Router();
 const passport = require("passport");
+const goldRate = require("../controllers/branch/goldrate");
+const branch = require("../controllers/branch/branch");
 const fund = require("../controllers/branch/fund");
 const expense = require("../controllers/branch/expense");
 const customer = require("../controllers/branch/customer");
@@ -19,6 +21,14 @@ const multer = require("../config/multer");
 branchRouter.get("/", function (req, res, next) {
   res.send("Home Page");
 });
+
+branchRouter.get("/goldrate/get", goldRate.find);
+branchRouter.get("/goldrate/get/:id", goldRate.findById);
+branchRouter.post("/goldrate/find", goldRate.findOne);
+
+branchRouter.get("/branch/get", branch.find);
+branchRouter.get("/branch/get/:id", branch.findById);
+branchRouter.post("/branch/find", branch.findOne);
 
 branchRouter.get("/expense/get", expense.find);
 branchRouter.get("/expense/get/:id", expense.findById);

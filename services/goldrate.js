@@ -15,6 +15,13 @@ async function findById(id) {
     throw err;
   }
 }
+async function findOne(query) {
+  try {
+    return await GoldRate.findOne(query).exec();
+  } catch (err) {
+    throw err;
+  }
+}
 
 async function create(payload) {
   try {
@@ -47,4 +54,4 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+module.exports = { find, findById, findOne, create, update, remove };

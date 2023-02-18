@@ -16,6 +16,14 @@ async function findById(id) {
   }
 }
 
+async function findOne(query) {
+  try {
+    return await Branch.findOne(query).exec();
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function create(payload) {
   try {
     let goldRate = new Branch(payload);
@@ -47,4 +55,4 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+module.exports = { find, findById, findOne, create, update, remove };
