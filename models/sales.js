@@ -20,9 +20,11 @@ const Sales = mongoose.model(
         type: String,
         required: true,
       },
-      releaseId: {
-        type: String,
-      },
+      releaseId: [
+        {
+          type: String,
+        },
+      ],
       ornaments: [
         mongoose.Schema({
           ornamentType: {
