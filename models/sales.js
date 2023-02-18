@@ -52,7 +52,7 @@ const Sales = mongoose.model(
           netAmount: {
             type: String,
             required: true,
-          }
+          },
         }),
       ],
       dop: {
@@ -61,7 +61,9 @@ const Sales = mongoose.model(
       },
       goldRate: {
         type: String,
-        required: true,
+      },
+      silverRate: {
+        type: String,
       },
       netWeight: {
         type: String,
