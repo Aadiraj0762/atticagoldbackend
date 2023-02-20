@@ -7,6 +7,13 @@ const Customer = mongoose.model(
       customerId: {
         type: String,
         unique: true,
+        default: function () {
+          return `BGC${this.customerIdSeq.toString().padStart(3, "0")}`;
+        },
+      },
+      customerIdSeq: {
+        type: Number,
+        unique: true,
       },
       email: {
         type: String,

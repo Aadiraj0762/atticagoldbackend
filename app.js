@@ -13,6 +13,7 @@ var adminRouter = require("./routes/admin");
 var hrRouter = require("./routes/hr");
 var accountsRouter = require("./routes/accounts");
 var branchRouter = require("./routes/branch");
+var customerRouter = require("./routes/customer");
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/v1.0/admin", adminRouter);
 app.use("/api/v1.0/hr", hrRouter);
 app.use("/api/v1.0/accounts", accountsRouter);
 app.use("/api/v1.0/branch", branchRouter);
+app.use("/api/v1.0/customer", customerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

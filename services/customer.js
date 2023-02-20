@@ -18,8 +18,12 @@ async function findById(id) {
 
 async function create(payload) {
   try {
-    let goldRate = new Customer(payload);
-    return await goldRate.save();
+    const latestSeq = await Customer.findOne({})
+      .sort({ customerIdSeq: -1 })
+      .exec();
+    payload.customerIdSeq = latestSeq.customerIdSeq + 1;
+    let customer = new Customer(payload);
+    return await customer.save();
   } catch (err) {
     throw err;
   }
