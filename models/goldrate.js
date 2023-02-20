@@ -12,6 +12,10 @@ const GoldRate = mongoose.model(
         type: String,
         required: true,
       },
+      date: {
+        type: Date,
+        required: true,
+      },
       state: {
         type: String,
         required: true,
