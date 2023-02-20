@@ -15,6 +15,7 @@ async function findById(id) {
     throw err;
   }
 }
+
 async function findOne(query) {
   try {
     return await GoldRate.findOne(query).exec();
