@@ -1,19 +1,22 @@
 var express = require("express");
 var router = express.Router();
-var authRoutes = express.Router();
+var customerRouter = express.Router();
 const {
   login,
   verifyOtp,
   verifyToken,
 } = require("../controllers/customer/auth");
 const profile = require("../controllers/customer/profile");
+const goldRate = require("../controllers/customer/goldrate");
 
 router.post("/login", login);
 router.post("/verify-otp", verifyOtp);
 
-authRoutes.get("/profile", profile.get);
-authRoutes.post("/profile", profile.update);
+customerRouter.post("/goldrate", goldRate.findOne);
 
-router.use(verifyToken, authRoutes);
+customerRouter.get("/profile", profile.get);
+customerRouter.post("/profile", profile.update);
+
+router.use(verifyToken, customerRouter);
 
 module.exports = router;
