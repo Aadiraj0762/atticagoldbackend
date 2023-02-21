@@ -30,6 +30,7 @@ const Customer = mongoose.model(
       phoneNumber: {
         type: String,
         required: true,
+        unique: true,
       },
       alternatePhoneNumber: {
         type: String,
