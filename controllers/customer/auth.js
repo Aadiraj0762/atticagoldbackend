@@ -1,39 +1,111 @@
 const jwt = require("jsonwebtoken");
 const Customer = require("../../models/customer");
 
-function login(req, res, next) {
-  return Customer.findOne({ phoneNumber: req.body.phoneNumber })
-    .then((user) => {
-      if (!user) {
-        return res.json({
-          status: false,
-          message: "Incorrect phone number.",
-          data: null,
-        });
-      }
+async function login(req, res) {
+  let customer = await Customer.findOne({
+    phoneNumber: req.body.phoneNumber,
+  }).exec();
 
-      const token = jwt.sign(
-        {
-          sub: user._id,
-          iat: new Date().getTime(),
-        },
-        process.env.SECRET,
-        { expiresIn: "1d" }
-      );
-
-      return res.json({
-        status: true,
-        message: "Logged in Successfully.",
-        data: { user, token },
-      });
-    })
-    .catch((err) => {
-      return res.json({
-        status: false,
-        message: err.message,
-        data: null,
-      });
+  if (!customer) {
+    customer = new Customer({
+      phoneNumber: req.body.phoneNumber,
     });
+    customer = await customer.save();
+  }
+
+  const otp = Math.floor(1000 + Math.random() * 9999);
+
+  const token = jwt.sign(
+    {
+      otp: otp,
+      phoneNumber: req.body.phoneNumber,
+    },
+    process.env.SECRET,
+    { expiresIn: 60 * 5 }
+  );
+
+  return res.json({
+    status: true,
+    message: "OTP sent successfully",
+    data: { otp, token },
+  });
 }
 
-module.exports = { login };
+async function verifyOtp(req, res) {
+  try {
+    let payload = jwt.verify(req.body.token, process.env.SECRET);
+
+    if (payload.otp != req.body.otp) {
+      throw new Error("Invalid otp");
+    }
+
+    let customer = await Customer.findOne({
+      phoneNumber: payload.phoneNumber,
+    }).exec();
+
+    console.log(payload, customer);
+
+    if (!customer) {
+      throw new Error("Invalid otp");
+    }
+
+    const token = jwt.sign(
+      {
+        id: customer._id,
+        customerId: customer.customerId,
+        phoneNumber: customer.phoneNumber,
+      },
+      process.env.SECRET,
+      { expiresIn: "1d" }
+    );
+
+    return res.json({
+      status: true,
+      message: "Logged in successfully",
+      data: { customer, token },
+    });
+  } catch (err) {
+    return res.json({
+      status: false,
+      message: "Invalid otp",
+      data: null,
+    });
+  }
+}
+
+async function verifyToken(req, res, next) {
+  try {
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.split(" ")[0] === "Bearer"
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.query && req.query.token) {
+      token = req.query.token;
+    }
+
+    let payload = jwt.verify(token, process.env.SECRET);
+
+    if (payload.otp != req.body.otp) {
+      throw new Error("Invalid token");
+    }
+
+    let customer = await Customer.findById(payload.id).exec();
+
+    if (!customer) {
+      throw new Error("Invalid token");
+    }
+
+    req.user = customer;
+    next();
+  } catch (err) {
+    return res.status(401).json({
+      status: false,
+      message: "Unauthorized",
+      data: null,
+    });
+  }
+}
+
+module.exports = { login, verifyOtp, verifyToken };
