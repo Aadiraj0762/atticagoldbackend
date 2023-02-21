@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const customerService = require("../../services/customer");
 const Customer = require("../../models/customer");
 
 async function login(req, res) {
@@ -7,10 +8,9 @@ async function login(req, res) {
   }).exec();
 
   if (!customer) {
-    customer = new Customer({
+    customer = await customerService.create({
       phoneNumber: req.body.phoneNumber,
     });
-    customer = await customer.save();
   }
 
   const otp = Math.floor(1000 + Math.random() * 9999);
@@ -42,8 +42,6 @@ async function verifyOtp(req, res) {
     let customer = await Customer.findOne({
       phoneNumber: payload.phoneNumber,
     }).exec();
-
-    console.log(payload, customer);
 
     if (!customer) {
       throw new Error("Invalid otp");

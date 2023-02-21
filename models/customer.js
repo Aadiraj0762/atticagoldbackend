@@ -17,19 +17,15 @@ const Customer = mongoose.model(
       },
       email: {
         type: String,
-        required: true,
       },
       name: {
         type: String,
-        required: true,
       },
       gender: {
         type: String,
-        required: true,
       },
       dob: {
         type: String,
-        required: true,
       },
       phoneNumber: {
         type: String,
@@ -40,11 +36,9 @@ const Customer = mongoose.model(
       },
       profileImage: {
         type: String,
-        required: true,
       },
       maritalStatus: {
         type: String,
-        required: true,
       },
       employment: mongoose.Schema({
         employmentType: {
@@ -76,11 +70,9 @@ const Customer = mongoose.model(
       }),
       signature: {
         type: String,
-        required: true,
       },
       otp: {
         type: String,
-        required: true,
       },
       address: [
         mongoose.Schema(
@@ -169,7 +161,6 @@ const Customer = mongoose.model(
       ],
       source: {
         type: String,
-        required: true,
       },
       label: {
         type: String,
@@ -177,6 +168,7 @@ const Customer = mongoose.model(
       status: {
         type: String,
         required: true,
+        default: "active",
       },
     },
     { timestamps: true }
