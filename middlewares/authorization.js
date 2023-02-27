@@ -35,7 +35,7 @@ function isAccounts(req, res, next) {
 }
 
 function isBranch(req, res, next) {
-  if (req.user.userType.toLowerCase() === "branch") {
+  if (req.user?.userType?.toLowerCase() === "branch") {
     return next();
   }
 

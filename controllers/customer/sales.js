@@ -21,7 +21,10 @@ async function findById(req, res) {
 
 async function create(req, res) {
   try {
-    let createdData = await salesService.create(req.body);
+    let createdData = await salesService.create({
+      ...req.body,
+      customerId: req.user._id,
+    });
     res.json({
       status: true,
       message: "",
