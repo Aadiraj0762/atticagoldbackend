@@ -36,20 +36,6 @@ const Employee = mongoose.model(
         type: String,
         required: true,
       },
-      proofDocument: {
-        documentType: {
-          type: String,
-          required: true,
-        },
-        documentNo: {
-          type: String,
-          required: true,
-        },
-        documentFile: {
-          type: String,
-          required: true,
-        },
-      },
       address: [
         mongoose.Schema(
           {
@@ -80,20 +66,6 @@ const Employee = mongoose.model(
             residential: {
               type: String,
               required: true,
-            },
-            addressProof: {
-              documentType: {
-                type: String,
-                required: true,
-              },
-              documentNo: {
-                type: String,
-                required: true,
-              },
-              documentFile: {
-                type: String,
-                required: true,
-              },
             },
           },
           { timestamps: true }

@@ -16,9 +16,6 @@ const Expense = mongoose.model(
         type: String,
         required: true,
       },
-      uploadProof: {
-        type: String,
-      },
       note: {
         type: String,
         required: true,
