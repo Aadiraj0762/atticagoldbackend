@@ -100,21 +100,6 @@ const Sales = mongoose.model(
       bankAmount: {
         type: String,
       },
-      proofDocument: [
-        mongoose.Schema({
-          documentType: {
-            type: String,
-            required: true,
-          },
-          documentNo: {
-            type: String,
-          },
-          documentFile: {
-            type: String,
-            required: true,
-          },
-        }),
-      ],
       status: {
         type: String,
         required: true,

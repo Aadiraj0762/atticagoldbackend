@@ -18,10 +18,14 @@ async function findById(req, res) {
 
 async function create(req, res) {
   try {
+    let data = await salesService.create(req.body);
     res.json({
       status: true,
       message: "",
-      data: await salesService.create(req.body),
+      data: {
+        ...data,
+        fileUpload: { uploadId: data._id, uploadName: "sale" },
+      },
     });
   } catch (err) {
     res.json({
@@ -50,6 +54,13 @@ async function update(req, res) {
 
 async function remove(req, res) {
   try {
+    await fileUploadService.removeMany({
+      uploadId: {
+        $in: req.params.id.split(","),
+      },
+      uploadName: "sale",
+    });
+
     res.json({
       status: true,
       message: "",

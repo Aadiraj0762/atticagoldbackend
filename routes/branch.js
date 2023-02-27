@@ -15,6 +15,7 @@ const sales = require("../controllers/branch/sales");
 const release = require("../controllers/branch/release");
 const attendance = require("../controllers/branch/attendance");
 const leave = require("../controllers/branch/leave");
+const fileUpload = require("../controllers/branch/fileupload");
 const { isBranch } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
@@ -77,23 +78,25 @@ branchRouter.post("/employee/delete/:id", employee.remove);
 
 branchRouter.get("/attendance/get", attendance.find);
 branchRouter.get("/attendance/get/:id", attendance.findById);
-branchRouter.post(
-  "/attendance/create",
-  multer.single("employeePhoto"),
-  attendance.create
-);
-branchRouter.post(
-  "/attendance/update/:id",
-  multer.single("employeePhoto"),
-  attendance.update
-);
+branchRouter.post("/attendance/create", attendance.create);
+branchRouter.post("/attendance/update/:id", attendance.update);
 branchRouter.post("/attendance/delete/:id", attendance.remove);
 
 branchRouter.get("/leave/get", leave.find);
 branchRouter.get("/leave/get/:id", leave.findById);
-branchRouter.post("/leave/create", multer.single("proof"), leave.create);
-branchRouter.post("/leave/update/:id", multer.single("proof"), leave.update);
+branchRouter.post("/leave/create", leave.create);
+branchRouter.post("/leave/update/:id", leave.update);
 branchRouter.post("/leave/delete/:id", leave.remove);
+
+branchRouter.get("/file-upload/get", fileUpload.find);
+branchRouter.post("/file-upload/get", fileUpload.find);
+branchRouter.get("/file-upload/get/:id", fileUpload.findById);
+branchRouter.post(
+  "/file-upload/create",
+  multer.single("uploadedFile"),
+  fileUpload.create
+);
+branchRouter.post("/file-upload/delete/:id", fileUpload.remove);
 
 branchRouter.get("/profile", profile.get);
 branchRouter.post("/profile/change-password", profile.changePassword);

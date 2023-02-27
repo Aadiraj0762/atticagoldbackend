@@ -1,27 +1,27 @@
 const mongoose = require("mongoose");
 
-const Leave = mongoose.model(
-  "leaves",
+const Sales = mongoose.model(
+  "fileuploads",
   mongoose.Schema(
     {
-      employeeId: {
+      uploadId: {
         type: String,
         required: true,
       },
-      branchId: {
+      uploadName: {
         type: String,
         required: true,
       },
-      leaveType: {
+      uploadType: {
         type: String,
-        required: true,
       },
-      dates: [Date],
-      note: {
+      documentType: {
         type: String,
-        required: true,
       },
-      status: {
+      documentNo: {
+        type: String,
+      },
+      uploadedFile: {
         type: String,
         required: true,
       },
@@ -30,4 +30,4 @@ const Leave = mongoose.model(
   )
 );
 
-module.exports = Leave;
+module.exports = Sales;

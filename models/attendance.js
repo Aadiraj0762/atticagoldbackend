@@ -8,9 +8,10 @@ const Attendance = mongoose.model(
         type: String,
         required: true,
       },
-      employeePhoto: {
-        type: String,
+      attendanceDate: {
+        type: Date,
         required: true,
+        default: new Date(),
       },
     },
     { timestamps: true }

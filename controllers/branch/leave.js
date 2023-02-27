@@ -1,5 +1,5 @@
-const fs = require("fs");
 const leaveService = require("../../services/leave");
+const fileUploadService = require("../../services/fileupload");
 
 async function find(req, res) {
   res.json({
@@ -19,15 +19,14 @@ async function findById(req, res) {
 
 async function create(req, res) {
   try {
-    if (req.file) {
-      req.body.proof = `images/leave/${req.file.originalname}`;
-      fs.writeFileSync(`./public/${req.body.proof}`, req.file.buffer);
-    }
-
+    let data = await leaveService.create(req.body);
     res.json({
       status: true,
       message: "",
-      data: await leaveService.create(req.body),
+      data: {
+        ...data,
+        fileUpload: { uploadId: data._id, uploadName: "leave" },
+      },
     });
   } catch (err) {
     res.json({
@@ -40,17 +39,6 @@ async function create(req, res) {
 
 async function update(req, res) {
   try {
-    if (req.file) {
-      req.body.proof = `images/leave/${req.file.originalname}`;
-      fs.writeFileSync(`./public/${req.body.proof}`, req.file.buffer);
-      let oldFile = await leaveService.findById(req.params.id);
-      if (oldFile.proof) {
-        fs.unlink(`./public/${oldFile.proof}`, function (err) {
-          // File not deleted
-        });
-      }
-    }
-
     res.json({
       status: true,
       message: "",
@@ -67,13 +55,12 @@ async function update(req, res) {
 
 async function remove(req, res) {
   try {
-    let oldFile = await leaveService.findById(req.params.id);
-    if (oldFile.proof) {
-      fs.unlink(`./public/${oldFile.proof}`, function (err) {
-        // File not deleted
-      });
-    }
-
+    await fileUploadService.removeMany({
+      uploadId: {
+        $in: req.params.id.split(","),
+      },
+      uploadName: "leave",
+    });
     res.json({
       status: true,
       message: "",
