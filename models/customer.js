@@ -55,23 +55,6 @@ const Customer = mongoose.model(
           required: true,
         },
       }),
-      documentId: mongoose.Schema({
-        documentType: {
-          type: String,
-          required: true,
-        },
-        documentNo: {
-          type: String,
-          required: true,
-        },
-        documentFile: {
-          type: String,
-          required: true,
-        },
-      }),
-      signature: {
-        type: String,
-      },
       otp: {
         type: String,
       },
@@ -110,20 +93,6 @@ const Customer = mongoose.model(
               type: String,
               required: true,
             },
-            addressProof: {
-              documentType: {
-                type: String,
-                required: true,
-              },
-              documentNo: {
-                type: String,
-                required: true,
-              },
-              documentFile: {
-                type: String,
-                required: true,
-              },
-            },
           },
           { timestamps: true }
         ),
@@ -147,14 +116,6 @@ const Customer = mongoose.model(
             required: true,
           },
           branch: {
-            type: String,
-            required: true,
-          },
-          proofType: {
-            type: String,
-            required: true,
-          },
-          proofFile: {
             type: String,
             required: true,
           },

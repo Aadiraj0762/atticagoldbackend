@@ -42,27 +42,11 @@ const Release = mongoose.model(
       pledgeId: {
         type: String,
       },
-      releaseDocument: {
-        type: String,
-        required: true,
-      },
       releaseDate: {
         type: Date,
         required: true,
       },
       comments: {
-        type: String,
-        required: true,
-      },
-      documentType: {
-        type: String,
-        required: true,
-      },
-      documentNo: {
-        type: String,
-        required: true,
-      },
-      documentFile: {
         type: String,
         required: true,
       },
