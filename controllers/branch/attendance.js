@@ -19,13 +19,13 @@ async function findById(req, res) {
 
 async function create(req, res) {
   try {
-    let data = await attendanceService.create(req.body);
+    let createdData = await attendanceService.create(req.body);
     res.json({
       status: true,
       message: "",
       data: {
-        ...data,
-        fileUpload: { uploadId: data._id, uploadName: "attendance" },
+        data: createdData,
+        fileUpload: { uploadId: data._id, uploadType: "attendance" },
       },
     });
   } catch (err) {
@@ -59,7 +59,7 @@ async function remove(req, res) {
       uploadId: {
         $in: req.params.id.split(","),
       },
-      uploadName: "attendance",
+      uploadType: "attendance",
     });
 
     res.json({

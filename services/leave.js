@@ -18,8 +18,8 @@ async function findById(id) {
 
 async function create(payload) {
   try {
-    let goldRate = new Leave(payload);
-    return await goldRate.save();
+    let leave = new Leave(payload);
+    return await leave.save();
   } catch (err) {
     throw err;
   }

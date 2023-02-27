@@ -19,13 +19,13 @@ async function findById(req, res) {
 
 async function create(req, res) {
   try {
-    let data = await leaveService.create(req.body);
+    let createdData = await leaveService.create(req.body);
     res.json({
       status: true,
       message: "",
       data: {
-        ...data,
-        fileUpload: { uploadId: data._id, uploadName: "leave" },
+        data: createdData,
+        fileUpload: { uploadId: createdData._id, uploadName: "leave" },
       },
     });
   } catch (err) {
