@@ -1,4 +1,5 @@
 const salesService = require("../../services/sales");
+const fileUploadService = require("../../services/fileupload");
 
 async function find(req, res) {
   res.json({
@@ -18,13 +19,13 @@ async function findById(req, res) {
 
 async function create(req, res) {
   try {
-    let data = await salesService.create(req.body);
+    let createdData = await salesService.create(req.body);
     res.json({
       status: true,
       message: "",
       data: {
-        ...data,
-        fileUpload: { uploadId: data._id, uploadName: "sale" },
+        data: createdData,
+        fileUpload: { uploadId: createdData._id, uploadName: "sale" },
       },
     });
   } catch (err) {

@@ -71,10 +71,8 @@ async function remove(id) {
 async function removeMany(query) {
   try {
     let oldFiles = await fileUpload.find(query);
-    console.log(oldFiles);
 
     oldFiles.forEach((file) => {
-      console.log(file);
       if (file.uploadedFile) {
         fs.unlink(`./public/${file.uploadedFile}`, function (err) {
           // fileUpload not deleted
