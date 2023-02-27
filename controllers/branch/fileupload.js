@@ -29,7 +29,7 @@ async function create(req, res) {
     res.json({
       status: true,
       message: "",
-      data: await fileUpload.create(req.body),
+      data: await fileUpload.create({ ...req.body, uploadedFile: req.file }),
     });
   } catch (err) {
     res.json({

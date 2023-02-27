@@ -56,11 +56,13 @@ async function remove(id) {
       }
     });
 
-    return await fileUpload.deleteMany({
-      _id: {
-        $in: id.split(","),
-      },
-    }).exec();
+    return await fileUpload
+      .deleteMany({
+        _id: {
+          $in: id.split(","),
+        },
+      })
+      .exec();
   } catch (err) {
     throw err;
   }
@@ -69,8 +71,10 @@ async function remove(id) {
 async function removeMany(query) {
   try {
     let oldFiles = await fileUpload.find(query);
+    console.log(oldFiles);
 
     oldFiles.forEach((file) => {
+      console.log(file);
       if (file.uploadedFile) {
         fs.unlink(`./public/${file.uploadedFile}`, function (err) {
           // fileUpload not deleted
