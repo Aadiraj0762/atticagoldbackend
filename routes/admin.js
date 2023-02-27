@@ -12,6 +12,7 @@ const profile = require("../controllers/admin/profile");
 const leave = require("../controllers/admin/leave");
 const attendance = require("../controllers/admin/attendance");
 const sales = require("../controllers/admin/sales");
+const fileUpload = require("../controllers/branch/fileupload");
 const { isAdmin } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
@@ -55,11 +56,7 @@ adminRouter.post("/fund/delete/:id", fund.remove);
 
 adminRouter.get("/attendance/get", attendance.find);
 adminRouter.get("/attendance/get/:id", attendance.findById);
-adminRouter.post(
-  "/attendance/update/:id",
-  multer.single("employeePhoto"),
-  attendance.update
-);
+adminRouter.post("/attendance/update/:id", attendance.update);
 adminRouter.post("/attendance/delete/:id", attendance.remove);
 
 adminRouter.get("/sales/get", sales.find);
@@ -69,8 +66,18 @@ adminRouter.post("/sales/delete/:id", sales.remove);
 
 adminRouter.get("/leave/get", leave.find);
 adminRouter.get("/leave/get/:id", leave.findById);
-adminRouter.post("/leave/update/:id", multer.single("proof"), leave.update);
+adminRouter.post("/leave/update/:id", leave.update);
 adminRouter.post("/leave/delete/:id", leave.remove);
+
+adminRouter.get("/file-upload/get", fileUpload.find);
+adminRouter.post("/file-upload/get", fileUpload.find);
+adminRouter.get("/file-upload/get/:id", fileUpload.findById);
+adminRouter.post(
+  "/file-upload/create",
+  multer.single("uploadedFile"),
+  fileUpload.create
+);
+adminRouter.post("/file-upload/delete/:id", fileUpload.remove);
 
 adminRouter.get("/profile", profile.get);
 adminRouter.post("/profile/change-password", profile.changePassword);

@@ -7,6 +7,7 @@ const user = require("../controllers/hr/user");
 const employee = require("../controllers/hr/employee");
 const profile = require("../controllers/hr/profile");
 const leave = require("../controllers/hr/leave");
+const fileUpload = require("../controllers/branch/fileupload");
 const attendance = require("../controllers/hr/attendance");
 const { isHr } = require("../middlewares/authorization");
 const multer = require("../config/multer");
@@ -35,17 +36,23 @@ hrRouter.post("/employee/delete/:id", employee.remove);
 
 hrRouter.get("/attendance/get", attendance.find);
 hrRouter.get("/attendance/get/:id", attendance.findById);
-hrRouter.post(
-  "/attendance/update/:id",
-  multer.single("employeePhoto"),
-  attendance.update
-);
+hrRouter.post("/attendance/update/:id", attendance.update);
 hrRouter.post("/attendance/delete/:id", attendance.remove);
 
 hrRouter.get("/leave/get", leave.find);
 hrRouter.get("/leave/get/:id", leave.findById);
-hrRouter.post("/leave/update/:id", multer.single("proof"), leave.update);
+hrRouter.post("/leave/update/:id", leave.update);
 hrRouter.post("/leave/delete/:id", leave.remove);
+
+hrRouter.get("/file-upload/get", fileUpload.find);
+hrRouter.post("/file-upload/get", fileUpload.find);
+hrRouter.get("/file-upload/get/:id", fileUpload.findById);
+hrRouter.post(
+  "/file-upload/create",
+  multer.single("uploadedFile"),
+  fileUpload.create
+);
+hrRouter.post("/file-upload/delete/:id", fileUpload.remove);
 
 hrRouter.get("/profile", profile.get);
 hrRouter.post("/profile/change-password", profile.changePassword);
