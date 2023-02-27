@@ -12,7 +12,7 @@ const profile = require("../controllers/admin/profile");
 const leave = require("../controllers/admin/leave");
 const attendance = require("../controllers/admin/attendance");
 const sales = require("../controllers/admin/sales");
-const fileUpload = require("../controllers/branch/fileupload");
+const fileUpload = require("../controllers/admin/fileupload");
 const { isAdmin } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
