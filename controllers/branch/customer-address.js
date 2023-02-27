@@ -4,7 +4,7 @@ async function findById(req, res) {
   res.json({
     status: true,
     message: "",
-    data: (await customerAddressService.findById(req.params.id)).address,
+    data: (await customerAddressService.findById(req.params.id))?.address ?? [],
   });
 }
 
