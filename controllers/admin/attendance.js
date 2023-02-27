@@ -1,5 +1,5 @@
-const fs = require("fs");
 const attendanceService = require("../../services/attendance");
+const fileUploadService = require("../../services/fileupload");
 
 async function find(req, res) {
   res.json({
@@ -17,18 +17,28 @@ async function findById(req, res) {
   });
 }
 
+async function create(req, res) {
+  try {
+    let createdData = await attendanceService.create(req.body);
+    res.json({
+      status: true,
+      message: "",
+      data: {
+        data: createdData,
+        fileUpload: { uploadId: createdData._id, uploadType: "attendance" },
+      },
+    });
+  } catch (err) {
+    res.json({
+      status: false,
+      message: err.errors ?? err.message,
+      data: {},
+    });
+  }
+}
+
 async function update(req, res) {
   try {
-    if (req.file) {
-      req.body.employeePhoto = `images/attendance/${req.file.originalname}`;
-      fs.writeFileSync(`./public/${req.body.employeePhoto}`, req.file.buffer);
-      let oldFile = await attendanceService.findById(req.params.id);
-      if (oldFile.employeePhoto) {
-        fs.unlink(`./public/${oldFile.employeePhoto}`, function (err) {
-          // File not deleted
-        });
-      }
-    }
     res.json({
       status: true,
       message: "",
@@ -45,12 +55,13 @@ async function update(req, res) {
 
 async function remove(req, res) {
   try {
-    let oldFile = await attendanceService.findById(req.params.id);
-    if (oldFile.employeePhoto) {
-      fs.unlink(`./public/${oldFile.employeePhoto}`, function (err) {
-        // File not deleted
-      });
-    }
+    await fileUploadService.removeMany({
+      uploadId: {
+        $in: req.params.id.split(","),
+      },
+      uploadType: "attendance",
+    });
+
     res.json({
       status: true,
       message: "",
@@ -65,4 +76,4 @@ async function remove(req, res) {
   }
 }
 
-module.exports = { find, findById, update, remove };
+module.exports = { find, findById, create, update, remove };
