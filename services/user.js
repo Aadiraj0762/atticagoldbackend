@@ -2,7 +2,7 @@ const User = require("../models/user");
 
 async function find(query = {}) {
   try {
-    return await User.find(query).exec();
+    return await User.find(query).populate("employee").exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +10,7 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await User.findById(id).exec();
+    return await User.findById(id).populate("employee").exec();
   } catch (err) {
     throw err;
   }

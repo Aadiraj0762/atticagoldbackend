@@ -4,7 +4,7 @@ const Salary = mongoose.model(
   "salaries",
   mongoose.Schema(
     {
-      employeeId: {
+      employee: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "employees",
         required: true,

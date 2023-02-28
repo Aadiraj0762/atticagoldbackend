@@ -4,12 +4,12 @@ const Leave = mongoose.model(
   "leaves",
   mongoose.Schema(
     {
-      employeeId: {
+      employee: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "employees",
         required: true,
       },
-      branchId: {
+      branch: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "branches",
         required: true,

@@ -4,7 +4,7 @@ const Release = mongoose.model(
   "releases",
   mongoose.Schema(
     {
-      customerId: {
+      customer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "customers",
         required: true,
@@ -25,7 +25,7 @@ const Release = mongoose.model(
         type: String,
         required: true,
       },
-      bankId: {
+      bank: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "customers.bank",
       },

@@ -4,7 +4,7 @@ const Attendance = mongoose.model(
   "attendances",
   mongoose.Schema(
     {
-      employeeId: {
+      employee: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "employees",
         required: true,

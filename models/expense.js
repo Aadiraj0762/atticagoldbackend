@@ -4,7 +4,7 @@ const Expense = mongoose.model(
   "expenses",
   mongoose.Schema(
     {
-      branchId: {
+      branch: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "branches",
         required: true,

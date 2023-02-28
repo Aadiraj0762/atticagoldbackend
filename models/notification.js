@@ -12,11 +12,11 @@ const Notification = mongoose.model(
         type: String,
         required: true,
       },
-      branchId: {
+      branch: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "branches",
       },
-      employeeId: {
+      employee: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "employees",
       },
