@@ -5,7 +5,8 @@ const Expense = mongoose.model(
   mongoose.Schema(
     {
       branchId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "branches",
         required: true,
       },
       amount: {

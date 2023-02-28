@@ -13,10 +13,12 @@ const Notification = mongoose.model(
         required: true,
       },
       branchId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "branches",
       },
       employeeId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "employees",
       },
       status: {
         type: String,

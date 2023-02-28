@@ -5,11 +5,13 @@ const Leave = mongoose.model(
   mongoose.Schema(
     {
       employeeId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "employees",
         required: true,
       },
       branchId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "branches",
         required: true,
       },
       leaveType: {

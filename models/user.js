@@ -14,7 +14,8 @@ const User = mongoose.model(
         required: true,
       },
       employeeId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "employees",
         unique: true,
       },
       userType: {

@@ -5,15 +5,18 @@ const Sales = mongoose.model(
   mongoose.Schema(
     {
       employeeId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "employees",
         required: true,
       },
       customerId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "customers",
         required: true,
       },
       branchId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "branches",
         required: true,
       },
       saleType: {
@@ -26,7 +29,8 @@ const Sales = mongoose.model(
       },
       releaseId: [
         {
-          type: String,
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "releases",
         },
       ],
       ornaments: [
@@ -95,7 +99,8 @@ const Sales = mongoose.model(
         type: String,
       },
       bankId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "customers.bank",
       },
       bankAmount: {
         type: String,

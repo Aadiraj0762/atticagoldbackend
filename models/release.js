@@ -5,7 +5,8 @@ const Release = mongoose.model(
   mongoose.Schema(
     {
       customerId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "customers",
         required: true,
       },
       weight: {
@@ -25,7 +26,8 @@ const Release = mongoose.model(
         required: true,
       },
       bankId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "customers.bank",
       },
       pledgedDate: {
         type: Date,
