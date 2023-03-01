@@ -28,10 +28,6 @@ const Employee = mongoose.model(
       alternatePhoneNumber: {
         type: String,
       },
-      profileImage: {
-        type: String,
-        required: true,
-      },
       designation: {
         type: String,
         required: true,
