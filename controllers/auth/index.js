@@ -13,8 +13,8 @@ function login(req, res, next) {
     }
 
     if (
-      user.userType.toLowerCase() != "admin" &&
-      user.employeeId !== req.body.employeeId
+      user?.userType?.toLowerCase() != "admin" &&
+      user?.employeeId !== req.body.employeeId
     ) {
       return res.status(400).json({
         status: false,
