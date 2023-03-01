@@ -23,6 +23,7 @@ const Notification = mongoose.model(
       status: {
         type: String,
         required: true,
+        default: "active",
       },
       dates: {
         type: String,

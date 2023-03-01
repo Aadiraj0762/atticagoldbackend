@@ -50,6 +50,7 @@ const Branch = mongoose.model(
       status: {
         type: String,
         required: true,
+        default: "active",
       },
     },
     { timestamps: true }

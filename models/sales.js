@@ -108,6 +108,7 @@ const Sales = mongoose.model(
       status: {
         type: String,
         required: true,
+        default: "pending",
       },
     },
     { timestamps: true }

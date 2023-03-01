@@ -44,6 +44,7 @@ const Salary = mongoose.model(
       status: {
         type: String,
         required: true,
+        default: "active",
       },
     },
     { timestamps: true }
