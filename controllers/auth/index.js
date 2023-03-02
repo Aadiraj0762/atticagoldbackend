@@ -4,7 +4,7 @@ const User = require("../../models/user");
 
 function login(req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
-    if (err) {
+    if (err || !user) {
       return res.status(400).json({
         status: false,
         message: info ? info.message : "Invalid username or password.",
@@ -13,9 +13,8 @@ function login(req, res, next) {
     }
 
     if (
-      !user ||
-      (user.userType?.toLowerCase() != "admin" &&
-        user.employeeId !== req.body.employeeId)
+      user.userType?.toLowerCase() != "admin" &&
+      !user.employee.equals(req.body.employeeId)
     ) {
       return res.status(400).json({
         status: false,
@@ -68,7 +67,8 @@ function getUserType(req, res, next) {
 }
 
 function getBranchUser(req, res, next) {
-  User.find({ username: req.body.username }, { employeeId: 1 })
+  User.find({ username: req.body.username }, { employee: 1 })
+    .populate("employee")
     .then(function (data) {
       return res.json({
         status: true,
