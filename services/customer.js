@@ -21,7 +21,7 @@ async function create(payload) {
     const latestSeq = await Customer.findOne({})
       .sort({ customerIdSeq: -1 })
       .exec();
-    payload.customerIdSeq = (latestSeq.customerIdSeq ?? 0) + 1;
+    payload.customerIdSeq = (latestSeq?.customerIdSeq ?? 0) + 1;
     let customer = new Customer(payload);
     return await customer.save();
   } catch (err) {
