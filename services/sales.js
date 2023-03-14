@@ -2,7 +2,12 @@ const Sales = require("../models/sales");
 
 async function find(query = {}) {
   try {
-    return await Sales.find(query).exec();
+    return await Sales.find(query)
+      .populate("branch")
+      .populate("customer")
+      .populate("release")
+      .populate("bank")
+      .exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +15,12 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Sales.findById(id).exec();
+    return await Sales.findById(id)
+      .populate("branch")
+      .populate("customer")
+      .populate("release")
+      .populate("bank")
+      .exec();
   } catch (err) {
     throw err;
   }
