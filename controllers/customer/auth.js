@@ -13,7 +13,7 @@ async function login(req, res) {
     });
   }
 
-  const otp = Math.floor(1000 + Math.random() * 9999);
+  const otp = String(Math.floor(1000 + Math.random() * 9000)).substring(0, 4);
 
   const token = jwt.sign(
     {
