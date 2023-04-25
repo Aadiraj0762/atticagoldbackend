@@ -39,6 +39,7 @@ adminRouter.post("/user/update/:id", user.update);
 adminRouter.post("/user/delete/:id", user.remove);
 
 adminRouter.get("/employee/get", employee.find);
+adminRouter.get("/employee/login-not-created", employee.getLoginNotCreatedEmployee);
 adminRouter.get("/employee/get/:id", employee.findById);
 adminRouter.post("/employee/create", employee.create);
 adminRouter.post("/employee/update/:id", employee.update);

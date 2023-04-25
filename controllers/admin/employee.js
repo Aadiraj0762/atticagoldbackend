@@ -1,4 +1,5 @@
 const employeeService = require("../../services/employee");
+const userService = require("../../services/user");
 const fileUploadService = require("../../services/fileupload");
 
 async function find(req, res) {
@@ -6,6 +7,20 @@ async function find(req, res) {
     status: true,
     message: "",
     data: await employeeService.find(),
+  });
+}
+
+async function getLoginNotCreatedEmployee(req, res) {
+  let employees = await userService.find();
+  let employeeIds = employees
+    .filter((e) => e?.employee?.employeeId)
+    .map((e) => e?.employee?.employeeId);
+  res.json({
+    status: true,
+    message: "",
+    data: await employeeService.find({
+      employeeId: { $nin: employeeIds },
+    }),
   });
 }
 
@@ -83,4 +98,11 @@ async function remove(req, res) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+module.exports = {
+  find,
+  getLoginNotCreatedEmployee,
+  findById,
+  create,
+  update,
+  remove,
+};
