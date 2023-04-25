@@ -100,7 +100,6 @@ const Sales = mongoose.model(
       },
       bank: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "customers.bank",
       },
       bankAmount: {
         type: String,

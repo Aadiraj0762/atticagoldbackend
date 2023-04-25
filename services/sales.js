@@ -6,7 +6,6 @@ async function find(query = {}) {
       .populate("branch")
       .populate("customer")
       .populate("release")
-      .populate("bank")
       .exec();
   } catch (err) {
     throw err;
@@ -19,7 +18,6 @@ async function findById(id) {
       .populate("branch")
       .populate("customer")
       .populate("release")
-      .populate("bank")
       .exec();
   } catch (err) {
     throw err;
