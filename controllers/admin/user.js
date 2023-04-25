@@ -32,11 +32,19 @@ async function create(req, res) {
       data: await userService.create(req.body),
     });
   } catch (err) {
-    res.json({
-      status: false,
-      message: err.errors ?? err.message,
-      data: {},
-    });
+    if (err.code === 11000) {
+      res.json({
+        status: false,
+        message: "Same User already created",
+        data: {},
+      });
+    } else {
+      res.json({
+        status: false,
+        message: err.errors ?? err.message,
+        data: {},
+      });
+    }
   }
 }
 
@@ -48,11 +56,19 @@ async function update(req, res) {
       data: await userService.update(req.params.id, req.body),
     });
   } catch (err) {
-    res.json({
-      status: false,
-      message: err.errors ?? err.message,
-      data: {},
-    });
+    if (err.code === 11000) {
+      res.json({
+        status: false,
+        message: "Same User already created",
+        data: {},
+      });
+    } else {
+      res.json({
+        status: false,
+        message: err.errors ?? err.message,
+        data: {},
+      });
+    }
   }
 }
 
