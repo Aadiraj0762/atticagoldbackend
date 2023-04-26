@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var adminRouter = express.Router();
 const passport = require("passport");
+const dashboard = require("../controllers/admin/dashboard");
 const goldRate = require("../controllers/admin/goldrate");
 const branch = require("../controllers/admin/branch");
 const user = require("../controllers/admin/user");
@@ -19,6 +20,8 @@ const multer = require("../config/multer");
 adminRouter.get("/", function (req, res, next) {
   res.send("Home Page");
 });
+
+adminRouter.get("/dashboard/get", dashboard.get);
 
 adminRouter.get("/goldrate/get", goldRate.find);
 adminRouter.get("/goldrate/get/:id", goldRate.findById);

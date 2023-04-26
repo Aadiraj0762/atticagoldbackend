@@ -16,6 +16,21 @@ async function findById(id) {
   }
 }
 
+async function count(query = {}) {
+  try {
+    if (query.createdAt) {
+      const createdAt = new Date(query.createdAt);
+      query.createdAt = {
+        $gte: createdAt,
+        $lt: new Date(createdAt.getTime() + 86400000),
+      };
+    }
+    return await Customer.count(query);
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function create(payload) {
   try {
     const latestSeq = await Customer.findOne({})
@@ -51,4 +66,4 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+module.exports = { find, findById, count, create, update, remove };
