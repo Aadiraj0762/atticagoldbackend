@@ -5,7 +5,7 @@ const GoldRate = mongoose.model(
   mongoose.Schema(
     {
       rate: {
-        type: String,
+        type: Number,
         required: true,
       },
       type: {

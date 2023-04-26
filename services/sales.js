@@ -39,6 +39,14 @@ async function count(query = {}) {
   }
 }
 
+async function aggregate(query = {}) {
+  try {
+    return await Sales.aggregate(query).exec();
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function create(payload) {
   try {
     let goldRate = new Sales(payload);
@@ -70,4 +78,4 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, count, create, update, remove };
+module.exports = { find, findById, count, aggregate, create, update, remove };

@@ -40,27 +40,27 @@ const Sales = mongoose.model(
             required: true,
           },
           quantity: {
-            type: String,
+            type: Number,
             required: true,
           },
           grossWeight: {
-            type: String,
+            type: Number,
             required: true,
           },
           stoneWeight: {
-            type: String,
+            type: Number,
             required: true,
           },
           netWeight: {
-            type: String,
+            type: Number,
             required: true,
           },
           purity: {
-            type: String,
+            type: Number,
             required: true,
           },
           netAmount: {
-            type: String,
+            type: Number,
             required: true,
           },
         }),
@@ -70,17 +70,17 @@ const Sales = mongoose.model(
         required: true,
       },
       goldRate: {
-        type: String,
+        type: Number,
       },
       silverRate: {
-        type: String,
+        type: Number,
       },
       netWeight: {
-        type: String,
+        type: Number,
         required: true,
       },
       netAmount: {
-        type: String,
+        type: Number,
         required: true,
       },
       paymentType: {
@@ -88,21 +88,21 @@ const Sales = mongoose.model(
         required: true,
       },
       margin: {
-        type: String,
+        type: Number,
         required: true,
       },
       payableAmount: {
-        type: String,
+        type: Number,
         required: true,
       },
       cashAmount: {
-        type: String,
+        type: Number,
       },
       bank: {
         type: mongoose.Schema.Types.ObjectId,
       },
       bankAmount: {
-        type: String,
+        type: Number,
       },
       status: {
         type: String,

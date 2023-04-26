@@ -10,15 +10,15 @@ const Release = mongoose.model(
         required: true,
       },
       weight: {
-        type: String,
+        type: Number,
         required: true,
       },
       pledgeAmount: {
-        type: String,
+        type: Number,
         required: true,
       },
       payableAmount: {
-        type: String,
+        type: Number,
         required: true,
       },
       paymentType: {

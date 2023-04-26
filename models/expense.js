@@ -10,7 +10,7 @@ const Expense = mongoose.model(
         required: true,
       },
       amount: {
-        type: String,
+        type: Number,
         required: true,
       },
       type: {

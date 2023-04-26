@@ -1,6 +1,7 @@
 const goldRateService = require("../../services/goldrate");
 const customerService = require("../../services/customer");
 const salesService = require("../../services/sales");
+const expenseService = require("../../services/expense");
 
 async function get(req, res) {
   const date = new Date().toISOString().replace(/T.*/, "");
@@ -9,6 +10,17 @@ async function get(req, res) {
     state: "Karnataka",
     type: "gold",
   });
+  const totalGrossWeight = await salesService.aggregate([
+    { $unwind: "$ornaments" },
+    { $group: { _id: null, total: { $sum: "$ornaments.grossWeight" } } },
+  ]);
+  const totalNetAmount = await salesService.aggregate([
+    { $unwind: "$ornaments" },
+    { $group: { _id: null, total: { $sum: "$ornaments.netAmount" } } },
+  ]);
+  const totalExpenses = await expenseService.aggregate([
+    { $group: { _id: null, total: { $sum: "$amount" } } },
+  ]);
 
   res.json({
     status: true,
@@ -29,9 +41,9 @@ async function get(req, res) {
         createdAt: date,
         saleType: "pledge",
       }),
-      totalGrossWeight: 10,
-      totalNetAmount: 10,
-      totalExpenses: 10,
+      totalGrossWeight: totalGrossWeight[0]?.total,
+      totalNetAmount: totalNetAmount[0]?.total,
+      totalExpenses: totalExpenses[0]?.total,
     },
   });
 }

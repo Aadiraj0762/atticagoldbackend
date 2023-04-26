@@ -16,6 +16,14 @@ async function findById(id) {
   }
 }
 
+async function aggregate(query = {}) {
+  try {
+    return await Expense.aggregate(query).exec();
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function create(payload) {
   try {
     let goldRate = new Expense(payload);
@@ -47,4 +55,4 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+module.exports = { find, findById, aggregate, create, update, remove };
