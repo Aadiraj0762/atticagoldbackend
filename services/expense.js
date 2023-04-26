@@ -2,7 +2,7 @@ const Expense = require("../models/expense");
 
 async function find(query = {}) {
   try {
-    return await Expense.find(query).exec();
+    return await Expense.find(query).populate("branch").exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +10,7 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Expense.findById(id).exec();
+    return await Expense.findById(id).populate("branch").exec();
   } catch (err) {
     throw err;
   }

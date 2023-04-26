@@ -2,7 +2,10 @@ const Leave = require("../models/leave");
 
 async function find(query = {}) {
   try {
-    return await Leave.find(query).exec();
+    return await Leave.find(query)
+      .populate("employee")
+      .populate("branch")
+      .exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +13,10 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Leave.findById(id).exec();
+    return await Leave.findById(id)
+      .populate("employee")
+      .populate("branch")
+      .exec();
   } catch (err) {
     throw err;
   }
