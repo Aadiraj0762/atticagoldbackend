@@ -2,6 +2,13 @@ const GoldRate = require("../models/goldrate");
 
 async function find(query = {}) {
   try {
+    if (query.date) {
+      const date = new Date(query.date);
+      query.date = {
+        $gte: date,
+        $lt: new Date(date.getTime() + 86400000),
+      };
+    }
     return await GoldRate.find(query).exec();
   } catch (err) {
     throw err;
@@ -18,6 +25,13 @@ async function findById(id) {
 
 async function findOne(query) {
   try {
+    if (query.date) {
+      const date = new Date(query.date);
+      query.date = {
+        $gte: date,
+        $lt: new Date(date.getTime() + 86400000),
+      };
+    }
     return await GoldRate.findOne(query).exec();
   } catch (err) {
     throw err;
