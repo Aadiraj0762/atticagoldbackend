@@ -10,11 +10,19 @@ async function find(req, res) {
 }
 
 async function findById(req, res) {
-  res.json({
-    status: true,
-    message: "",
-    data: await salesService.findById(req.params.id),
-  });
+  try {
+    res.json({
+      status: true,
+      message: "",
+      data: await salesService.findById(req.params.id),
+    });
+  } catch (err) {
+    res.json({
+      status: false,
+      message: err.errors ?? err.message,
+      data: {},
+    });
+  }
 }
 
 async function create(req, res) {
