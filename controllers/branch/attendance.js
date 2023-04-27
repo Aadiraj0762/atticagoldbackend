@@ -25,7 +25,7 @@ async function create(req, res) {
       message: "",
       data: {
         data: createdData,
-        fileUpload: { uploadId: createdData._id, uploadType: "attendance" },
+        fileUpload: { uploadId: createdData._id, uploadName: "attendance" },
       },
     });
   } catch (err) {
