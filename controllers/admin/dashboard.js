@@ -26,7 +26,7 @@ async function get(req, res) {
     status: true,
     message: "",
     data: {
-      todayGoldRate: goldRate.rate,
+      todayGoldRate: goldRate?.rate ?? 0,
       todayCustomers: await customerService.count({
         createdAt: date,
       }),
