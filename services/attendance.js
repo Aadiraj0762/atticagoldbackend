@@ -2,7 +2,35 @@ const Attendance = require("../models/attendance");
 
 async function find(query = {}) {
   try {
-    return await Attendance.find(query).exec();
+    return await Attendance.aggregate([
+      { $match: query },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "attendance",
+        },
+      },
+      {
+        $lookup: {
+          from: "employees",
+          localField: "employee",
+          foreignField: "_id",
+          as: "employee",
+        },
+      },
+      {
+        $set: {
+          attendance: { $arrayElemAt: ["$attendance", 0] },
+        },
+      },
+      {
+        $set: {
+          employee: { $arrayElemAt: ["$employee", 0] },
+        },
+      },
+    ]).exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +38,36 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Attendance.findById(id).exec();
+    return await Attendance.aggregate([
+      { $match: { _id: id } },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "attendance",
+        },
+      },
+      {
+        $lookup: {
+          from: "employees",
+          localField: "employee",
+          foreignField: "_id",
+          as: "employee",
+        },
+      },
+      {
+        $set: {
+          attendance: { $arrayElemAt: ["$attendance", 0] },
+        },
+      },
+      {
+        $set: {
+          employee: { $arrayElemAt: ["$employee", 0] },
+        },
+      },
+      { $limit: 1 },
+    ]).exec();
   } catch (err) {
     throw err;
   }

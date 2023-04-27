@@ -5,7 +5,7 @@ const Sales = mongoose.model(
   mongoose.Schema(
     {
       uploadId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
       },
       uploadName: {
