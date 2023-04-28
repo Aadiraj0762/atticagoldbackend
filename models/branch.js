@@ -51,7 +51,7 @@ const Branch = mongoose.model(
           required: true,
         },
       },
-      isHeadOffic: {
+      isHeadOffice: {
         type: String,
         required: true,
         default: "no",
