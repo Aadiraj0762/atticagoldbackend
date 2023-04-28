@@ -9,14 +9,16 @@ const Fund = mongoose.model(
         required: true,
       },
       from: {
-        type: String,
-        required: true,
-      },
-      type: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "branches",
         required: true,
       },
       to: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "branches",
+        required: true,
+      },
+      type: {
         type: String,
         required: true,
       },
