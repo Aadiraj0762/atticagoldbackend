@@ -2,7 +2,7 @@ const Fund = require("../models/fund");
 
 async function find(query = {}) {
   try {
-    return await Fund.find(query).exec();
+    return await Fund.find(query).populate("from").populate("to").exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +10,7 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Fund.findById(id).exec();
+    return await Fund.findById(id).populate("from").populate("to").exec();
   } catch (err) {
     throw err;
   }
