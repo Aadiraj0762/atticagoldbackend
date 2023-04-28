@@ -51,6 +51,11 @@ const Branch = mongoose.model(
           required: true,
         },
       },
+      isHeadOffic: {
+        type: String,
+        required: true,
+        default: "no",
+      },
       status: {
         type: String,
         required: true,
