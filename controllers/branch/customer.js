@@ -1,4 +1,5 @@
 const customerService = require("../../services/customer");
+const fileUploadService = require("../../services/fileupload");
 
 async function find(req, res) {
   res.json({
@@ -18,10 +19,14 @@ async function findById(req, res) {
 
 async function create(req, res) {
   try {
+    let createdData = await customerService.create(req.body);
     res.json({
       status: true,
       message: "",
-      data: await customerService.create(req.body),
+      data: {
+        data: createdData,
+        fileUpload: { uploadId: createdData._id, uploadName: "customer" },
+      },
     });
   } catch (err) {
     res.json({
@@ -50,6 +55,12 @@ async function update(req, res) {
 
 async function remove(req, res) {
   try {
+    await fileUploadService.removeMany({
+      uploadId: {
+        $in: req.params.id.split(","),
+      },
+      uploadName: "customer",
+    });
     res.json({
       status: true,
       message: "",
