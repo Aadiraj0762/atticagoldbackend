@@ -13,6 +13,10 @@ const Branch = mongoose.model(
         type: String,
         required: true,
       },
+      gstNumber: {
+        type: String,
+        required: true,
+      },
       address: {
         address: {
           type: String,
