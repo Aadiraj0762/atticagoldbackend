@@ -29,8 +29,23 @@ async function findByBranchId(id) {
           as: "employee",
         },
       },
-      { $project: { _id: 0, employee: 1 } },
       { $unwind: "$employee" },
+      {
+        $project: {
+          _id: "$employee._id",
+          employeeId: "$employee.employeeId",
+          name: "$employee.name",
+          gender: "$employee.gender",
+          dob: "$employee.dob",
+          phoneNumber: "$employee.phoneNumber",
+          alternatePhoneNumber: "$employee.alternatePhoneNumber",
+          designation: "$employee.designation",
+          status: "$employee.status",
+          address: "$employee.address",
+          createdAt: "$employee.createdAt",
+          updatedAt: "$employee.updatedAt",
+        },
+      },
     ]).exec();
   } catch (err) {
     throw err;
