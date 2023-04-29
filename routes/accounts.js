@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var accountsRouter = express.Router();
 const passport = require("passport");
+const dashboard = require("../controllers/admin/dashboard");
 const goldRate = require("../controllers/accounts/goldrate");
 const branch = require("../controllers/accounts/branch");
 const fund = require("../controllers/accounts/fund.js");
@@ -13,6 +14,8 @@ const { isAccounts } = require("../middlewares/authorization");
 accountsRouter.get("/", function (req, res, next) {
   res.send("Home Page");
 });
+
+accountsRouter.get("/dashboard/get", dashboard.get);
 
 accountsRouter.get("/goldrate/get", goldRate.find);
 accountsRouter.get("/goldrate/get/:id", goldRate.findById);
