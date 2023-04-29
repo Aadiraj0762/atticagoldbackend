@@ -13,7 +13,7 @@ function login(req, res, next) {
     }
 
     if (
-      user.userType?.toLowerCase() != "admin" &&
+      user.userType?.toLowerCase() === "branch" &&
       !user.employee.equals(req.body.employeeId)
     ) {
       return res.status(400).json({

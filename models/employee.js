@@ -67,6 +67,14 @@ const Employee = mongoose.model(
           { timestamps: true }
         ),
       ],
+      shiftStartTime: {
+        type: String,
+        required: true,
+      },
+      shiftEndTime: {
+        type: String,
+        required: true,
+      },
       status: {
         type: String,
         required: true,

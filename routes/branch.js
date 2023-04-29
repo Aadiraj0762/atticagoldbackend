@@ -72,6 +72,7 @@ branchRouter.post("/customer-bank/delete/:id", customerBank.remove);
 
 branchRouter.get("/employee/get", employee.find);
 branchRouter.get("/employee/get/:id", employee.findById);
+branchRouter.get("/employee/get-branch-employee/:id", employee.findByBranchId);
 branchRouter.post("/employee/create", employee.create);
 branchRouter.post("/employee/update/:id", employee.update);
 branchRouter.post("/employee/delete/:id", employee.remove);

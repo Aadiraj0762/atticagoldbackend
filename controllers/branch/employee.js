@@ -16,6 +16,14 @@ async function findById(req, res) {
   });
 }
 
+async function findByBranchId(req, res) {
+  res.json({
+    status: true,
+    message: "",
+    data: await employeeService.findByBranchId(req.params.id),
+  });
+}
+
 async function create(req, res) {
   try {
     res.json({
@@ -64,4 +72,4 @@ async function remove(req, res) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+module.exports = { find, findById, findByBranchId, create, update, remove };

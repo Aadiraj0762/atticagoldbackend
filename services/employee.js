@@ -1,4 +1,5 @@
 const Employee = require("../models/employee");
+const User = require("../models/user");
 
 async function find(query = {}) {
   try {
@@ -11,6 +12,26 @@ async function find(query = {}) {
 async function findById(id) {
   try {
     return await Employee.findById(id).exec();
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function findByBranchId(id) {
+  try {
+    return await User.aggregate([
+      { $match: { username: id } },
+      {
+        $lookup: {
+          from: "employees",
+          localField: "employee",
+          foreignField: "_id",
+          as: "employee",
+        },
+      },
+      { $project: { _id: 0, employee: 1 } },
+      { $unwind: "$employee" },
+    ]).exec();
   } catch (err) {
     throw err;
   }
@@ -47,4 +68,4 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+module.exports = { find, findById, findByBranchId, create, update, remove };
