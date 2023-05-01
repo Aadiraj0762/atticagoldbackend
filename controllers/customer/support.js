@@ -17,6 +17,7 @@ async function findById(req, res) {
 }
 
 async function create(req, res) {
+  req.body.customer = req.user._id;
   try {
     res.json({
       status: true,
