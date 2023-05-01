@@ -4,7 +4,7 @@ async function find(req, res) {
   res.json({
     status: true,
     message: "",
-    data: await supportService.find(),
+    data: await supportService.find({ customer: req.user._id }),
   });
 }
 
