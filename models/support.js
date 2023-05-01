@@ -14,21 +14,6 @@ const Support = mongoose.Schema(
       type: String,
       required: true,
     },
-    reply: [
-      mongoose.Schema(
-        {
-          from: {
-            type: String,
-            required: true,
-          },
-          description: {
-            type: String,
-            required: true,
-          },
-        },
-        { timestamps: true }
-      ),
-    ],
     status: {
       type: String,
       required: true,
