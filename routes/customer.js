@@ -39,6 +39,7 @@ customerRouter.post("/support/delete/:id", support.remove);
 
 customerRouter.get("/support-reply/get", supportReply.find);
 customerRouter.get("/support-reply/get/:id", supportReply.findById);
+customerRouter.get("/support-reply/get-by-support-id/:id", supportReply.findBySupportId);
 customerRouter.post("/support-reply/create", supportReply.create);
 customerRouter.post("/support-reply/update/:id", supportReply.update);
 customerRouter.post("/support-reply/delete/:id", supportReply.remove);
