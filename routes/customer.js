@@ -10,6 +10,8 @@ const profile = require("../controllers/customer/profile");
 const goldRate = require("../controllers/customer/goldrate");
 const branch = require("../controllers/customer/branch");
 const sales = require("../controllers/customer/sales");
+const support = require("../controllers/customer/support");
+const supportReply = require("../controllers/customer/support-reply");
 
 router.post("/login", login);
 router.post("/verify-otp", verifyOtp);
@@ -28,6 +30,18 @@ customerRouter.post("/sales/delete/:id", sales.remove);
 
 customerRouter.get("/profile", profile.get);
 customerRouter.post("/profile", profile.update);
+
+customerRouter.get("/support/get", support.find);
+customerRouter.get("/support/get/:id", support.findById);
+customerRouter.post("/support/create", support.create);
+customerRouter.post("/support/update/:id", support.update);
+customerRouter.post("/support/delete/:id", support.remove);
+
+customerRouter.get("/support-reply/get", supportReply.find);
+customerRouter.get("/support-reply/get/:id", supportReply.findById);
+customerRouter.post("/support-reply/create", supportReply.create);
+customerRouter.post("/support-reply/update/:id", supportReply.update);
+customerRouter.post("/support-reply/delete/:id", supportReply.remove);
 
 router.use(verifyToken, customerRouter);
 
