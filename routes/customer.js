@@ -14,7 +14,7 @@ const sales = require("../controllers/customer/sales");
 router.post("/login", login);
 router.post("/verify-otp", verifyOtp);
 
-customerRouter.post("/goldrate", goldRate.findOne);
+customerRouter.post("/goldrate", goldRate.latest);
 
 customerRouter.get("/branch/get", branch.find);
 customerRouter.get("/branch/get/:id", branch.findById);

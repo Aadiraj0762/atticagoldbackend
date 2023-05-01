@@ -38,6 +38,14 @@ async function findOne(query) {
   }
 }
 
+async function latest(query) {
+  try {
+    return await GoldRate.findOne(query).sort({ createdAt: -1 }).exec();
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function create(payload) {
   try {
     let goldRate = new GoldRate(payload);
@@ -69,4 +77,12 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, findOne, create, update, remove };
+module.exports = {
+  find,
+  findById,
+  findOne,
+  latest,
+  create,
+  update,
+  remove,
+};

@@ -1,11 +1,11 @@
 const goldRateService = require("../../services/goldrate");
 
-async function findOne(req, res) {
+async function latest(req, res) {
   try {
     res.json({
       status: true,
       message: "",
-      data: await goldRateService.findOne(req.body),
+      data: await goldRateService.latest(req.body),
     });
   } catch (err) {
     res.json({
@@ -16,4 +16,4 @@ async function findOne(req, res) {
   }
 }
 
-module.exports = { findOne };
+module.exports = { latest };
