@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var hrRouter = express.Router();
 const passport = require("passport");
+const dashboard = require("../controllers/hr/dashboard");
 const branch = require("../controllers/hr/branch");
 const user = require("../controllers/hr/user");
 const employee = require("../controllers/hr/employee");
@@ -15,6 +16,8 @@ const multer = require("../config/multer");
 hrRouter.get("/", function (req, res, next) {
   res.send("Home Page");
 });
+
+hrRouter.get("/dashboard/get", dashboard.get);
 
 hrRouter.get("/branch/get", branch.find);
 hrRouter.get("/branch/get/:id", branch.findById);

@@ -1,5 +1,5 @@
 function isAdmin(req, res, next) {
-  if (req.user.userType.toLowerCase() === "admin") {
+  if (req.user?.userType?.toLowerCase() === "admin") {
     return next();
   }
 
@@ -11,7 +11,7 @@ function isAdmin(req, res, next) {
 }
 
 function isHr(req, res, next) {
-  if (req.user.userType.toLowerCase() === "hr") {
+  if (req.user?.userType?.toLowerCase() === "hr") {
     return next();
   }
 
@@ -23,7 +23,7 @@ function isHr(req, res, next) {
 }
 
 function isAccounts(req, res, next) {
-  if (req.user.userType.toLowerCase() === "accounts") {
+  if (req.user?.userType?.toLowerCase() === "accounts") {
     return next();
   }
 

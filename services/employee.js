@@ -52,6 +52,29 @@ async function findByBranchId(id) {
   }
 }
 
+async function aggregate(query = {}) {
+  try {
+    return await Employee.aggregate(query).exec();
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function count(query = {}) {
+  try {
+    if (query.createdAt) {
+      const createdAt = new Date(query.createdAt);
+      query.createdAt = {
+        $gte: createdAt,
+        $lt: new Date(createdAt.getTime() + 86400000),
+      };
+    }
+    return await Employee.count(query);
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function create(payload) {
   try {
     let goldRate = new Employee(payload);
@@ -83,4 +106,13 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, findByBranchId, create, update, remove };
+module.exports = {
+  find,
+  findById,
+  findByBranchId,
+  aggregate,
+  count,
+  create,
+  update,
+  remove,
+};
