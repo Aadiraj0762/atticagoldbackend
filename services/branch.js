@@ -2,7 +2,22 @@ const Branch = require("../models/branch");
 
 async function find(query = {}) {
   try {
-    return await Branch.find(query).exec();
+    return await Branch.aggregate([
+      { $match: query },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "image",
+        },
+      },
+      {
+        $set: {
+          attendance: { $arrayElemAt: ["$attendance", 0] },
+        },
+      },
+    ]).exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +25,23 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Branch.findById(id).exec();
+    return await Branch.aggregate([
+      { $match: { _id: id } },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "image",
+        },
+      },
+      {
+        $set: {
+          attendance: { $arrayElemAt: ["$attendance", 0] },
+        },
+      },
+      { $limit: 1 },
+    ]).exec();
   } catch (err) {
     throw err;
   }
@@ -18,7 +49,23 @@ async function findById(id) {
 
 async function findOne(query) {
   try {
-    return await Branch.findOne(query).exec();
+    return await Branch.aggregate([
+      { $match: query },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "image",
+        },
+      },
+      {
+        $set: {
+          attendance: { $arrayElemAt: ["$attendance", 0] },
+        },
+      },
+      { $limit: 1 },
+    ]).exec();
   } catch (err) {
     throw err;
   }
