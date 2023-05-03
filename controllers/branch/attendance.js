@@ -59,7 +59,7 @@ async function remove(req, res) {
       uploadId: {
         $in: req.params.id.split(","),
       },
-      uploadType: "attendance",
+      uploadName: "attendance",
     });
 
     res.json({
