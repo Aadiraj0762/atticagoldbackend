@@ -1,4 +1,5 @@
 const Attendance = require("../models/attendance");
+const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
@@ -39,7 +40,7 @@ async function find(query = {}) {
 async function findById(id) {
   try {
     return await Attendance.aggregate([
-      { $match: { _id: id } },
+      { $match: { _id: new mongoose.Types.ObjectId(id) } },
       {
         $lookup: {
           from: "fileuploads",

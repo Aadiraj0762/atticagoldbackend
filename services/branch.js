@@ -1,4 +1,5 @@
 const Branch = require("../models/branch");
+const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
@@ -14,7 +15,7 @@ async function find(query = {}) {
       },
       {
         $set: {
-          attendance: { $arrayElemAt: ["$attendance", 0] },
+          image: { $arrayElemAt: ["$image", 0] },
         },
       },
     ]).exec();
@@ -25,8 +26,8 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Branch.aggregate([
-      { $match: { _id: id } },
+    const data = await Branch.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(id) } },
       {
         $lookup: {
           from: "fileuploads",
@@ -37,11 +38,12 @@ async function findById(id) {
       },
       {
         $set: {
-          attendance: { $arrayElemAt: ["$attendance", 0] },
+          image: { $arrayElemAt: ["$image", 0] },
         },
       },
       { $limit: 1 },
     ]).exec();
+    return data[0] ?? {};
   } catch (err) {
     throw err;
   }
@@ -61,7 +63,7 @@ async function findOne(query) {
       },
       {
         $set: {
-          attendance: { $arrayElemAt: ["$attendance", 0] },
+          image: { $arrayElemAt: ["$image", 0] },
         },
       },
       { $limit: 1 },
