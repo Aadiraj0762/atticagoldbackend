@@ -1,4 +1,7 @@
 const supportService = require("../../services/support");
+const supportReplyService = require("../../services/support-reply");
+const fileUploadService = require("../../services/fileupload");
+const mongoose = require("mongoose");
 
 async function find(req, res) {
   res.json({
@@ -51,6 +54,23 @@ async function update(req, res) {
 
 async function remove(req, res) {
   try {
+    const reply = await supportReplyService.find({
+      support: {
+        $in: req.params.id
+          .split(",")
+          .map((id) => new mongoose.Types.ObjectId(id)),
+      },
+    });
+
+    await fileUploadService.removeMany({
+      uploadId: {
+        $in: reply.map((e) => e._id),
+      },
+      uploadName: "support_reply",
+    });
+
+    await supportReplyService.remove(reply.map((e) => e._id).join(","));
+
     res.json({
       status: true,
       message: "",

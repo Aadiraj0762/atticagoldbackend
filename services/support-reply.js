@@ -1,8 +1,19 @@
 const SupportReply = require("../models/support-reply");
+const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
-    return await SupportReply.find(query).exec();
+    return await SupportReply.aggregate([
+      { $match: query },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "attachments",
+        },
+      },
+    ]).exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +21,19 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await SupportReply.findById(id).exec();
+    const data = await SupportReply.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(id) } },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "attachments",
+        },
+      },
+      { $limit: 1 },
+    ]).exec();
+    return data[0] ?? {};
   } catch (err) {
     throw err;
   }

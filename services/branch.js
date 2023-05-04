@@ -51,7 +51,7 @@ async function findById(id) {
 
 async function findOne(query) {
   try {
-    return await Branch.aggregate([
+    const data = await Branch.aggregate([
       { $match: query },
       {
         $lookup: {
@@ -62,12 +62,13 @@ async function findOne(query) {
         },
       },
       {
-        $set: {
-          image: { $arrayElemAt: ["$image", 0] },
+        $addFields: {
+          image: { $first: "$image" },
         },
       },
       { $limit: 1 },
     ]).exec();
+    return data[0] ?? {};
   } catch (err) {
     throw err;
   }
