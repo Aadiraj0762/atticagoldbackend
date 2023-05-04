@@ -22,13 +22,9 @@ async function find(query = {}) {
         },
       },
       {
-        $set: {
-          attendance: { $arrayElemAt: ["$attendance", 0] },
-        },
-      },
-      {
-        $set: {
-          employee: { $arrayElemAt: ["$employee", 0] },
+        $addFields: {
+          attendance: { $first: "$attendance" },
+          employee: { $first: "$employee" },
         },
       },
     ]).exec();
@@ -58,13 +54,9 @@ async function findById(id) {
         },
       },
       {
-        $set: {
-          attendance: { $arrayElemAt: ["$attendance", 0] },
-        },
-      },
-      {
-        $set: {
-          employee: { $arrayElemAt: ["$employee", 0] },
+        $addFields: {
+          attendance: { $first: "$attendance" },
+          employee: { $first: "$employee" },
         },
       },
       { $limit: 1 },

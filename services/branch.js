@@ -14,8 +14,8 @@ async function find(query = {}) {
         },
       },
       {
-        $set: {
-          image: { $arrayElemAt: ["$image", 0] },
+        $addFields: {
+          image: { $first: "$image" },
         },
       },
     ]).exec();
@@ -37,8 +37,8 @@ async function findById(id) {
         },
       },
       {
-        $set: {
-          image: { $arrayElemAt: ["$image", 0] },
+        $addFields: {
+          image: { $first: "$image" },
         },
       },
       { $limit: 1 },
