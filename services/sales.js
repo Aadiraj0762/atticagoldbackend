@@ -49,6 +49,7 @@ async function aggregate(query = {}) {
 
 async function create(payload) {
   try {
+    payload.billId = Math.floor(100000 + Math.random() * 900000);
     let goldRate = new Sales(payload);
     return await goldRate.save();
   } catch (err) {
