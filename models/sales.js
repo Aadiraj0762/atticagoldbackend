@@ -4,6 +4,11 @@ const Sales = mongoose.model(
   "sales",
   mongoose.Schema(
     {
+      billId: {
+        type: String,
+        unique: true,
+        required: true,
+      },
       employee: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "employees",
