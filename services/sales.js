@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
-    if (query.createdAt["$gte"]) {
+    if (query.createdAt && "$gte" in query.createdAt) {
       query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
     }
-    if (query.createdAt["$lte"]) {
+    if (query.createdAt && "$lte" in query.createdAt) {
       query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
     }
     return await Sales.aggregate([
@@ -49,6 +49,14 @@ async function find(query = {}) {
           localField: "release",
           foreignField: "_id",
           as: "release",
+        },
+      },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "proof",
         },
       },
       {
@@ -107,6 +115,14 @@ async function findById(id) {
         },
       },
       {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "proof",
+        },
+      },
+      {
         $addFields: {
           branch: { $first: "$branch" },
           customer: { $first: "$customer" },
@@ -147,8 +163,8 @@ async function aggregate(query = {}) {
 async function create(payload) {
   try {
     payload.billId = Math.floor(100000 + Math.random() * 900000);
-    let goldRate = new Sales(payload);
-    return await goldRate.save();
+    let sale = new Sales(payload);
+    return await sale.save();
   } catch (err) {
     throw err;
   }
