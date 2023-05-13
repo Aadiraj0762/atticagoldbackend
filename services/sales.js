@@ -1,12 +1,64 @@
 const Sales = require("../models/sales");
+const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
-    return await Sales.find(query)
-      .populate("branch")
-      .populate("customer")
-      .populate("release")
-      .exec();
+    if (query.createdAt["$gte"]) {
+      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+    }
+    if (query.createdAt["$lte"]) {
+      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+    }
+    return await Sales.aggregate([
+      {
+        $match: query,
+      },
+      {
+        $lookup: {
+          from: "customers",
+          localField: "customer",
+          foreignField: "_id",
+          as: "bank",
+          let: { bankId: "$bank" },
+          pipeline: [
+            { $unwind: "$bank" },
+            { $match: { $expr: { $eq: ["$bank._id", "$$bankId"] } } },
+            { $replaceRoot: { newRoot: "$bank" } },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: "branches",
+          localField: "branch",
+          foreignField: "_id",
+          as: "branch",
+        },
+      },
+      {
+        $lookup: {
+          from: "customers",
+          localField: "customer",
+          foreignField: "_id",
+          as: "customer",
+        },
+      },
+      {
+        $lookup: {
+          from: "releases",
+          localField: "release",
+          foreignField: "_id",
+          as: "release",
+        },
+      },
+      {
+        $addFields: {
+          branch: { $first: "$branch" },
+          customer: { $first: "$customer" },
+          bank: { $first: "$bank" },
+        },
+      },
+    ]).exec();
   } catch (err) {
     throw err;
   }
@@ -14,11 +66,56 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Sales.findById(id)
-      .populate("branch")
-      .populate("customer")
-      .populate("release")
-      .exec();
+    const sales = await Sales.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(id) } },
+      {
+        $lookup: {
+          from: "customers",
+          localField: "customer",
+          foreignField: "_id",
+          as: "bank",
+          let: { bankId: "$bank" },
+          pipeline: [
+            { $unwind: "$bank" },
+            { $match: { $expr: { $eq: ["$bank._id", "$$bankId"] } } },
+            { $replaceRoot: { newRoot: "$bank" } },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: "branches",
+          localField: "branch",
+          foreignField: "_id",
+          as: "branch",
+        },
+      },
+      {
+        $lookup: {
+          from: "customers",
+          localField: "customer",
+          foreignField: "_id",
+          as: "customer",
+        },
+      },
+      {
+        $lookup: {
+          from: "releases",
+          localField: "release",
+          foreignField: "_id",
+          as: "release",
+        },
+      },
+      {
+        $addFields: {
+          branch: { $first: "$branch" },
+          customer: { $first: "$customer" },
+          bank: { $first: "$bank" },
+        },
+      },
+      { $limit: 1 },
+    ]).exec();
+    return sales[0];
   } catch (err) {
     throw err;
   }

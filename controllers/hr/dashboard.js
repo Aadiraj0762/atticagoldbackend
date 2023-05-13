@@ -1,5 +1,4 @@
 const employeeService = require("../../services/employee");
-const attendanceService = require("../../services/attendance");
 
 async function get(req, res) {
   const date = new Date().toISOString().slice(0, 10);
