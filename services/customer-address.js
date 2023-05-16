@@ -19,11 +19,6 @@ async function create(payload) {
       landmark: payload.landmark,
       residential: payload.residential,
       label: payload.label,
-      addressProof: {
-        documentType: payload.documentType,
-        documentNo: payload.documentNo,
-        documentFile: payload.documentFile,
-      },
     };
     return await Customer.findByIdAndUpdate(
       payload.customerId,

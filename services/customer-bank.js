@@ -22,10 +22,10 @@ async function create(payload) {
   }
 }
 
-async function remove(customerId, id) {
+async function remove(customer, id) {
   try {
     return await Customer.findByIdAndUpdate(
-      customerId,
+      customer,
       { $pull: { bank: { _id: id } } },
       {
         returnDocument: "after",
