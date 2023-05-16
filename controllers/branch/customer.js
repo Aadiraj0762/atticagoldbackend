@@ -5,7 +5,7 @@ async function find(req, res) {
   res.json({
     status: true,
     message: "",
-    data: await customerService.find(),
+    data: await customerService.find(req.body ?? {}),
   });
 }
 

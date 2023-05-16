@@ -44,6 +44,7 @@ branchRouter.post("/fund/update/:id", fund.update);
 branchRouter.post("/fund/delete/:id", fund.remove);
 
 branchRouter.get("/sales/get", sales.find);
+branchRouter.post("/sales/get", sales.find);
 branchRouter.get("/sales/get/:id", sales.findById);
 branchRouter.post("/sales/create", sales.create);
 branchRouter.post("/sales/update/:id", sales.update);
@@ -57,6 +58,7 @@ branchRouter.post("/release/update/:id", release.update);
 branchRouter.post("/release/delete/:id", release.remove);
 
 branchRouter.get("/customer/get", customer.find);
+branchRouter.post("/customer/get", customer.find);
 branchRouter.get("/customer/get/:id", customer.findById);
 branchRouter.post("/customer/create", customer.create);
 branchRouter.post("/customer/update/:id", customer.update);

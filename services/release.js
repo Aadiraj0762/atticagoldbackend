@@ -1,7 +1,11 @@
 const Release = require("../models/release");
+const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
+    if (query.customer) {
+      query.customer = new mongoose.Types.ObjectId(query.customer);
+    }
     return await Release.find(query).exec();
   } catch (err) {
     throw err;

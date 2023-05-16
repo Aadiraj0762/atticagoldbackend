@@ -9,6 +9,9 @@ async function find(query = {}) {
     if (query.createdAt && "$lte" in query.createdAt) {
       query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
     }
+    if (query.branch) {
+      query.branch = new mongoose.Types.ObjectId(query.branch);
+    }
     return await Sales.aggregate([
       {
         $match: query,
