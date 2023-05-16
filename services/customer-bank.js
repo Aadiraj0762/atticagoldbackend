@@ -10,9 +10,16 @@ async function findById(id) {
 
 async function create(payload) {
   try {
+    const data = {
+      accountNo: payload.accountNo,
+      accountHolderName: payload.accountHolderName,
+      ifscCode: payload.ifscCode,
+      bankName: payload.bankName,
+      branch: payload.branch,
+    };
     return await Customer.findByIdAndUpdate(
       payload.customerId,
-      { $push: { bank: payload } },
+      { $push: { bank: data } },
       {
         returnDocument: "after",
       }
@@ -22,10 +29,10 @@ async function create(payload) {
   }
 }
 
-async function remove(customer, id) {
+async function remove(customerId, id) {
   try {
     return await Customer.findByIdAndUpdate(
-      customer,
+      customerId,
       { $pull: { bank: { _id: id } } },
       {
         returnDocument: "after",
