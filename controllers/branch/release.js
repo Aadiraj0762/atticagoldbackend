@@ -1,4 +1,5 @@
 const release = require("../../services/release");
+const fileUploadService = require("../../services/fileupload");
 
 async function find(req, res) {
   res.json({
@@ -18,10 +19,14 @@ async function findById(req, res) {
 
 async function create(req, res) {
   try {
+    let createdData = await release.create(req.body);
     res.json({
       status: true,
       message: "",
-      data: await release.create(req.body),
+      data: {
+        data: createdData,
+        fileUpload: { uploadId: createdData._id, uploadName: "release" },
+      },
     });
   } catch (err) {
     res.json({
@@ -50,6 +55,12 @@ async function update(req, res) {
 
 async function remove(req, res) {
   try {
+    await fileUploadService.removeMany({
+      uploadId: {
+        $in: req.params.id.split(","),
+      },
+      uploadName: "release",
+    });
     res.json({
       status: true,
       message: "",
