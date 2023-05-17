@@ -28,7 +28,7 @@ const Sales = mongoose.model(
         type: String,
         required: true,
       },
-      ornamentType: {
+      purchaseType: {
         type: String,
         required: true,
       },
