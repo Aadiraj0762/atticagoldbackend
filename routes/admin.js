@@ -13,6 +13,8 @@ const profile = require("../controllers/admin/profile");
 const leave = require("../controllers/admin/leave");
 const attendance = require("../controllers/admin/attendance");
 const sales = require("../controllers/admin/sales");
+const customer = require("../controllers/admin/customer");
+const release = require("../controllers/admin/release");
 const fileUpload = require("../controllers/admin/fileupload");
 const { isAdmin } = require("../middlewares/authorization");
 const multer = require("../config/multer");
@@ -73,6 +75,20 @@ adminRouter.get("/leave/get", leave.find);
 adminRouter.get("/leave/get/:id", leave.findById);
 adminRouter.post("/leave/update/:id", leave.update);
 adminRouter.post("/leave/delete/:id", leave.remove);
+
+adminRouter.get("/release/get", release.find);
+adminRouter.post("/release/get", release.find);
+adminRouter.get("/release/get/:id", release.findById);
+adminRouter.post("/release/create", release.create);
+adminRouter.post("/release/update/:id", release.update);
+adminRouter.post("/release/delete/:id", release.remove);
+
+adminRouter.get("/customer/get", customer.find);
+adminRouter.post("/customer/get", customer.find);
+adminRouter.get("/customer/get/:id", customer.findById);
+adminRouter.post("/customer/create", customer.create);
+adminRouter.post("/customer/update/:id", customer.update);
+adminRouter.post("/customer/delete/:id", customer.remove);
 
 adminRouter.get("/file-upload/get", fileUpload.find);
 adminRouter.post("/file-upload/get", fileUpload.find);
