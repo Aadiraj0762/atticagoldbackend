@@ -43,6 +43,21 @@ async function find(query = {}) {
           from: "customers",
           localField: "customer",
           foreignField: "_id",
+          pipeline: [
+            {
+              $lookup: {
+                from: "fileuploads",
+                localField: "_id",
+                foreignField: "uploadId",
+                as: "profileImage",
+              },
+            },
+            {
+              $addFields: {
+                profileImage: { $first: "$profileImage" },
+              },
+            },
+          ],
           as: "customer",
         },
       },
@@ -106,6 +121,21 @@ async function findById(id) {
           from: "customers",
           localField: "customer",
           foreignField: "_id",
+          pipeline: [
+            {
+              $lookup: {
+                from: "fileuploads",
+                localField: "_id",
+                foreignField: "uploadId",
+                as: "profileImage",
+              },
+            },
+            {
+              $addFields: {
+                profileImage: { $first: "$profileImage" },
+              },
+            },
+          ],
           as: "customer",
         },
       },

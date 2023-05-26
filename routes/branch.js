@@ -38,6 +38,7 @@ branchRouter.post("/expense/update/:id", expense.update);
 branchRouter.post("/expense/delete/:id", expense.remove);
 
 branchRouter.get("/fund/get", fund.find);
+branchRouter.post("/fund/find", fund.find);
 branchRouter.get("/fund/get/:id", fund.findById);
 branchRouter.post("/fund/create", fund.create);
 branchRouter.post("/fund/update/:id", fund.update);

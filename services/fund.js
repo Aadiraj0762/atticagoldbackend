@@ -1,7 +1,15 @@
+const mongoose = require("mongoose");
 const Fund = require("../models/fund");
 
 async function find(query = {}) {
   try {
+    if (query.branch) {
+      query.$or = [
+        { from: mongoose.Types.ObjectId(query.branch) },
+        { to: mongoose.Types.ObjectId(query.branch) },
+      ];
+      delete query.branch;
+    }
     return await Fund.find(query).populate("from").populate("to").exec();
   } catch (err) {
     throw err;

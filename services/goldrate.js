@@ -9,6 +9,9 @@ async function find(query = {}) {
         $lt: new Date(date.getTime() + 86400000),
       };
     }
+    if (query.state) {
+      query.state = { $regex: new RegExp(`^${query.state}$`, "i") };
+    }
     return await GoldRate.find(query).exec();
   } catch (err) {
     throw err;
@@ -31,6 +34,9 @@ async function findOne(query) {
         $gte: date,
         $lt: new Date(date.getTime() + 86400000),
       };
+    }
+    if (query.state) {
+      query.state = { $regex: new RegExp(`^${query.state}$`, "i") };
     }
     return await GoldRate.findOne(query).exec();
   } catch (err) {

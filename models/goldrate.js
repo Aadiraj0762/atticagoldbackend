@@ -19,7 +19,6 @@ const GoldRate = mongoose.model(
       state: {
         type: String,
         required: true,
-        default: "active",
       },
     },
     { timestamps: true }

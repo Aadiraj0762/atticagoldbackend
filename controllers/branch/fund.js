@@ -1,11 +1,19 @@
 const fundService = require("../../services/fund");
 
 async function find(req, res) {
-  res.json({
-    status: true,
-    message: "",
-    data: await fundService.find(),
-  });
+  try {
+    res.json({
+      status: true,
+      message: "",
+      data: await fundService.find(req.body),
+    });
+  } catch (err) {
+    res.json({
+      status: false,
+      message: err.errors ?? err.message,
+      data: {},
+    });
+  }
 }
 
 async function findById(req, res) {

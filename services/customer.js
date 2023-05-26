@@ -1,8 +1,30 @@
 const Customer = require("../models/customer");
+const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
-    return await Customer.find(query).exec();
+    if (query.createdAt && "$gte" in query.createdAt) {
+      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+    }
+    if (query.createdAt && "$lte" in query.createdAt) {
+      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+    }
+    return await Customer.aggregate([
+      { $match: query },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "profileImage",
+        },
+      },
+      {
+        $addFields: {
+          profileImage: { $first: "$profileImage" },
+        },
+      },
+    ]).exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +32,23 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Customer.findById(id).exec();
+    return await Customer.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(id) } },
+      {
+        $lookup: {
+          from: "fileuploads",
+          localField: "_id",
+          foreignField: "uploadId",
+          as: "profileImage",
+        },
+      },
+      {
+        $addFields: {
+          profileImage: { $first: "$profileImage" },
+        },
+      },
+      { $limit: 1 },
+    ]).exec();
   } catch (err) {
     throw err;
   }
