@@ -1,6 +1,14 @@
 const Branch = require("../models/branch");
 const mongoose = require("mongoose");
 
+async function getState(query = {}) {
+  try {
+    return await Branch.distinct("address.state").exec();
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function find(query = {}) {
   try {
     return await Branch.aggregate([
@@ -105,4 +113,4 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, findOne, create, update, remove };
+module.exports = { find, findById, findOne, getState, create, update, remove };

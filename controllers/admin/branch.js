@@ -1,6 +1,14 @@
 const branchService = require("../../services/branch");
 const fileUploadService = require("../../services/fileupload");
 
+async function getState(req, res) {
+  res.json({
+    status: true,
+    message: "",
+    data: await branchService.getState(),
+  });
+}
+
 async function find(req, res) {
   res.json({
     status: true,
@@ -84,4 +92,4 @@ async function remove(req, res) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+module.exports = { find, findById, getState, create, update, remove };

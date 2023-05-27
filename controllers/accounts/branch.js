@@ -1,5 +1,13 @@
 const branchService = require("../../services/branch");
 
+async function getState(req, res) {
+  res.json({
+    status: true,
+    message: "",
+    data: await branchService.getState(),
+  });
+}
+
 async function find(req, res) {
   res.json({
     status: true,
@@ -16,4 +24,4 @@ async function findById(req, res) {
   });
 }
 
-module.exports = { find, findById };
+module.exports = { find, findById, getState };

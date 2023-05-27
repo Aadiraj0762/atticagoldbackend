@@ -32,6 +32,7 @@ adminRouter.post("/goldrate/update/:id", goldRate.update);
 adminRouter.post("/goldrate/delete/:id", goldRate.remove);
 
 adminRouter.get("/branch/get", branch.find);
+adminRouter.get("/branch/state", branch.getState);
 adminRouter.get("/branch/get/:id", branch.findById);
 adminRouter.post("/branch/create", branch.create);
 adminRouter.post("/branch/update/:id", branch.update);

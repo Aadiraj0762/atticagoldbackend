@@ -24,6 +24,7 @@ accountsRouter.post("/goldrate/update/:id", goldRate.update);
 accountsRouter.post("/goldrate/delete/:id", goldRate.remove);
 
 accountsRouter.get("/branch/get", branch.find);
+accountsRouter.get("/branch/state", branch.getState);
 accountsRouter.get("/branch/get/:id", branch.findById);
 
 accountsRouter.get("/fund/get", fund.find);
