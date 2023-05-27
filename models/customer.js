@@ -15,6 +15,11 @@ const Customer = mongoose.model(
         type: Number,
         unique: true,
       },
+      branch: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "branches",
+        required: true,
+      },
       email: {
         type: String,
       },

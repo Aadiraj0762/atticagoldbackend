@@ -9,6 +9,9 @@ async function find(query = {}) {
     if (query.createdAt && "$lte" in query.createdAt) {
       query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
     }
+    if (query.branch) {
+      query.branch = new mongoose.Types.ObjectId(query.branch);
+    }
     return await Customer.aggregate([
       { $match: query },
       {
@@ -20,8 +23,17 @@ async function find(query = {}) {
         },
       },
       {
+        $lookup: {
+          from: "branches",
+          localField: "branch",
+          foreignField: "_id",
+          as: "branch",
+        },
+      },
+      {
         $addFields: {
           profileImage: { $first: "$profileImage" },
+          branch: { $first: "$branch" },
         },
       },
     ]).exec();
@@ -43,8 +55,17 @@ async function findById(id) {
         },
       },
       {
+        $lookup: {
+          from: "branches",
+          localField: "branch",
+          foreignField: "_id",
+          as: "branch",
+        },
+      },
+      {
         $addFields: {
           profileImage: { $first: "$profileImage" },
+          branch: { $first: "$branch" },
         },
       },
       { $limit: 1 },
