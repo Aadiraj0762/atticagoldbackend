@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Employee = require("../models/employee");
 const passport = require("passport");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
@@ -32,10 +33,38 @@ passport.use(
       passwordField: "password",
     },
     function (username, password, cb) {
-      return User.findOne({ username, password })
-        .then((user) => {
+      return User.findOne({ username, password }, { password: 0 })
+        .populate("employee")
+        .then(async (user) => {
           if (!user) {
-            return cb(null, false, { message: "Incorrect email or password." });
+            const employee = await Employee.findOne({
+              phoneNumber: username,
+            }).exec();
+
+            if (!employee) {
+              return cb(null, false, {
+                message: "Incorrect email or password.",
+              });
+            }
+
+            const employeeUser = await User.findOne(
+              {
+                employee: employee._id,
+              },
+              { password: 0 }
+            )
+              .populate("employee")
+              .exec();
+
+            if (!user) {
+              return cb(null, false, {
+                message: "Incorrect email or password.",
+              });
+            }
+
+            return cb(null, employeeUser, {
+              message: "Logged in Successfully.",
+            });
           }
 
           return cb(null, user, {
