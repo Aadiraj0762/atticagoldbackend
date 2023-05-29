@@ -15,6 +15,7 @@ const sales = require("../controllers/branch/sales");
 const release = require("../controllers/branch/release");
 const attendance = require("../controllers/branch/attendance");
 const leave = require("../controllers/branch/leave");
+const report = require("../controllers/branch/report");
 const fileUpload = require("../controllers/branch/fileupload");
 const { isBranch } = require("../middlewares/authorization");
 const multer = require("../config/multer");
@@ -104,6 +105,11 @@ branchRouter.post("/file-upload/delete/:id", fileUpload.remove);
 
 branchRouter.get("/profile", profile.get);
 branchRouter.post("/profile/change-password", profile.changePassword);
+
+branchRouter.get(
+  "/report/get-consolidated-sale-report",
+  report.consolidatedSaleReport
+);
 
 router.use(
   function (req, res, next) {

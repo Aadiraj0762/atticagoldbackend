@@ -242,4 +242,32 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, count, aggregate, create, update, remove };
+async function consolidatedSaleReport() {
+  try {
+    return await Sales.aggregate([
+      {
+        $group: {
+          _id: "$createdAt",
+          bills: { count: { $sum: 1 } },
+          grossWeight: { $sum: "$grossWeight" },
+          netWeight: { $sum: "$netWeight" },
+          grossAmount: { $sum: "$grossAmount" },
+          netAmount: { $sum: "$netAmount" },
+        },
+      },
+    ]).exec();
+  } catch (err) {
+    throw err;
+  }
+}
+
+module.exports = {
+  find,
+  findById,
+  count,
+  aggregate,
+  create,
+  update,
+  remove,
+  consolidatedSaleReport,
+};
