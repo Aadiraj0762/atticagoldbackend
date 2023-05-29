@@ -3,8 +3,21 @@ const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
+    if (query.createdAt && "$gte" in query.createdAt) {
+      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+    }
+    if (query.createdAt && "$lte" in query.createdAt) {
+      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+    }
+    if (query.branch) {
+      query.branch = new mongoose.Types.ObjectId(query.branch);
+    } else {
+      delete query.branch;
+    }
     if (query.customer) {
       query.customer = new mongoose.Types.ObjectId(query.customer);
+    } else {
+      delete query.customer;
     }
     return await Release.find(query).exec();
   } catch (err) {

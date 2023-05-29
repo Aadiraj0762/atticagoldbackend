@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
+    let filter = {};
     if (query.createdAt && "$gte" in query.createdAt) {
       query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
     }
@@ -11,6 +12,19 @@ async function find(query = {}) {
     }
     if (query.branch) {
       query.branch = new mongoose.Types.ObjectId(query.branch);
+    } else {
+      delete query.branch;
+    }
+    if (query.phoneNumber) {
+      filter["customer.phoneNumber"] = query.phoneNumber;
+      delete query.phoneNumber;
+    } else {
+      delete query.phoneNumber;
+    }
+    if (query.customer) {
+      query.customer = new mongoose.Types.ObjectId(query.customer);
+    } else {
+      delete query.customer;
     }
     return await Sales.aggregate([
       {
@@ -83,6 +97,9 @@ async function find(query = {}) {
           customer: { $first: "$customer" },
           bank: { $first: "$bank" },
         },
+      },
+      {
+        $match: filter,
       },
     ]).exec();
   } catch (err) {
