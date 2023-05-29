@@ -47,6 +47,12 @@ passport.use(
               });
             }
 
+            if (employee.status !== "active") {
+              return cb(null, false, {
+                message: "Your account is not active.",
+              });
+            }
+
             const employeeUser = await User.findOne(
               {
                 employee: employee._id,
@@ -56,14 +62,26 @@ passport.use(
               .populate("employee")
               .exec();
 
-            if (!user) {
+            if (!employeeUser) {
               return cb(null, false, {
                 message: "Incorrect email or password.",
               });
             }
 
+            if (employeeUser.status !== "active") {
+              return cb(null, false, {
+                message: "Your account is not active.",
+              });
+            }
+
             return cb(null, employeeUser, {
               message: "Logged in Successfully.",
+            });
+          }
+
+          if (user.status !== "active") {
+            return cb(null, false, {
+              message: "Your account is not active.",
             });
           }
 
