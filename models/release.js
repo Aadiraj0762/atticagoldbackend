@@ -9,6 +9,11 @@ const Release = mongoose.model(
         ref: "customers",
         required: true,
       },
+      branch: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "branches",
+        required: true,
+      },
       weight: {
         type: Number,
         required: true,
@@ -37,7 +42,7 @@ const Release = mongoose.model(
         type: String,
         required: true,
       },
-      branch: {
+      pledgedBranch: {
         type: String,
         required: true,
       },

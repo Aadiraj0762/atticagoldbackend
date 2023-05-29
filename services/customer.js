@@ -31,9 +31,22 @@ async function find(query = {}) {
         },
       },
       {
+        $lookup: {
+          from: "sales",
+          localField: "_id",
+          foreignField: "customer",
+          as: "sales",
+        },
+      },
+      {
         $addFields: {
           profileImage: { $first: "$profileImage" },
           branch: { $first: "$branch" },
+        },
+      },
+      {
+        $match: {
+          sales: { $eq: [] },
         },
       },
     ]).exec();
