@@ -9,7 +9,6 @@ const User = mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     employee: {
       type: mongoose.Schema.Types.ObjectId,
