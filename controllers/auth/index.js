@@ -1,6 +1,7 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
+const Employee = require("../../models/employee");
 
 function login(req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
@@ -71,30 +72,39 @@ function verifyLoginOtp(req, res, next) {
   if (!req.body.token) {
     return res.status(400).json({
       status: false,
-      message: info ? info.message : "Token is required.",
+      message: "Token is required.",
       data: {},
     });
   }
   if (!req.body.otp) {
     return res.status(400).json({
       status: false,
-      message: info ? info.message : "Otp is required.",
+      message: "Otp is required.",
       data: {},
     });
   }
 
   jwt.verify(req.body.token, process.env.SECRET, function (err, decoded) {
+    const data = decoded.sub;
     if (err) {
       return res.status(400).json({
         status: false,
-        message: info ? info.message : "Otp is expired.",
+        message: "Otp is expired.",
+        data: {},
+      });
+    }
+
+    if (data.otp !== +req.body.otp) {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid otp.",
         data: {},
       });
     }
 
     const token = jwt.sign(
       {
-        sub: decoded._id,
+        sub: data.user._id,
         iat: new Date().getTime(),
       },
       process.env.SECRET,
@@ -104,14 +114,50 @@ function verifyLoginOtp(req, res, next) {
     return res.json({
       status: true,
       message: "Logged in Successfully.",
-      data: { user: decoded, token },
+      data: { user: data.user, token },
     });
   });
 }
 
 function getUserType(req, res, next) {
   User.findOne({ username: req.body.username })
-    .then(function (user) {
+    .then(async function (user) {
+      if (!user) {
+        const employee = await Employee.findOne({
+          phoneNumber: req.body.username,
+        }).exec();
+
+        if (!employee) {
+          return res.json({
+            status: false,
+            message: "Invalid username",
+            data: [],
+          });
+        }
+
+        const employeeUser = await User.findOne(
+          {
+            employee: employee._id,
+          },
+          { password: 0 }
+        ).exec();
+
+        if (!employeeUser) {
+          return res.json({
+            status: false,
+            message: "Invalid username",
+            data: [],
+          });
+        }
+
+        return res.json({
+          status: true,
+          message: "",
+          data: {
+            userType: employeeUser.userType,
+          },
+        });
+      }
       return res.json({
         status: true,
         message: "",
