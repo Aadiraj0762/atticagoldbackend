@@ -252,6 +252,14 @@ async function branchConsolidatedSaleReport(query = {}) {
     return await Sales.aggregate([
       { $match: query },
       {
+        $lookup: {
+          from: "releases",
+          localField: "release",
+          foreignField: "_id",
+          as: "release",
+        },
+      },
+      {
         $addFields: {
           rate: {
             $cond: {
@@ -267,13 +275,24 @@ async function branchConsolidatedSaleReport(query = {}) {
           _id: {
             date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
             purchaseType: "$purchaseType",
+            saleType: "$saleType",
           },
           grossWeight: { $sum: "$grossWeight" },
           netWeight: { $sum: "$netWeight" },
           netAmount: { $sum: "$netAmount" },
+          payableAmount: { $sum: "$payableAmount" },
           bills: { $count: {} },
           ornaments: { $sum: { $size: "$ornaments" } },
           rate: { $first: "$rate" },
+          releaseAmount: {
+            $sum: {
+              $reduce: {
+                input: "$release",
+                initialValue: 0,
+                in: { $sum: ["$$value", "$$this.payableAmount"] },
+              },
+            },
+          },
         },
       },
       {
@@ -281,10 +300,13 @@ async function branchConsolidatedSaleReport(query = {}) {
           _id: 0,
           date: "$_id.date",
           type: "$_id.purchaseType",
+          saleType: "$_id.saleType",
           grossWeight: 1,
           grossWeight: 1,
           netWeight: 1,
           netAmount: 1,
+          payableAmount: 1,
+          releaseAmount: 1,
           bills: 1,
           ornaments: 1,
           rate: 1,
@@ -314,6 +336,14 @@ async function adminConsolidatedSaleReport(query = {}) {
         },
       },
       {
+        $lookup: {
+          from: "releases",
+          localField: "release",
+          foreignField: "_id",
+          as: "release",
+        },
+      },
+      {
         $addFields: {
           rate: {
             $cond: {
@@ -331,14 +361,25 @@ async function adminConsolidatedSaleReport(query = {}) {
             date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
             purchaseType: "$purchaseType",
             branch: "$branch.branchId",
+            saleType: "$saleType",
           },
           grossWeight: { $sum: "$grossWeight" },
           netWeight: { $sum: "$netWeight" },
           netAmount: { $sum: "$netAmount" },
+          payableAmount: { $sum: "$payableAmount" },
           bills: { $count: {} },
           ornaments: { $sum: { $size: "$ornaments" } },
           rate: { $first: "$rate" },
           branch: { $first: "$branch.branchName" },
+          releaseAmount: {
+            $sum: {
+              $reduce: {
+                input: "$release",
+                initialValue: 0,
+                in: { $sum: ["$$value", "$$this.payableAmount"] },
+              },
+            },
+          },
         },
       },
       {
@@ -346,10 +387,12 @@ async function adminConsolidatedSaleReport(query = {}) {
           _id: 0,
           date: "$_id.date",
           type: "$_id.purchaseType",
-          grossWeight: 1,
+          saleType: "$_id.saleType",
           grossWeight: 1,
           netWeight: 1,
           netAmount: 1,
+          payableAmount: 1,
+          releaseAmount: 1,
           bills: 1,
           ornaments: 1,
           rate: 1,
