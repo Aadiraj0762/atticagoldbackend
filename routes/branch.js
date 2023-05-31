@@ -110,6 +110,10 @@ branchRouter.get(
   "/report/get-consolidated-sale-report",
   report.consolidatedSaleReport
 );
+branchRouter.post(
+  "/report/get-consolidated-sale-report",
+  report.consolidatedSaleReport
+);
 
 router.use(
   function (req, res, next) {

@@ -16,6 +16,7 @@ const sales = require("../controllers/admin/sales");
 const customer = require("../controllers/admin/customer");
 const release = require("../controllers/admin/release");
 const fileUpload = require("../controllers/admin/fileupload");
+const report = require("../controllers/admin/report");
 const { isAdmin } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
@@ -45,7 +46,10 @@ adminRouter.post("/user/update/:id", user.update);
 adminRouter.post("/user/delete/:id", user.remove);
 
 adminRouter.get("/employee/get", employee.find);
-adminRouter.get("/employee/login-not-created", employee.getLoginNotCreatedEmployee);
+adminRouter.get(
+  "/employee/login-not-created",
+  employee.getLoginNotCreatedEmployee
+);
 adminRouter.get("/employee/get/:id", employee.findById);
 adminRouter.post("/employee/create", employee.create);
 adminRouter.post("/employee/update/:id", employee.update);
@@ -103,6 +107,15 @@ adminRouter.post("/file-upload/delete/:id", fileUpload.remove);
 
 adminRouter.get("/profile", profile.get);
 adminRouter.post("/profile/change-password", profile.changePassword);
+
+adminRouter.get(
+  "/report/get-consolidated-sale-report",
+  report.consolidatedSaleReport
+);
+adminRouter.post(
+  "/report/get-consolidated-sale-report",
+  report.consolidatedSaleReport
+);
 
 router.use(
   function (req, res, next) {

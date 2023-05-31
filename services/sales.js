@@ -242,17 +242,122 @@ async function remove(id) {
   }
 }
 
-async function consolidatedSaleReport() {
+async function branchConsolidatedSaleReport(query = {}) {
   try {
+    if (query.branch) {
+      query.branch = new mongoose.Types.ObjectId(query.branch);
+    } else {
+      delete query.branch;
+    }
     return await Sales.aggregate([
+      { $match: query },
+      {
+        $addFields: {
+          rate: {
+            $cond: {
+              if: { $eq: ["$purchaseType", "gold"] },
+              then: "$goldRate",
+              else: "$silverRate",
+            },
+          },
+        },
+      },
       {
         $group: {
-          _id: "$createdAt",
-          bills: { count: { $sum: 1 } },
+          _id: {
+            date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+            purchaseType: "$purchaseType",
+          },
           grossWeight: { $sum: "$grossWeight" },
           netWeight: { $sum: "$netWeight" },
           grossAmount: { $sum: "$grossAmount" },
           netAmount: { $sum: "$netAmount" },
+          bills: { $count: {} },
+          ornaments: { $sum: { $size: "$ornaments" } },
+          rate: { $first: "$rate" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          date: "$_id.date",
+          type: "$_id.purchaseType",
+          grossWeight: 1,
+          grossWeight: 1,
+          netWeight: 1,
+          grossAmount: 1,
+          netAmount: 1,
+          bills: 1,
+          ornaments: 1,
+          rate: 1,
+        },
+      },
+    ]).exec();
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function adminConsolidatedSaleReport(query = {}) {
+  try {
+    if (query.branch) {
+      query.branch = new mongoose.Types.ObjectId(query.branch);
+    } else {
+      delete query.branch;
+    }
+    return await Sales.aggregate([
+      { $match: query },
+      {
+        $lookup: {
+          from: "branches",
+          localField: "branch",
+          foreignField: "_id",
+          as: "branch",
+        },
+      },
+      {
+        $addFields: {
+          rate: {
+            $cond: {
+              if: { $eq: ["$purchaseType", "gold"] },
+              then: "$goldRate",
+              else: "$silverRate",
+            },
+          },
+          branch: { $first: "$branch" },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+            purchaseType: "$purchaseType",
+            branch: "$branch.branchId",
+          },
+          grossWeight: { $sum: "$grossWeight" },
+          netWeight: { $sum: "$netWeight" },
+          grossAmount: { $sum: "$grossAmount" },
+          netAmount: { $sum: "$netAmount" },
+          bills: { $count: {} },
+          ornaments: { $sum: { $size: "$ornaments" } },
+          rate: { $first: "$rate" },
+          branch: { $first: "$branch.branchName" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          date: "$_id.date",
+          type: "$_id.purchaseType",
+          grossWeight: 1,
+          grossWeight: 1,
+          netWeight: 1,
+          grossAmount: 1,
+          netAmount: 1,
+          bills: 1,
+          ornaments: 1,
+          rate: 1,
+          branch: 1,
         },
       },
     ]).exec();
@@ -269,5 +374,6 @@ module.exports = {
   create,
   update,
   remove,
-  consolidatedSaleReport,
+  branchConsolidatedSaleReport,
+  adminConsolidatedSaleReport,
 };
