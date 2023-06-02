@@ -12,7 +12,6 @@ async function login(req, res) {
     if (!customer) {
       customer = await customerService.create({
         phoneNumber: req.body.phoneNumber,
-        referralPhoneNumber: req.body?.referralPhoneNumber,
       });
     }
 
