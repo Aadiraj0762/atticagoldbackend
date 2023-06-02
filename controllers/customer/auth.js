@@ -1,41 +1,51 @@
 const jwt = require("jsonwebtoken");
 const customerService = require("../../services/customer");
 const Customer = require("../../models/customer");
+const Branch = require("../../models/branch");
 
 async function login(req, res) {
-  let customer = await Customer.findOne({
-    phoneNumber: req.body.phoneNumber,
-  }).exec();
-
-  if (!customer) {
-    customer = await customerService.create({
+  try {
+    let customer = await Customer.findOne({
       phoneNumber: req.body.phoneNumber,
+    }).exec();
+
+    if (!customer) {
+      customer = await customerService.create({
+        phoneNumber: req.body.phoneNumber,
+        referralPhoneNumber: req.body?.referralPhoneNumber,
+      });
+    }
+
+    const otp = String(Math.floor(1000 + Math.random() * 9000)).substring(0, 4);
+
+    const token = jwt.sign(
+      {
+        otp: otp,
+        phoneNumber: req.body.phoneNumber,
+      },
+      process.env.SECRET,
+      { expiresIn: 60 * 5 }
+    );
+
+    return res.json({
+      status: true,
+      message: "OTP sent successfully",
+      data: { otp, token },
+    });
+  } catch (err) {
+    return res.json({
+      status: false,
+      message: "Login failed",
+      data: {},
     });
   }
-
-  const otp = String(Math.floor(1000 + Math.random() * 9000)).substring(0, 4);
-
-  const token = jwt.sign(
-    {
-      otp: otp,
-      phoneNumber: req.body.phoneNumber,
-    },
-    process.env.SECRET,
-    { expiresIn: 60 * 5 }
-  );
-
-  return res.json({
-    status: true,
-    message: "OTP sent successfully",
-    data: { otp, token },
-  });
 }
 
 async function verifyOtp(req, res) {
   try {
     let payload = jwt.verify(req.body.token, process.env.SECRET);
 
-    if (payload.otp != req.body.otp) {
+    if (String(payload.otp) !== String(req.body.otp)) {
       throw new Error("Invalid otp");
     }
 

@@ -30,7 +30,9 @@ function login(req, res, next) {
       }
 
       if (user.userType?.toLowerCase() === "branch") {
-        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otp = String(
+          Math.floor(100000 + Math.random() * 900000)
+        ).substring(0, 6);
         const token = jwt.sign(
           {
             sub: {
@@ -94,7 +96,7 @@ function verifyLoginOtp(req, res, next) {
       });
     }
 
-    if (data.otp !== +req.body.otp) {
+    if (String(data.otp) !== String(req.body.otp)) {
       return res.status(400).json({
         status: false,
         message: "Invalid otp.",
