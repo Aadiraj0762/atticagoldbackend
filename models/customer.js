@@ -40,7 +40,7 @@ const Customer = mongoose.model(
       alternatePhoneNumber: {
         type: String,
       },
-      profileImage: {
+      referralPhoneNumber: {
         type: String,
       },
       maritalStatus: {
