@@ -17,6 +17,8 @@ const customer = require("../controllers/admin/customer");
 const release = require("../controllers/admin/release");
 const fileUpload = require("../controllers/admin/fileupload");
 const report = require("../controllers/admin/report");
+const support = require("../controllers/admin/support");
+const supportReply = require("../controllers/admin/support-reply");
 const { isAdmin } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
@@ -116,6 +118,19 @@ adminRouter.post(
   "/report/get-consolidated-sale-report",
   report.consolidatedSaleReport
 );
+
+adminRouter.get("/support/get", support.find);
+adminRouter.get("/support/get/:id", support.findById);
+adminRouter.post("/support/create", support.create);
+adminRouter.post("/support/update/:id", support.update);
+adminRouter.post("/support/delete/:id", support.remove);
+
+adminRouter.get("/support-reply/get", supportReply.find);
+adminRouter.get("/support-reply/get/:id", supportReply.findById);
+adminRouter.get("/support-reply/get-by-support-id/:id", supportReply.findBySupportId);
+adminRouter.post("/support-reply/create", supportReply.create);
+adminRouter.post("/support-reply/update/:id", supportReply.update);
+adminRouter.post("/support-reply/delete/:id", supportReply.remove);
 
 router.use(
   function (req, res, next) {
