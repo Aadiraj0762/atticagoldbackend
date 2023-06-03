@@ -3,14 +3,30 @@ const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
+    if (query.support) {
+      query.support = new mongoose.Types.ObjectId(query.support);
+    }
     return await SupportReply.aggregate([
       { $match: query },
+      {
+        $lookup: {
+          from: "supports",
+          localField: "support",
+          foreignField: "_id",
+          as: "support",
+        },
+      },
       {
         $lookup: {
           from: "fileuploads",
           localField: "_id",
           foreignField: "uploadId",
           as: "attachments",
+        },
+      },
+      {
+        $addFields: {
+          support: { $first: "$support" },
         },
       },
     ]).exec();
@@ -25,10 +41,23 @@ async function findById(id) {
       { $match: { _id: new mongoose.Types.ObjectId(id) } },
       {
         $lookup: {
+          from: "supports",
+          localField: "support",
+          foreignField: "_id",
+          as: "support",
+        },
+      },
+      {
+        $lookup: {
           from: "fileuploads",
           localField: "_id",
           foreignField: "uploadId",
           as: "attachments",
+        },
+      },
+      {
+        $addFields: {
+          support: { $first: "$support" },
         },
       },
       { $limit: 1 },

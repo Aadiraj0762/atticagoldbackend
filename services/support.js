@@ -2,7 +2,7 @@ const Support = require("../models/support");
 
 async function find(query = {}) {
   try {
-    return await Support.find(query).exec();
+    return await Support.find(query).populate("customer").exec();
   } catch (err) {
     throw err;
   }
@@ -10,7 +10,7 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await Support.findById(id).exec();
+    return await Support.findById(id).populate("customer").exec();
   } catch (err) {
     throw err;
   }

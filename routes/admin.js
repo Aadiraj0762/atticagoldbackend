@@ -120,12 +120,14 @@ adminRouter.post(
 );
 
 adminRouter.get("/support/get", support.find);
+adminRouter.post("/support/get", support.find);
 adminRouter.get("/support/get/:id", support.findById);
 adminRouter.post("/support/create", support.create);
 adminRouter.post("/support/update/:id", support.update);
 adminRouter.post("/support/delete/:id", support.remove);
 
 adminRouter.get("/support-reply/get", supportReply.find);
+adminRouter.post("/support-reply/get", supportReply.find);
 adminRouter.get("/support-reply/get/:id", supportReply.findById);
 adminRouter.get("/support-reply/get-by-support-id/:id", supportReply.findBySupportId);
 adminRouter.post("/support-reply/create", supportReply.create);
