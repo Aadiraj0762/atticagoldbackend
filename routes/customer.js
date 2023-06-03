@@ -13,6 +13,7 @@ const sales = require("../controllers/customer/sales");
 const support = require("../controllers/customer/support");
 const supportReply = require("../controllers/customer/support-reply");
 const fileUpload = require("../controllers/customer/fileupload");
+const multer = require("../config/multer");
 
 router.post("/login", login);
 router.post("/verify-otp", verifyOtp);
