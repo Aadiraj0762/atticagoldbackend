@@ -12,6 +12,7 @@ const branch = require("../controllers/customer/branch");
 const sales = require("../controllers/customer/sales");
 const support = require("../controllers/customer/support");
 const supportReply = require("../controllers/customer/support-reply");
+const fileUpload = require("../controllers/customer/fileupload");
 
 router.post("/login", login);
 router.post("/verify-otp", verifyOtp);
@@ -43,6 +44,16 @@ customerRouter.get("/support-reply/get-by-support-id/:id", supportReply.findBySu
 customerRouter.post("/support-reply/create", supportReply.create);
 customerRouter.post("/support-reply/update/:id", supportReply.update);
 customerRouter.post("/support-reply/delete/:id", supportReply.remove);
+
+customerRouter.get("/file-upload/get", fileUpload.find);
+customerRouter.post("/file-upload/get", fileUpload.find);
+customerRouter.get("/file-upload/get/:id", fileUpload.findById);
+customerRouter.post(
+  "/file-upload/create",
+  multer.single("uploadedFile"),
+  fileUpload.create
+);
+customerRouter.post("/file-upload/delete/:id", fileUpload.remove);
 
 router.use(verifyToken, customerRouter);
 
