@@ -77,6 +77,7 @@ async function remove(req, res) {
       data: await supportService.remove(req.params.id),
     });
   } catch (err) {
+    console.log(err);
     res.json({
       status: false,
       message: err.errors ?? err.message,

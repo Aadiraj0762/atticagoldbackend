@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 async function find(query = {}) {
   try {
-    if (query.support) {
+    if (query.support && typeof query.support == "string") {
       query.support = new mongoose.Types.ObjectId(query.support);
     }
     return await SupportReply.aggregate([
@@ -97,11 +97,13 @@ async function update(id, payload) {
 
 async function remove(id) {
   try {
-    return await SupportReply.deleteMany({
-      _id: {
-        $in: id.split(","),
-      },
-    }).exec();
+    if (id) {
+      return await SupportReply.deleteMany({
+        _id: {
+          $in: id.split(","),
+        },
+      }).exec();
+    }
   } catch (err) {
     throw err;
   }
