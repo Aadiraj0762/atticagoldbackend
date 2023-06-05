@@ -31,7 +31,10 @@ async function create(req, res) {
   } catch (err) {
     res.json({
       status: false,
-      message: err.errors ?? err.message,
+      message:
+        err.errors ?? err.code == 11000
+          ? "Mobile number already exists"
+          : err.message,
       data: {},
     });
   }
