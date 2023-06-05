@@ -4,6 +4,7 @@ const fileUploadService = require("../../services/fileupload");
 const mongoose = require("mongoose");
 
 async function find(req, res) {
+  req.body.customer = new mongoose.Types.ObjectId(req.user._id);
   res.json({
     status: true,
     message: "",
