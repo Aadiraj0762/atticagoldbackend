@@ -21,6 +21,12 @@ async function find(query = {}) {
     } else {
       delete query.phoneNumber;
     }
+    if (query.branchName) {
+      filter["branch.branchName"] = query.branchName;
+      delete query.branchName;
+    } else {
+      delete query.branchName;
+    }
     if (query.customer) {
       query.customer = new mongoose.Types.ObjectId(query.customer);
     } else {
