@@ -250,6 +250,12 @@ async function remove(id) {
 
 async function branchConsolidatedSaleReport(query = {}) {
   try {
+    if (query.createdAt && "$gte" in query.createdAt) {
+      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+    }
+    if (query.createdAt && "$lte" in query.createdAt) {
+      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+    }
     if (query.branch) {
       query.branch = new mongoose.Types.ObjectId(query.branch);
     } else {
@@ -326,6 +332,12 @@ async function branchConsolidatedSaleReport(query = {}) {
 
 async function adminConsolidatedSaleReport(query = {}) {
   try {
+    if (query.createdAt && "$gte" in query.createdAt) {
+      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+    }
+    if (query.createdAt && "$lte" in query.createdAt) {
+      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+    }
     if (query.branch) {
       query.branch = new mongoose.Types.ObjectId(query.branch);
     } else {

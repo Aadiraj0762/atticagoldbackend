@@ -29,6 +29,7 @@ adminRouter.get("/", function (req, res, next) {
 adminRouter.get("/dashboard/get", dashboard.get);
 
 adminRouter.get("/goldrate/get", goldRate.find);
+adminRouter.post("/goldrate/get", goldRate.find);
 adminRouter.get("/goldrate/get/:id", goldRate.findById);
 adminRouter.post("/goldrate/create", goldRate.create);
 adminRouter.post("/goldrate/update/:id", goldRate.update);
@@ -58,11 +59,13 @@ adminRouter.post("/employee/update/:id", employee.update);
 adminRouter.post("/employee/delete/:id", employee.remove);
 
 adminRouter.get("/expense/get", expense.find);
+adminRouter.post("/expense/get", expense.find);
 adminRouter.get("/expense/get/:id", expense.findById);
 adminRouter.post("/expense/update/:id", expense.update);
 adminRouter.post("/expense/delete/:id", expense.remove);
 
 adminRouter.get("/fund/get", fund.find);
+adminRouter.post("/fund/get", fund.find);
 adminRouter.get("/fund/get/:id", fund.findById);
 adminRouter.post("/fund/update/:id", fund.update);
 adminRouter.post("/fund/delete/:id", fund.remove);

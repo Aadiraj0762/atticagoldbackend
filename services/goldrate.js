@@ -3,11 +3,20 @@ const GoldRate = require("../models/goldrate");
 async function find(query = {}) {
   try {
     if (query.date) {
-      const date = new Date(query.date);
-      query.date = {
-        $gte: date,
-        $lt: new Date(date.getTime() + 86400000),
-      };
+      if (typeof query.date == "object") {
+        if ("$gte" in query.date) {
+          query.date["$gte"] = new Date(query.date["$gte"]);
+        }
+        if ("$lte" in query.date) {
+          query.date["$lte"] = new Date(query.date["$lte"]);
+        }
+      } else {
+        const date = new Date(query.date);
+        query.date = {
+          $gte: date,
+          $lt: new Date(date.getTime() + 86400000),
+        };
+      }
     }
     if (query.state) {
       query.state = { $regex: new RegExp(`^${query.state}$`, "i") };

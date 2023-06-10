@@ -3,6 +3,12 @@ const Fund = require("../models/fund");
 
 async function find(query = {}) {
   try {
+    if (query.createdAt && "$gte" in query.createdAt) {
+      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+    }
+    if (query.createdAt && "$lte" in query.createdAt) {
+      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+    }
     if (query.branch) {
       query.$or = [
         { from: mongoose.Types.ObjectId(query.branch) },
