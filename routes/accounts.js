@@ -11,6 +11,7 @@ const sales = require("../controllers/accounts/sales");
 const profile = require("../controllers/accounts/profile");
 const fileUpload = require("../controllers/accounts/fileupload");
 const { isAccounts } = require("../middlewares/authorization");
+const multer = require("../config/multer");
 
 accountsRouter.get("/", function (req, res, next) {
   res.send("Home Page");
