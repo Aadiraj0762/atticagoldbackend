@@ -78,4 +78,19 @@ async function remove(req, res) {
   }
 }
 
-module.exports = { find, findById, create, update, remove };
+async function sendOtp(req, res) {
+  res.json(
+    await customerService.sendOtp({ phoneNumber: req.body?.phoneNumber })
+  );
+}
+
+async function verifyOtp(req, res) {
+  res.json(
+    await customerService.verifyOtp({
+      token: req.body?.token,
+      otp: req.body?.otp,
+    })
+  );
+}
+
+module.exports = { find, findById, create, update, remove, sendOtp, verifyOtp };

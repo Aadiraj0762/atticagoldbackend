@@ -65,6 +65,8 @@ branchRouter.get("/customer/get/:id", customer.findById);
 branchRouter.post("/customer/create", customer.create);
 branchRouter.post("/customer/update/:id", customer.update);
 branchRouter.post("/customer/delete/:id", customer.remove);
+branchRouter.post("/customer/send-otp", customer.sendOtp);
+branchRouter.post("/customer/verify-otp", customer.verifyOtp);
 
 branchRouter.get("/customer-address/get/:id", customerAddress.findById);
 branchRouter.post("/customer-address/create", customerAddress.create);

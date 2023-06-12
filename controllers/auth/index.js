@@ -13,17 +13,6 @@ function login(req, res, next) {
       });
     }
 
-    // if (
-    //   user.userType?.toLowerCase() === "branch" &&
-    //   !user.employee.equals(req.body.employeeId)
-    // ) {
-    //   return res.status(400).json({
-    //     status: false,
-    //     message: "Invalid username or password.",
-    //     data: {},
-    //   });
-    // }
-
     req.login(user, { session: false }, (err) => {
       if (err) {
         return res.send(err);
@@ -33,12 +22,49 @@ function login(req, res, next) {
         const otp = String(
           Math.floor(100000 + Math.random() * 900000)
         ).substring(0, 6);
+
+        fetch(
+          `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${user.phoneNumber}&text=Hi. Your One Time Password to login Benaka Gold Company is ${otp}. This OTP is valid for 5 minutes only.&dltContentId=1707168655011078843`
+        )
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.statusCode == 200 && res.state == "SUBMIT_ACCEPTED") {
+              const token = jwt.sign(
+                {
+                  sub: {
+                    user,
+                    otp,
+                  },
+                  iat: new Date().getTime(),
+                },
+                process.env.SECRET,
+                { expiresIn: "1d" }
+              );
+
+              return res.json({
+                status: true,
+                message: "Logged in Successfully.",
+                data: { token },
+              });
+            } else {
+              return res.json({
+                status: false,
+                message: "OTP not sent",
+                data: {},
+              });
+            }
+          })
+          .catch((err) => {
+            return res.json({
+              status: false,
+              message: "OTP not sent",
+              data: {},
+            });
+          });
+      } else {
         const token = jwt.sign(
           {
-            sub: {
-              user,
-              otp,
-            },
+            sub: user._id,
             iat: new Date().getTime(),
           },
           process.env.SECRET,
@@ -48,24 +74,9 @@ function login(req, res, next) {
         return res.json({
           status: true,
           message: "Logged in Successfully.",
-          data: { token, otp },
+          data: { user, token },
         });
       }
-
-      const token = jwt.sign(
-        {
-          sub: user._id,
-          iat: new Date().getTime(),
-        },
-        process.env.SECRET,
-        { expiresIn: "1d" }
-      );
-
-      return res.json({
-        status: true,
-        message: "Logged in Successfully.",
-        data: { user, token },
-      });
     });
   })(req, res, next);
 }

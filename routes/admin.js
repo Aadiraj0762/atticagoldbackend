@@ -100,6 +100,8 @@ adminRouter.get("/customer/get/:id", customer.findById);
 adminRouter.post("/customer/create", customer.create);
 adminRouter.post("/customer/update/:id", customer.update);
 adminRouter.post("/customer/delete/:id", customer.remove);
+adminRouter.post("/customer/send-otp", customer.sendOtp);
+adminRouter.post("/customer/verify-otp", customer.verifyOtp);
 
 adminRouter.get("/file-upload/get", fileUpload.find);
 adminRouter.post("/file-upload/get", fileUpload.find);

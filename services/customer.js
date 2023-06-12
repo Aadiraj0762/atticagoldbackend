@@ -138,4 +138,84 @@ async function remove(id) {
   }
 }
 
-module.exports = { find, findById, count, create, update, remove };
+async function sendOtp(payload) {
+  try {
+    const otp = String(Math.floor(100000 + Math.random() * 900000)).substring(
+      0,
+      6
+    );
+
+    let res = await fetch(
+      `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${payload.phoneNumber}&text=Hi.%20Thanks%20for%20choosing%20Benaka%20Gold%20Company%20to%20serve%20you.%20The%20One%20Time%20Password%20to%20verify%20your%20phone%20number%20is%20${otp}.%20Validity%20for%20this%20OTP%20is%205%20minutes%20only.%20Call%20us%20if%20you%20have%20any%20queries%20:%206366111999.%20Visit%20us%20:%20https://www.benakagoldcompany.com%20&dltContentId=1707168655011078843`
+    );
+    if (res.statusCode == 200 && res.state == "SUBMIT_ACCEPTED") {
+      const token = jwt.sign(
+        {
+          sub: {
+            phoneNumber: payload.phoneNumber,
+            otp,
+          },
+          iat: new Date().getTime(),
+        },
+        process.env.SECRET,
+        { expiresIn: "1d" }
+      );
+
+      return {
+        status: true,
+        message: "OTP sent Successfully.",
+        data: { token },
+      };
+    } else {
+      return {
+        status: false,
+        message: "OTP not sent",
+        data: {},
+      };
+    }
+  } catch (err) {
+    return {
+      status: false,
+      message: "OTP not sent",
+      data: {},
+    };
+  }
+}
+
+function verifyOtp(payload) {
+  jwt.verify(payload.token, process.env.SECRET, function (err, decoded) {
+    const data = decoded.sub;
+    if (err) {
+      return {
+        status: false,
+        message: "Otp is expired.",
+        data: {},
+      };
+    }
+
+    if (String(data.otp) !== String(payload.otp)) {
+      return {
+        status: false,
+        message: "Invalid otp.",
+        data: {},
+      };
+    }
+
+    return {
+      status: true,
+      message: "OTP verified.",
+      data: {},
+    };
+  });
+}
+
+module.exports = {
+  find,
+  findById,
+  count,
+  create,
+  update,
+  remove,
+  sendOtp,
+  verifyOtp,
+};
