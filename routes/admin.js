@@ -71,6 +71,7 @@ adminRouter.post("/fund/update/:id", fund.update);
 adminRouter.post("/fund/delete/:id", fund.remove);
 
 adminRouter.get("/attendance/get", attendance.find);
+adminRouter.post("/attendance/get", attendance.find);
 adminRouter.get("/attendance/get/:id", attendance.findById);
 adminRouter.post("/attendance/update/:id", attendance.update);
 adminRouter.post("/attendance/delete/:id", attendance.remove);
