@@ -9,6 +9,7 @@ const fund = require("../controllers/accounts/fund.js");
 const expense = require("../controllers/accounts/expense");
 const sales = require("../controllers/accounts/sales");
 const profile = require("../controllers/accounts/profile");
+const fileUpload = require("../controllers/accounts/fileupload");
 const { isAccounts } = require("../middlewares/authorization");
 
 accountsRouter.get("/", function (req, res, next) {
@@ -46,6 +47,16 @@ accountsRouter.post("/sales/get", sales.find);
 accountsRouter.get("/sales/get/:id", sales.findById);
 accountsRouter.post("/sales/update/:id", sales.update);
 accountsRouter.post("/sales/delete/:id", sales.remove);
+
+accountsRouter.get("/file-upload/get", fileUpload.find);
+accountsRouter.post("/file-upload/get", fileUpload.find);
+accountsRouter.get("/file-upload/get/:id", fileUpload.findById);
+accountsRouter.post(
+  "/file-upload/create",
+  multer.single("uploadedFile"),
+  fileUpload.create
+);
+accountsRouter.post("/file-upload/delete/:id", fileUpload.remove);
 
 accountsRouter.get("/profile", profile.get);
 accountsRouter.post("/profile/change-password", profile.changePassword);
