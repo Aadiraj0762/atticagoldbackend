@@ -24,11 +24,11 @@ function login(req, res, next) {
         ).substring(0, 6);
 
         fetch(
-          `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${user.phoneNumber}&text=Hi. Your One Time Password to login Benaka Gold Company is ${otp}. This OTP is valid for 5 minutes only.&dltContentId=1707168655011078843`
+          `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${user.employee?.phoneNumber}&text=Hi. Your One Time Password to login Benaka Gold Company is ${otp}. This OTP is valid for 5 minutes only.&dltContentId=1707168655011078843`
         )
           .then((res) => res.json())
-          .then((res) => {
-            if (res.statusCode == 200 && res.state == "SUBMIT_ACCEPTED") {
+          .then((data) => {
+            if (data.statusCode == 200 && data.state == "SUBMIT_ACCEPTED") {
               const token = jwt.sign(
                 {
                   sub: {
@@ -83,14 +83,14 @@ function login(req, res, next) {
 
 function verifyLoginOtp(req, res, next) {
   if (!req.body.token) {
-    return res.status(400).json({
+    return res.json({
       status: false,
       message: "Token is required.",
       data: {},
     });
   }
   if (!req.body.otp) {
-    return res.status(400).json({
+    return res.json({
       status: false,
       message: "Otp is required.",
       data: {},
@@ -100,7 +100,7 @@ function verifyLoginOtp(req, res, next) {
   jwt.verify(req.body.token, process.env.SECRET, function (err, decoded) {
     const data = decoded.sub;
     if (err) {
-      return res.status(400).json({
+      return res.json({
         status: false,
         message: "Otp is expired.",
         data: {},
@@ -108,7 +108,7 @@ function verifyLoginOtp(req, res, next) {
     }
 
     if (String(data.otp) !== String(req.body.otp)) {
-      return res.status(400).json({
+      return res.json({
         status: false,
         message: "Invalid otp.",
         data: {},
