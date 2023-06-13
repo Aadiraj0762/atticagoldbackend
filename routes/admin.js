@@ -83,6 +83,7 @@ adminRouter.post("/sales/update/:id", sales.update);
 adminRouter.post("/sales/delete/:id", sales.remove);
 
 adminRouter.get("/leave/get", leave.find);
+adminRouter.post("/leave/get", leave.find);
 adminRouter.get("/leave/get/:id", leave.findById);
 adminRouter.post("/leave/update/:id", leave.update);
 adminRouter.post("/leave/delete/:id", leave.remove);

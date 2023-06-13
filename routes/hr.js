@@ -44,6 +44,7 @@ hrRouter.post("/attendance/update/:id", attendance.update);
 hrRouter.post("/attendance/delete/:id", attendance.remove);
 
 hrRouter.get("/leave/get", leave.find);
+hrRouter.post("/leave/get", leave.find);
 hrRouter.get("/leave/get/:id", leave.findById);
 hrRouter.post("/leave/update/:id", leave.update);
 hrRouter.post("/leave/delete/:id", leave.remove);

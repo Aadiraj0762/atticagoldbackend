@@ -2,6 +2,12 @@ const Leave = require("../models/leave");
 
 async function find(query = {}) {
   try {
+    if (query.createdAt && "$gte" in query.createdAt) {
+      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+    }
+    if (query.createdAt && "$lte" in query.createdAt) {
+      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+    }
     return await Leave.find(query)
       .populate("employee")
       .populate("branch")
