@@ -41,12 +41,13 @@ function login(req, res, next) {
                   },
                   iat: new Date().getTime(),
                 },
-                process.env.SECRET
+                process.env.SECRET,
+                { expiresIn: 60 * 5 }
               );
 
               return res.json({
                 status: true,
-                message: "Logged in Successfully.",
+                message: "OTP sent successfully.",
                 data: { token },
               });
             } else {
