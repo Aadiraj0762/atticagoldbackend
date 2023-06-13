@@ -2,6 +2,7 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
 const Employee = require("../../models/employee");
+const axios = require("axios");
 
 function login(req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
@@ -23,12 +24,15 @@ function login(req, res, next) {
           Math.floor(100000 + Math.random() * 900000)
         ).substring(0, 6);
 
-        fetch(
-          `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${user.employee?.phoneNumber}&text=Hi. Your One Time Password to login Benaka Gold Company is ${otp}. This OTP is valid for 5 minutes only.&dltContentId=1707168655011078843`
-        )
-          .then((res) => res.json())
+        axios
+          .get(
+            `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${user.employee?.phoneNumber}&text=Hi. Your One Time Password to login Benaka Gold Company is ${otp}. This OTP is valid for 5 minutes only.&dltContentId=1707168655011078843`
+          )
           .then((data) => {
-            if (data.statusCode == 200 && data.state == "SUBMIT_ACCEPTED") {
+            if (
+              data.data.statusCode == 200 &&
+              data.data.state == "SUBMIT_ACCEPTED"
+            ) {
               const token = jwt.sign(
                 {
                   sub: {

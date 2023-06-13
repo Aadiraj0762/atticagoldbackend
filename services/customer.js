@@ -1,5 +1,6 @@
 const Customer = require("../models/customer");
 const mongoose = require("mongoose");
+const axios = require("axios");
 
 async function find(query = {}) {
   try {
@@ -145,10 +146,10 @@ async function sendOtp(payload) {
       6
     );
 
-    let res = await fetch(
+    let res = await axios.get(
       `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${payload.phoneNumber}&text=Hi.%20Thanks%20for%20choosing%20Benaka%20Gold%20Company%20to%20serve%20you.%20The%20One%20Time%20Password%20to%20verify%20your%20phone%20number%20is%20${otp}.%20Validity%20for%20this%20OTP%20is%205%20minutes%20only.%20Call%20us%20if%20you%20have%20any%20queries%20:%206366111999.%20Visit%20us%20:%20https://www.benakagoldcompany.com%20&dltContentId=1707168655011078843`
     );
-    if (res.statusCode == 200 && res.state == "SUBMIT_ACCEPTED") {
+    if (res.data.statusCode == 200 && res.data.state == "SUBMIT_ACCEPTED") {
       const token = jwt.sign(
         {
           sub: {
