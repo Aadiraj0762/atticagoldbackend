@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const customerService = require("../../services/customer");
 const Customer = require("../../models/customer");
-const Branch = require("../../models/branch");
 
 async function login(req, res) {
   try {
