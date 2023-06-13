@@ -19,6 +19,7 @@ const fileUpload = require("../controllers/admin/fileupload");
 const report = require("../controllers/admin/report");
 const support = require("../controllers/admin/support");
 const supportReply = require("../controllers/admin/support-reply");
+const otp = require("../controllers/admin/otp");
 const { isAdmin } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
@@ -82,6 +83,12 @@ adminRouter.get("/sales/get/:id", sales.findById);
 adminRouter.post("/sales/update/:id", sales.update);
 adminRouter.post("/sales/delete/:id", sales.remove);
 
+adminRouter.get("/otp/get", otp.find);
+adminRouter.post("/otp/get", otp.find);
+adminRouter.get("/otp/get/:id", otp.findById);
+adminRouter.post("/otp/update/:id", otp.update);
+adminRouter.post("/otp/delete/:id", otp.remove);
+
 adminRouter.get("/leave/get", leave.find);
 adminRouter.post("/leave/get", leave.find);
 adminRouter.get("/leave/get/:id", leave.findById);
@@ -136,7 +143,10 @@ adminRouter.post("/support/delete/:id", support.remove);
 adminRouter.get("/support-reply/get", supportReply.find);
 adminRouter.post("/support-reply/get", supportReply.find);
 adminRouter.get("/support-reply/get/:id", supportReply.findById);
-adminRouter.get("/support-reply/get-by-support-id/:id", supportReply.findBySupportId);
+adminRouter.get(
+  "/support-reply/get-by-support-id/:id",
+  supportReply.findBySupportId
+);
 adminRouter.post("/support-reply/create", supportReply.create);
 adminRouter.post("/support-reply/update/:id", supportReply.update);
 adminRouter.post("/support-reply/delete/:id", supportReply.remove);

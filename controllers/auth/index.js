@@ -2,6 +2,7 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
 const Employee = require("../../models/employee");
+const otpService = require("../../services/otp");
 const axios = require("axios");
 
 function login(req, res, next) {
@@ -44,6 +45,8 @@ function login(req, res, next) {
                 process.env.SECRET,
                 { expiresIn: 60 * 5 }
               );
+
+              otpService.create({ type: "employee", otp: otp });
 
               return res.json({
                 status: true,

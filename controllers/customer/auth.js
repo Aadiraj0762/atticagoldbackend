@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const customerService = require("../../services/customer");
 const Customer = require("../../models/customer");
+const otpService = require("../../services/otp");
 const axios = require("axios");
 
 async function login(req, res) {
@@ -29,6 +30,8 @@ async function login(req, res) {
         process.env.SECRET,
         { expiresIn: 60 * 5 }
       );
+
+      otpService.create({ type: "customer", otp: otp });
 
       return res.json({
         status: true,
