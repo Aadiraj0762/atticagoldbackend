@@ -4,6 +4,10 @@ const Attendance = mongoose.model(
   "otp",
   mongoose.Schema(
     {
+      phoneNumber: {
+        type: String,
+        required: true,
+      },
       type: {
         type: String,
         required: true,

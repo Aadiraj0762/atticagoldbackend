@@ -31,7 +31,11 @@ async function login(req, res) {
         { expiresIn: 60 * 5 }
       );
 
-      otpService.create({ type: "customer", otp: otp });
+      otpService.create({
+        type: "customer",
+        otp: otp,
+        phoneNumber: req.body.phoneNumber,
+      });
 
       return res.json({
         status: true,

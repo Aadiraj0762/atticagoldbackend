@@ -46,7 +46,11 @@ function login(req, res, next) {
                 { expiresIn: 60 * 5 }
               );
 
-              otpService.create({ type: "employee", otp: otp });
+              otpService.create({
+                type: "employee",
+                otp: otp,
+                phoneNumber: user.employee?.phoneNumber,
+              });
 
               return res.json({
                 status: true,
