@@ -22,8 +22,7 @@ async function login(req, res) {
         otp: otp,
         phoneNumber: req.body.phoneNumber,
       },
-      process.env.SECRET,
-      { expiresIn: 60 * 5 }
+      process.env.SECRET
     );
 
     return res.json({

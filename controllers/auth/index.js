@@ -41,8 +41,7 @@ function login(req, res, next) {
                   },
                   iat: new Date().getTime(),
                 },
-                process.env.SECRET,
-                { expiresIn: "1d" }
+                process.env.SECRET
               );
 
               return res.json({
@@ -71,8 +70,7 @@ function login(req, res, next) {
             sub: user._id,
             iat: new Date().getTime(),
           },
-          process.env.SECRET,
-          { expiresIn: "1d" }
+          process.env.SECRET
         );
 
         return res.json({
