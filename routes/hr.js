@@ -10,6 +10,7 @@ const profile = require("../controllers/hr/profile");
 const leave = require("../controllers/hr/leave");
 const fileUpload = require("../controllers/hr/fileupload");
 const attendance = require("../controllers/hr/attendance");
+const payprocess = require("../controllers/hr/payprocess");
 const { isHr } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
@@ -48,6 +49,13 @@ hrRouter.post("/leave/get", leave.find);
 hrRouter.get("/leave/get/:id", leave.findById);
 hrRouter.post("/leave/update/:id", leave.update);
 hrRouter.post("/leave/delete/:id", leave.remove);
+
+hrRouter.get("/payprocess/get", payprocess.find);
+hrRouter.post("/payprocess/get", payprocess.find);
+hrRouter.get("/payprocess/get/:id", payprocess.findById);
+hrRouter.post("/payprocess/create", payprocess.create);
+hrRouter.post("/payprocess/update/:id", payprocess.update);
+hrRouter.post("/payprocess/delete/:id", payprocess.remove);
 
 hrRouter.get("/file-upload/get", fileUpload.find);
 hrRouter.post("/file-upload/get", fileUpload.find);

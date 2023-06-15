@@ -20,6 +20,7 @@ const report = require("../controllers/admin/report");
 const support = require("../controllers/admin/support");
 const supportReply = require("../controllers/admin/support-reply");
 const otp = require("../controllers/admin/otp");
+const payprocess = require("../controllers/admin/payprocess");
 const { isAdmin } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
@@ -110,6 +111,13 @@ adminRouter.post("/customer/update/:id", customer.update);
 adminRouter.post("/customer/delete/:id", customer.remove);
 adminRouter.post("/customer/send-otp", customer.sendOtp);
 adminRouter.post("/customer/verify-otp", customer.verifyOtp);
+
+adminRouter.get("/payprocess/get", payprocess.find);
+adminRouter.post("/payprocess/get", payprocess.find);
+adminRouter.get("/payprocess/get/:id", payprocess.findById);
+adminRouter.post("/payprocess/create", payprocess.create);
+adminRouter.post("/payprocess/update/:id", payprocess.update);
+adminRouter.post("/payprocess/delete/:id", payprocess.remove);
 
 adminRouter.get("/file-upload/get", fileUpload.find);
 adminRouter.post("/file-upload/get", fileUpload.find);
