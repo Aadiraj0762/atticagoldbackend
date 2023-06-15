@@ -78,6 +78,7 @@ async function find(query = {}) {
       {
         $match: filter,
       },
+      { $sort: { createdAt: -1 } },
     ]).exec();
   } catch (err) {
     throw err;

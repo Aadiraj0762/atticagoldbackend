@@ -3,7 +3,7 @@ const User = require("../models/user");
 
 async function find(query = {}) {
   try {
-    return await Employee.find(query).exec();
+    return await Employee.find(query).sort({ createdAt: -1 }).exec();
   } catch (err) {
     throw err;
   }
@@ -46,6 +46,7 @@ async function findByBranchId(id) {
           updatedAt: "$employee.updatedAt",
         },
       },
+      { $sort: { createdAt: -1 } },
     ]).exec();
   } catch (err) {
     throw err;

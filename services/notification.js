@@ -2,7 +2,7 @@ const Notification = require("../models/notification");
 
 async function find(query = {}) {
   try {
-    return await Notification.find(query).exec();
+    return await Notification.find(query).sort({ createdAt: -1 }).exec();
   } catch (err) {
     throw err;
   }

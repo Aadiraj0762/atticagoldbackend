@@ -33,6 +33,7 @@ async function find(query = {}) {
           employee: { $first: "$employee" },
         },
       },
+      { $sort: { createdAt: -1 } },
     ]).exec();
   } catch (err) {
     throw err;

@@ -2,7 +2,7 @@ const Salary = require("../models/salary");
 
 async function find(query = {}) {
   try {
-    return await Salary.find(query).exec();
+    return await Salary.find(query).sort({ createdAt: -1 }).exec();
   } catch (err) {
     throw err;
   }

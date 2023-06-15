@@ -2,7 +2,10 @@ const Support = require("../models/support");
 
 async function find(query = {}) {
   try {
-    return await Support.find(query).populate("customer").exec();
+    return await Support.find(query)
+      .populate("customer")
+      .sort({ createdAt: -1 })
+      .exec();
   } catch (err) {
     throw err;
   }

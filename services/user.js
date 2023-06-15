@@ -2,7 +2,10 @@ const User = require("../models/user");
 
 async function find(query = {}) {
   try {
-    return await User.find(query).populate("employee").exec();
+    return await User.find(query)
+      .populate("employee")
+      .sort({ createdAt: -1 })
+      .exec();
   } catch (err) {
     throw err;
   }

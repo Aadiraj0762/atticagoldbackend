@@ -3,7 +3,7 @@ const fileUpload = require("../models/fileupload");
 
 async function find(query = {}) {
   try {
-    return await fileUpload.find(query).exec();
+    return await fileUpload.find(query).sort({ createdAt: -1 }).exec();
   } catch (err) {
     throw err;
   }

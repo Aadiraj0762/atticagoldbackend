@@ -50,6 +50,7 @@ async function find(query = {}) {
           sales: { $eq: [] },
         },
       },
+      { $sort: { createdAt: -1 } },
     ]).exec();
   } catch (err) {
     throw err;

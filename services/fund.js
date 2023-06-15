@@ -16,7 +16,11 @@ async function find(query = {}) {
       ];
       delete query.branch;
     }
-    return await Fund.find(query).populate("from").populate("to").exec();
+    return await Fund.find(query)
+      .populate("from")
+      .populate("to")
+      .sort({ createdAt: -1 })
+      .exec();
   } catch (err) {
     throw err;
   }

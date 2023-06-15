@@ -21,7 +21,7 @@ async function find(query = {}) {
     if (query.state) {
       query.state = { $regex: new RegExp(`^${query.state}$`, "i") };
     }
-    return await GoldRate.find(query).exec();
+    return await GoldRate.find(query).sort({ createdAt: -1 }).exec();
   } catch (err) {
     throw err;
   }

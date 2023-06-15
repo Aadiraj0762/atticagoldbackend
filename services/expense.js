@@ -8,7 +8,10 @@ async function find(query = {}) {
     if (query.createdAt && "$lte" in query.createdAt) {
       query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
     }
-    return await Expense.find(query).populate("branch").exec();
+    return await Expense.find(query)
+      .populate("branch")
+      .sort({ createdAt: -1 })
+      .exec();
   } catch (err) {
     throw err;
   }

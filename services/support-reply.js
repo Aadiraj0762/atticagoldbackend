@@ -29,6 +29,7 @@ async function find(query = {}) {
           support: { $first: "$support" },
         },
       },
+      { $sort: { createdAt: -1 } },
     ]).exec();
   } catch (err) {
     throw err;

@@ -32,6 +32,7 @@ async function find(query = {}) {
           image: { $first: "$image" },
         },
       },
+      { $sort: { createdAt: -1 } },
     ]).exec();
   } catch (err) {
     throw err;
