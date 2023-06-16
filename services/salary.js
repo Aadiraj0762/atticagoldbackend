@@ -2,6 +2,16 @@ const Salary = require("../models/salary");
 
 async function find(query = {}) {
   try {
+    if (query.createdAt && "$gte" in query.createdAt) {
+      query.createdAt["$gte"] = new Date(
+        query.createdAt["$gte"].replace(/T.*Z/, "T00:00:00Z")
+      ).toISOString();
+    }
+    if (query.createdAt && "$lte" in query.createdAt) {
+      query.createdAt["$lte"] = new Date(
+        query.createdAt["$lte"].replace(/T.*Z/, "T23:59:59Z")
+      );
+    }
     return await Salary.find(query).sort({ createdAt: -1 }).exec();
   } catch (err) {
     throw err;

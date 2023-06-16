@@ -5,10 +5,14 @@ const axios = require("axios");
 async function find(query = {}) {
   try {
     if (query.createdAt && "$gte" in query.createdAt) {
-      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+      query.createdAt["$gte"] = new Date(
+        query.createdAt["$gte"].replace(/T.*Z/, "T00:00:00Z")
+      ).toISOString();
     }
     if (query.createdAt && "$lte" in query.createdAt) {
-      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+      query.createdAt["$lte"] = new Date(
+        query.createdAt["$lte"].replace(/T.*Z/, "T23:59:59Z")
+      );
     }
     if (query.branch) {
       query.branch = new mongoose.Types.ObjectId(query.branch);

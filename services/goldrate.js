@@ -5,10 +5,14 @@ async function find(query = {}) {
     if (query.date) {
       if (typeof query.date == "object") {
         if ("$gte" in query.date) {
-          query.date["$gte"] = new Date(query.date["$gte"]);
+          query.date["$gte"] = new Date(
+            query.date["$gte"].replace(/T.*Z/, "T00:00:00Z")
+          ).toISOString();
         }
         if ("$lte" in query.date) {
-          query.date["$lte"] = new Date(query.date["$lte"]);
+          query.date["$lte"] = new Date(
+            query.date["$lte"].replace(/T.*Z/, "T23:59:59Z")
+          ).toISOString();
         }
       } else {
         const date = new Date(query.date);
