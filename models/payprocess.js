@@ -14,8 +14,9 @@ const Payprocess = mongoose.model(
         required: true,
       },
       amount: {
-        type: String,
+        type: Number,
         required: true,
+        default: 0,
       },
       note: {
         type: String,

@@ -33,7 +33,8 @@ const Employee = mongoose.model(
         required: true,
       },
       salary: {
-        type: String,
+        type: Number,
+        default: 0,
       },
       address: [
         mongoose.Schema(

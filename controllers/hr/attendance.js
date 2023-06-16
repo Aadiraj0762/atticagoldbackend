@@ -64,5 +64,12 @@ async function remove(req, res) {
     });
   }
 }
+async function consolidated(req, res) {
+  res.json({
+    status: true,
+    message: "",
+    data: await attendanceService.consolidated(req.body ?? {}),
+  });
+}
 
-module.exports = { find, findById, update, remove };
+module.exports = { find, findById, update, remove, consolidated };
