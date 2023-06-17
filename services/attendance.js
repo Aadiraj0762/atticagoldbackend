@@ -166,8 +166,174 @@ async function consolidated(payload) {
         },
       },
       {
+        $lookup: {
+          from: "attendances",
+          localField: "_id",
+          foreignField: "employee",
+          let: { shiftStartTime: "$shiftStartTime" },
+          pipeline: [
+            {
+              $match: {
+                $and: [
+                  { attendanceDate: { $gte: fromDate } },
+                  { attendanceDate: { $lt: toDate } },
+                ],
+              },
+            },
+            {
+              $addFields: {
+                shiftStartTime: {
+                  $dateFromString: { dateString: "$$shiftStartTime" },
+                },
+              },
+            },
+            {
+              $addFields: {
+                startHour: {
+                  $hour: "$shiftStartTime",
+                },
+                startMinute: {
+                  $minute: "$shiftStartTime",
+                },
+                dateHour: {
+                  $hour: "$attendanceDate",
+                },
+                dateMinute: {
+                  $minute: "$attendanceDate",
+                },
+              },
+            },
+            {
+              $addFields: {
+                startMinute: {
+                  $sum: [{ $multiply: ["$startHour", 60] }, "$startMinute"],
+                },
+                dateMinute: {
+                  $sum: [{ $multiply: ["$dateHour", 60] }, "$dateMinute"],
+                },
+              },
+            },
+            {
+              $addFields: {
+                lateMins: {
+                  $subtract: ["$startMinute", "$dateMinute"],
+                },
+              },
+            },
+            {
+              $addFields: {
+                lateDays: {
+                  $cond: {
+                    if: { $gt: ["$lateMins", 5] },
+                    then: 1,
+                    else: 0,
+                  },
+                },
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                present: { $count: {} },
+                lateMins: { $sum: "$lateMins" },
+                lateDays: { $sum: "$lateDays" },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                present: 1,
+                lateMins: 1,
+                lateDays: 1,
+              },
+            },
+          ],
+          as: "attendance",
+        },
+      },
+      {
+        $lookup: {
+          from: "payprocesses",
+          localField: "_id",
+          foreignField: "employee",
+          pipeline: [
+            {
+              $match: {
+                $and: [
+                  { createdAt: { $gte: fromDate } },
+                  { createdAt: { $lt: toDate } },
+                ],
+              },
+            },
+            {
+              $addFields: {
+                allowances: {
+                  $cond: {
+                    if: { $eq: ["$type", "allowances"] },
+                    then: "$amount",
+                    else: 0,
+                  },
+                },
+                deductions: {
+                  $cond: {
+                    if: { $eq: ["$type", "deductions"] },
+                    then: "$amount",
+                    else: 0,
+                  },
+                },
+                advance: {
+                  $cond: {
+                    if: { $eq: ["$type", "advance"] },
+                    then: "$amount",
+                    else: 0,
+                  },
+                },
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                allowances: { $sum: "$allowances" },
+                deductions: { $sum: "$deductions" },
+                advance: { $sum: "$advance" },
+              },
+            },
+          ],
+          as: "payprocess",
+        },
+      },
+      {
+        $lookup: {
+          from: "leaves",
+          localField: "_id",
+          foreignField: "employee",
+          pipeline: [
+            {
+              $match: {
+                status: "approved",
+                createdAt: { $gte: leaveMonth },
+              },
+            },
+            { $unwind: "$dates" },
+            {
+              $match: {
+                $and: [
+                  { dates: { $gte: fromDate } },
+                  { dates: { $lt: toDate } },
+                ],
+              },
+            },
+            { $count: "leave" },
+          ],
+          as: "leave",
+        },
+      },
+      {
         $addFields: {
           user: { $first: "$user" },
+          attendance: { $first: "$attendance" },
+          payprocess: { $first: "$payprocess" },
+          leave: { $first: "$leave" },
         },
       },
       {
@@ -185,6 +351,13 @@ async function consolidated(payload) {
           shiftStartTime: 1,
           branchId: "$user.branch.branchId",
           branchName: "$user.branch.branchName",
+          present: "$attendance.present",
+          lateMins: "$attendance.lateMins",
+          lateDays: "$attendance.lateDays",
+          allowances: "$payprocess.allowances",
+          deductions: "$payprocess.deductions",
+          advance: "$payprocess.advance",
+          leave: "$leave.leave",
         },
       },
     ]).exec();
@@ -195,97 +368,13 @@ async function consolidated(payload) {
         employee: e,
       };
 
-      let present = await Attendance.aggregate([
-        {
-          $match: {
-            employee: e._id,
-            $and: [
-              { attendanceDate: { $gte: fromDate } },
-              { attendanceDate: { $lt: toDate } },
-            ],
-          },
-        },
-        {
-          $group: {
-            _id: null,
-            present: { $count: {} },
-          },
-        },
-        {
-          $project: {
-            _id: 0,
-            present: 1,
-          },
-        },
-      ]).exec();
-      let payroll = await Payprocess.aggregate([
-        {
-          $match: {
-            employee: e._id,
-            $and: [
-              { createdAt: { $gte: fromDate } },
-              { createdAt: { $lt: toDate } },
-            ],
-          },
-        },
-        {
-          $addFields: {
-            allowances: {
-              $cond: {
-                if: { $eq: ["$type", "allowances"] },
-                then: "$amount",
-                else: 0,
-              },
-            },
-            deductions: {
-              $cond: {
-                if: { $eq: ["$type", "deductions"] },
-                then: "$amount",
-                else: 0,
-              },
-            },
-            advance: {
-              $cond: {
-                if: { $eq: ["$type", "advance"] },
-                then: "$amount",
-                else: 0,
-              },
-            },
-          },
-        },
-        {
-          $group: {
-            _id: null,
-            allowances: { $sum: "$allowances" },
-            deductions: { $sum: "$deductions" },
-            advance: { $sum: "$advance" },
-          },
-        },
-      ]).exec();
-      let leave = await Leave.aggregate([
-        {
-          $match: {
-            employee: e._id,
-            status: "approved",
-            createdAt: { $gte: leaveMonth },
-          },
-        },
-        { $unwind: "$dates" },
-        {
-          $match: {
-            $and: [{ dates: { $gte: fromDate } }, { dates: { $lt: toDate } }],
-          },
-        },
-        { $count: "leave" },
-      ]).exec();
-
-      emp.present = present[0]?.present ?? 0;
-      emp.allowances = payroll[0]?.allowances ?? 0;
-      emp.deductions = payroll[0]?.deductions ?? 0;
-      emp.advance = payroll[0]?.advance ?? 0;
-      emp.absent = leave[0]?.leave ?? 0;
-      emp.lateDays = 0;
-      emp.lateMins = 0;
+      emp.present = e.present ?? 0;
+      emp.allowances = e.allowances ?? 0;
+      emp.deductions = e.deductions ?? 0;
+      emp.advance = e.advance ?? 0;
+      emp.absent = e.leave ?? 0;
+      emp.lateDays = e.lateDays ?? 0;
+      emp.lateMins = e.lateMins ?? 0;
       emp.workingDays = new Date(
         salaryMonth.getFullYear(),
         salaryMonth.getMonth() + 1,
