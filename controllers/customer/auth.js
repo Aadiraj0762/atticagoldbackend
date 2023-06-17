@@ -40,7 +40,7 @@ async function login(req, res) {
       return res.json({
         status: true,
         message: "OTP sent successfully",
-        data: { token },
+        data: { token, otp },
       });
     } else {
       return res.json({

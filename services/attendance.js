@@ -130,11 +130,11 @@ async function remove(id) {
 async function consolidated(payload) {
   try {
     let salaryMonth = new Date(payload.date ?? new Date());
-    salaryMonth.setDate(1);
-    salaryMonth.setMonth(salaryMonth.getMonth() - 1);
     salaryMonth = new Date(
       salaryMonth.toISOString().replace(/T.*Z/, "T00:00:00Z")
     );
+    salaryMonth.setDate(1);
+    salaryMonth.setMonth(salaryMonth.getMonth() - 1);
     let leaveMonth = new Date(salaryMonth);
     leaveMonth.setMonth(leaveMonth.getMonth() - 2);
     let fromDate = new Date(salaryMonth);
@@ -288,7 +288,7 @@ async function consolidated(payload) {
       emp.lateMins = 0;
       emp.workingDays = new Date(
         salaryMonth.getFullYear(),
-        salaryMonth.getMonth(),
+        salaryMonth.getMonth() + 1,
         0
       ).getDate();
       emp.salary = +(e.salary ?? 0);
@@ -301,7 +301,7 @@ async function consolidated(payload) {
             emp.advance
         );
       } else {
-        emp.payable;
+        emp.payable = 0;
       }
       report.push(emp);
     }
