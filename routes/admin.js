@@ -13,6 +13,7 @@ const profile = require("../controllers/admin/profile");
 const leave = require("../controllers/admin/leave");
 const attendance = require("../controllers/admin/attendance");
 const sales = require("../controllers/admin/sales");
+const ornament = require("../controllers/admin/ornament");
 const customer = require("../controllers/admin/customer");
 const release = require("../controllers/admin/release");
 const fileUpload = require("../controllers/admin/fileupload");
@@ -83,6 +84,10 @@ adminRouter.post("/sales/get", sales.find);
 adminRouter.get("/sales/get/:id", sales.findById);
 adminRouter.post("/sales/update/:id", sales.update);
 adminRouter.post("/sales/delete/:id", sales.remove);
+
+adminRouter.get("/ornament/get", ornament.find);
+adminRouter.post("/ornament/get", ornament.find);
+adminRouter.post("/ornament/update", ornament.update);
 
 adminRouter.get("/otp/get", otp.find);
 adminRouter.post("/otp/get", otp.find);

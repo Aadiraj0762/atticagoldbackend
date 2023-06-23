@@ -12,10 +12,12 @@ const customerBank = require("../controllers/branch/customer-bank");
 const employee = require("../controllers/branch/employee");
 const profile = require("../controllers/branch/profile");
 const sales = require("../controllers/branch/sales");
+const ornament = require("../controllers/branch/ornament");
 const release = require("../controllers/branch/release");
 const attendance = require("../controllers/branch/attendance");
 const leave = require("../controllers/branch/leave");
 const report = require("../controllers/branch/report");
+const balancesheet = require("../controllers/branch/balancesheet");
 const fileUpload = require("../controllers/branch/fileupload");
 const { isBranch } = require("../middlewares/authorization");
 const multer = require("../config/multer");
@@ -51,6 +53,13 @@ branchRouter.get("/sales/get/:id", sales.findById);
 branchRouter.post("/sales/create", sales.create);
 branchRouter.post("/sales/update/:id", sales.update);
 branchRouter.post("/sales/delete/:id", sales.remove);
+
+branchRouter.get("/ornament/get", ornament.find);
+branchRouter.post("/ornament/get", ornament.find);
+branchRouter.post("/ornament/update", ornament.update);
+
+branchRouter.get("/balancesheet/get", balancesheet.find);
+branchRouter.post("/balancesheet/get", balancesheet.find);
 
 branchRouter.get("/release/get", release.find);
 branchRouter.post("/release/get", release.find);

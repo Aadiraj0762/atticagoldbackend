@@ -8,6 +8,7 @@ const branch = require("../controllers/accounts/branch");
 const fund = require("../controllers/accounts/fund.js");
 const expense = require("../controllers/accounts/expense");
 const sales = require("../controllers/accounts/sales");
+const ornament = require("../controllers/accounts/ornament");
 const profile = require("../controllers/accounts/profile");
 const fileUpload = require("../controllers/accounts/fileupload");
 const { isAccounts } = require("../middlewares/authorization");
@@ -48,6 +49,10 @@ accountsRouter.post("/sales/get", sales.find);
 accountsRouter.get("/sales/get/:id", sales.findById);
 accountsRouter.post("/sales/update/:id", sales.update);
 accountsRouter.post("/sales/delete/:id", sales.remove);
+
+accountsRouter.get("/ornament/get", ornament.find);
+accountsRouter.post("/ornament/get", ornament.find);
+accountsRouter.post("/ornament/update", ornament.update);
 
 accountsRouter.get("/file-upload/get", fileUpload.find);
 accountsRouter.post("/file-upload/get", fileUpload.find);

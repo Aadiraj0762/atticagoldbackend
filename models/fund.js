@@ -5,7 +5,7 @@ const Fund = mongoose.model(
   mongoose.Schema(
     {
       amount: {
-        type: String,
+        type: Number,
         required: true,
       },
       from: {

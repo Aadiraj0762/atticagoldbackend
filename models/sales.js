@@ -68,6 +68,11 @@ const Sales = mongoose.model(
             type: Number,
             required: true,
           },
+          status: {
+            type: String,
+            required: true,
+            default: "hold",
+          },
         }),
       ],
       dop: {
