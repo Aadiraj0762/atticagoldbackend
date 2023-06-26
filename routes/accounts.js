@@ -10,6 +10,7 @@ const expense = require("../controllers/accounts/expense");
 const sales = require("../controllers/accounts/sales");
 const ornament = require("../controllers/accounts/ornament");
 const profile = require("../controllers/accounts/profile");
+const balancesheet = require("../controllers/accounts/balancesheet");
 const fileUpload = require("../controllers/accounts/fileupload");
 const { isAccounts } = require("../middlewares/authorization");
 const multer = require("../config/multer");
@@ -53,6 +54,13 @@ accountsRouter.post("/sales/delete/:id", sales.remove);
 accountsRouter.get("/ornament/get", ornament.find);
 accountsRouter.post("/ornament/get", ornament.find);
 accountsRouter.post("/ornament/update", ornament.update);
+
+accountsRouter.get("/balancesheet/get", balancesheet.find);
+accountsRouter.post("/balancesheet/get", balancesheet.find);
+accountsRouter.post(
+  "/balancesheet/calculate-closing-balance",
+  balancesheet.calculateClosingBalance
+);
 
 accountsRouter.get("/file-upload/get", fileUpload.find);
 accountsRouter.post("/file-upload/get", fileUpload.find);

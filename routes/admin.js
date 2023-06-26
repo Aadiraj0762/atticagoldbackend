@@ -22,6 +22,7 @@ const support = require("../controllers/admin/support");
 const supportReply = require("../controllers/admin/support-reply");
 const otp = require("../controllers/admin/otp");
 const payprocess = require("../controllers/admin/payprocess");
+const balancesheet = require("../controllers/admin/balancesheet");
 const { isAdmin } = require("../middlewares/authorization");
 const multer = require("../config/multer");
 
@@ -144,6 +145,13 @@ adminRouter.get(
 adminRouter.post(
   "/report/get-consolidated-sale-report",
   report.consolidatedSaleReport
+);
+
+adminRouter.get("/balancesheet/get", balancesheet.find);
+adminRouter.post("/balancesheet/get", balancesheet.find);
+adminRouter.post(
+  "/balancesheet/calculate-closing-balance",
+  balancesheet.calculateClosingBalance
 );
 
 adminRouter.get("/support/get", support.find);

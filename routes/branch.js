@@ -60,6 +60,10 @@ branchRouter.post("/ornament/update", ornament.update);
 
 branchRouter.get("/balancesheet/get", balancesheet.find);
 branchRouter.post("/balancesheet/get", balancesheet.find);
+branchRouter.post(
+  "/balancesheet/calculate-closing-balance",
+  balancesheet.calculateClosingBalance
+);
 
 branchRouter.get("/release/get", release.find);
 branchRouter.post("/release/get", release.find);
