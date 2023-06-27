@@ -88,6 +88,7 @@ adminRouter.post("/sales/delete/:id", sales.remove);
 
 adminRouter.get("/ornament/get", ornament.find);
 adminRouter.post("/ornament/get", ornament.find);
+adminRouter.post("/ornament/group-by", ornament.groupByBranchAndMovedAt);
 adminRouter.post("/ornament/update", ornament.update);
 
 adminRouter.get("/otp/get", otp.find);

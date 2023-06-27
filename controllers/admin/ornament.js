@@ -8,6 +8,14 @@ async function find(req, res) {
   });
 }
 
+async function groupByBranchAndMovedAt(req, res) {
+  res.json({
+    status: true,
+    message: "",
+    data: await ornamentService.groupByBranchAndMovedAt(req.body ?? {}),
+  });
+}
+
 async function update(req, res) {
   try {
     res.json({
@@ -24,4 +32,4 @@ async function update(req, res) {
   }
 }
 
-module.exports = { find, update };
+module.exports = { find, update, groupByBranchAndMovedAt };

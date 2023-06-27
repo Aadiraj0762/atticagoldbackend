@@ -53,6 +53,7 @@ accountsRouter.post("/sales/delete/:id", sales.remove);
 
 accountsRouter.get("/ornament/get", ornament.find);
 accountsRouter.post("/ornament/get", ornament.find);
+accountsRouter.post("/ornament/group-by", ornament.groupByBranchAndMovedAt);
 accountsRouter.post("/ornament/update", ornament.update);
 
 accountsRouter.get("/balancesheet/get", balancesheet.find);
