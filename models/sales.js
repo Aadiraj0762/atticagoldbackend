@@ -39,41 +39,47 @@ const Sales = mongoose.model(
         },
       ],
       ornaments: [
-        mongoose.Schema({
-          ornamentType: {
-            type: String,
-            required: true,
+        mongoose.Schema(
+          {
+            ornamentType: {
+              type: String,
+              required: true,
+            },
+            quantity: {
+              type: Number,
+              required: true,
+            },
+            grossWeight: {
+              type: Number,
+              required: true,
+            },
+            stoneWeight: {
+              type: Number,
+              required: true,
+            },
+            netWeight: {
+              type: Number,
+              required: true,
+            },
+            purity: {
+              type: Number,
+              required: true,
+            },
+            netAmount: {
+              type: Number,
+              required: true,
+            },
+            status: {
+              type: String,
+              required: true,
+              default: "hold",
+            },
+            statusUpdatedAt: {
+              type: Date,
+            },
           },
-          quantity: {
-            type: Number,
-            required: true,
-          },
-          grossWeight: {
-            type: Number,
-            required: true,
-          },
-          stoneWeight: {
-            type: Number,
-            required: true,
-          },
-          netWeight: {
-            type: Number,
-            required: true,
-          },
-          purity: {
-            type: Number,
-            required: true,
-          },
-          netAmount: {
-            type: Number,
-            required: true,
-          },
-          status: {
-            type: String,
-            required: true,
-            default: "hold",
-          },
-        }),
+          { timestamps: true }
+        ),
       ],
       dop: {
         type: String,

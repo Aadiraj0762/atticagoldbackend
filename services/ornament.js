@@ -70,6 +70,7 @@ async function update(payload) {
     if (payload.status) {
       data["ornaments.$.status"] = payload.status;
     }
+    data["ornaments.$.statusUpdatedAt"] = new Date();
     if (payload.id) {
       if (Array.isArray(payload.id)) {
         query["ornaments._id"] = {
