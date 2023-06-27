@@ -74,7 +74,7 @@ const Sales = mongoose.model(
               required: true,
               default: "hold",
             },
-            statusUpdatedAt: {
+            movedAt: {
               type: Date,
             },
           },

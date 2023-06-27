@@ -55,6 +55,7 @@ async function find(query = {}) {
           purity: "$ornaments.purity",
           netAmount: "$ornaments.netAmount",
           status: "$ornaments.status",
+          movedAt: "$ornaments.movedAt",
         },
       },
     ]).exec();
@@ -69,8 +70,10 @@ async function update(payload) {
     let query = {};
     if (payload.status) {
       data["ornaments.$.status"] = payload.status;
+      if (payload.status.toLowerCase() === "moved") {
+        data["ornaments.$.movedAt"] = new Date();
+      }
     }
-    data["ornaments.$.statusUpdatedAt"] = new Date();
     if (payload.id) {
       if (Array.isArray(payload.id)) {
         query["ornaments._id"] = {
