@@ -1,6 +1,7 @@
 const Customer = require("../models/customer");
 const mongoose = require("mongoose");
 const axios = require("axios");
+const jwt = require("jsonwebtoken");
 
 async function find(query = {}) {
   try {
@@ -154,6 +155,7 @@ async function sendOtp(payload) {
     let res = await axios.get(
       `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${payload.phoneNumber}&text=Hi.%20Thanks%20for%20choosing%20Benaka%20Gold%20Company%20to%20serve%20you.%20The%20One%20Time%20Password%20to%20verify%20your%20phone%20number%20is%20${otp}.%20Validity%20for%20this%20OTP%20is%205%20minutes%20only.%20Call%20us%20if%20you%20have%20any%20queries%20:%206366111999.%20Visit%20us%20:%20https://www.benakagoldcompany.com%20&dltContentId=1707168655011078843`
     );
+    console.log(res.data);
     if (res.data.statusCode == 200 && res.data.state == "SUBMIT_ACCEPTED") {
       const token = jwt.sign(
         {
@@ -164,7 +166,7 @@ async function sendOtp(payload) {
           iat: new Date().getTime(),
         },
         process.env.SECRET,
-        { expiresIn: "1d" }
+        { expiresIn: "5m" }
       );
 
       return {
@@ -180,6 +182,7 @@ async function sendOtp(payload) {
       };
     }
   } catch (err) {
+    console.log(err);
     return {
       status: false,
       message: "OTP not sent",
@@ -189,9 +192,10 @@ async function sendOtp(payload) {
 }
 
 function verifyOtp(payload) {
-  jwt.verify(payload.token, process.env.SECRET, function (err, decoded) {
+  try {
+    const decoded = jwt.verify(payload.token, process.env.SECRET);
     const data = decoded.sub;
-    if (err) {
+    if (!decoded) {
       return {
         status: false,
         message: "Otp is expired.",
@@ -212,7 +216,13 @@ function verifyOtp(payload) {
       message: "OTP verified.",
       data: {},
     };
-  });
+  } catch (err) {
+    return {
+      status: false,
+      message: "Invalid otp.",
+      data: {},
+    };
+  }
 }
 
 module.exports = {

@@ -43,7 +43,7 @@ function login(req, res, next) {
                   iat: new Date().getTime(),
                 },
                 process.env.SECRET,
-                { expiresIn: 60 * 5 }
+                { expiresIn: "5m" }
               );
 
               otpService.create({

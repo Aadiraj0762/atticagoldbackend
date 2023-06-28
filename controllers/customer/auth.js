@@ -28,7 +28,7 @@ async function login(req, res) {
           phoneNumber: req.body.phoneNumber,
         },
         process.env.SECRET,
-        { expiresIn: 60 * 5 }
+        { expiresIn: "5m" }
       );
 
       otpService.create({
