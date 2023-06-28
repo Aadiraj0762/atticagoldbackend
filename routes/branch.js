@@ -57,7 +57,7 @@ branchRouter.post("/sales/delete/:id", sales.remove);
 branchRouter.get("/ornament/get", ornament.find);
 branchRouter.post("/ornament/get", ornament.find);
 branchRouter.post("/ornament/group-by", ornament.groupByBranchAndMovedAt);
-branchRouter.get("/ornament/get-latest-print", ornament.getLatestPrint);
+branchRouter.post("/ornament/get-latest-print", ornament.getLatestPrint);
 branchRouter.post("/ornament/update", ornament.update);
 
 branchRouter.get("/balancesheet/get", balancesheet.find);

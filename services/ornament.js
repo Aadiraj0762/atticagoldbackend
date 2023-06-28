@@ -20,7 +20,12 @@ async function find(query = {}) {
     }
     if (query.branch) {
       and.push({
-        "branch._id": { $eq: new mongoose.Types.ObjectId(query.branch) },
+        "branch._id": {
+          $eq:
+            query.branch instanceof mongoose.Types.ObjectId
+              ? query.branch
+              : new mongoose.Types.ObjectId(query.branch),
+        },
       });
     } else {
       delete query.branch;
@@ -41,6 +46,15 @@ async function find(query = {}) {
     } else {
       delete query.movedAt;
     }
+
+    if (and.length > 0) {
+      query = {
+        $and: and,
+      };
+    } else {
+      query = {};
+    }
+
     return await Sale.aggregate([
       {
         $lookup: {
@@ -60,9 +74,7 @@ async function find(query = {}) {
         },
       },
       {
-        $match: {
-          $and: and,
-        },
+        $match: query,
       },
       {
         $project: {
@@ -78,6 +90,8 @@ async function find(query = {}) {
           netAmount: "$ornaments.netAmount",
           status: "$ornaments.status",
           movedAt: 1,
+          branch: "$branch",
+          billDate: "$createdAt",
         },
       },
     ]).exec();
@@ -86,9 +100,15 @@ async function find(query = {}) {
   }
 }
 
-async function getLatestPrint() {
+async function getLatestPrint(query = {}) {
   try {
+    if (query.branch) {
+      query.branch = new mongoose.Types.ObjectId(query.branch);
+    } else {
+      delete query.branch;
+    }
     let latest = await Sale.aggregate([
+      { $match: query },
       {
         $lookup: {
           from: "branches",
@@ -116,7 +136,7 @@ async function getLatestPrint() {
 
     return await find({
       branch: latest[0].branch?._id,
-      status: "moved",
+      status: latest[0].ornaments.status,
       movedAt: latest[0].movedAt,
     });
   } catch (err) {
@@ -186,6 +206,7 @@ async function groupByBranchAndMovedAt(query = {}) {
           stoneWeight: { $sum: "$ornaments.stoneWeight" },
           netWeight: { $sum: "$ornaments.netWeight" },
           netAmount: { $sum: "$ornaments.netAmount" },
+          ids: { $push: "$ornaments._id" },
         },
       },
       {
@@ -202,6 +223,7 @@ async function groupByBranchAndMovedAt(query = {}) {
           stoneWeight: 1,
           netWeight: 1,
           netAmount: 1,
+          ids: 1,
         },
       },
       { $sort: { movedAt: -1 } },
@@ -223,9 +245,18 @@ async function update(payload) {
     }
     if (payload.id) {
       if (Array.isArray(payload.id)) {
-        query["ornaments._id"] = {
-          $in: payload.id.map((id) => new mongoose.Types.ObjectId(id)),
-        };
+        payload.id.map(async (id) => {
+          await Sale.updateMany(
+            {
+              "ornaments._id": new mongoose.Types.ObjectId(id),
+            },
+            { $set: data },
+            {
+              returnDocument: "after",
+            }
+          ).exec();
+        });
+        return {};
       } else {
         query["ornaments._id"] = new mongoose.Types.ObjectId(payload.id);
       }
