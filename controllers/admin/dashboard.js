@@ -4,7 +4,7 @@ const salesService = require("../../services/sales");
 const expenseService = require("../../services/expense");
 
 async function get(req, res) {
-  const date = new Date().toISOString().replace(/T.*/, "");
+  const date = new Date().toISOString();
   const goldRate = await goldRateService.findOne({
     date: date,
     state: "Karnataka",
