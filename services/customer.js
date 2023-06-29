@@ -17,6 +17,11 @@ async function find(query = {}) {
     }
     if (query.branch) {
       query.branch = new mongoose.Types.ObjectId(query.branch);
+    } else {
+      delete query.branch;
+    }
+    if (!query.phoneNumber) {
+      delete query.phoneNumber;
     }
     return await Customer.aggregate([
       { $match: query },
