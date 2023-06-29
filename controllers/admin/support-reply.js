@@ -5,7 +5,7 @@ async function find(req, res) {
   res.json({
     status: true,
     message: "",
-    data: await supportReplyService.find(),
+    data: await supportReplyService.find(req.body ?? {}),
   });
 }
 

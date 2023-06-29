@@ -128,7 +128,7 @@ async function get(req, res) {
       totalPresent: totalPresent[0]?.count ?? 0,
       totalAbsent: totalAbsent[0]?.count ?? 0,
       totalLate: totalLate[0]?.count ?? 0,
-      totalEmployee: await employeeService.count({}),
+      totalEmployee: await employeeService.count({ createdAt: date }),
     },
   });
 }

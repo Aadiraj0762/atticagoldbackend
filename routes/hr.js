@@ -21,18 +21,25 @@ hrRouter.get("/", function (req, res, next) {
 hrRouter.get("/dashboard/get", dashboard.get);
 
 hrRouter.get("/branch/get", branch.find);
+hrRouter.post("/branch/get", branch.find);
 hrRouter.get("/branch/get/:id", branch.findById);
 hrRouter.post("/branch/create", branch.create);
 hrRouter.post("/branch/update/:id", branch.update);
 hrRouter.post("/branch/delete/:id", branch.remove);
 
 hrRouter.get("/user/get", user.find);
+hrRouter.post("/user/get", user.find);
 hrRouter.get("/user/get/:id", user.findById);
 hrRouter.post("/user/create", user.create);
 hrRouter.post("/user/update/:id", user.update);
 hrRouter.post("/user/delete/:id", user.remove);
 
 hrRouter.get("/employee/get", employee.find);
+hrRouter.post("/employee/get", employee.find);
+hrRouter.get(
+  "/employee/login-not-created",
+  employee.getLoginNotCreatedEmployee
+);
 hrRouter.get("/employee/get/:id", employee.findById);
 hrRouter.post("/employee/create", employee.create);
 hrRouter.post("/employee/update/:id", employee.update);

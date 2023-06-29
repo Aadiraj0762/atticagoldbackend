@@ -40,6 +40,7 @@ adminRouter.post("/goldrate/update/:id", goldRate.update);
 adminRouter.post("/goldrate/delete/:id", goldRate.remove);
 
 adminRouter.get("/branch/get", branch.find);
+adminRouter.post("/branch/get", branch.find);
 adminRouter.get("/branch/state", branch.getState);
 adminRouter.get("/branch/get/:id", branch.findById);
 adminRouter.post("/branch/create", branch.create);
@@ -47,12 +48,14 @@ adminRouter.post("/branch/update/:id", branch.update);
 adminRouter.post("/branch/delete/:id", branch.remove);
 
 adminRouter.get("/user/get", user.find);
+adminRouter.post("/user/get", user.find);
 adminRouter.get("/user/get/:id", user.findById);
 adminRouter.post("/user/create", user.create);
 adminRouter.post("/user/update/:id", user.update);
 adminRouter.post("/user/delete/:id", user.remove);
 
 adminRouter.get("/employee/get", employee.find);
+adminRouter.post("/employee/get", employee.find);
 adminRouter.get(
   "/employee/login-not-created",
   employee.getLoginNotCreatedEmployee

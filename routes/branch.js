@@ -27,14 +27,17 @@ branchRouter.get("/", function (req, res, next) {
 });
 
 branchRouter.get("/goldrate/get", goldRate.find);
+branchRouter.post("/goldrate/get", goldRate.find);
 branchRouter.get("/goldrate/get/:id", goldRate.findById);
 branchRouter.post("/goldrate/find", goldRate.findOne);
 
 branchRouter.get("/branch/get", branch.find);
+branchRouter.post("/branch/get", branch.find);
 branchRouter.get("/branch/get/:id", branch.findById);
 branchRouter.post("/branch/find", branch.findOne);
 
 branchRouter.get("/expense/get", expense.find);
+branchRouter.post("/expense/get", expense.find);
 branchRouter.get("/expense/get/:id", expense.findById);
 branchRouter.post("/expense/create", expense.create);
 branchRouter.post("/expense/update/:id", expense.update);
@@ -92,6 +95,7 @@ branchRouter.post("/customer-bank/create", customerBank.create);
 branchRouter.post("/customer-bank/delete/:id", customerBank.remove);
 
 branchRouter.get("/employee/get", employee.find);
+branchRouter.post("/employee/get", employee.find);
 branchRouter.get("/employee/get/:id", employee.findById);
 branchRouter.get("/employee/get-branch-employee/:id", employee.findByBranchId);
 branchRouter.post("/employee/create", employee.create);
@@ -99,12 +103,14 @@ branchRouter.post("/employee/update/:id", employee.update);
 branchRouter.post("/employee/delete/:id", employee.remove);
 
 branchRouter.get("/attendance/get", attendance.find);
+branchRouter.post("/attendance/get", attendance.find);
 branchRouter.get("/attendance/get/:id", attendance.findById);
 branchRouter.post("/attendance/create", attendance.create);
 branchRouter.post("/attendance/update/:id", attendance.update);
 branchRouter.post("/attendance/delete/:id", attendance.remove);
 
 branchRouter.get("/leave/get", leave.find);
+branchRouter.post("/leave/get", leave.find);
 branchRouter.get("/leave/get/:id", leave.findById);
 branchRouter.post("/leave/create", leave.create);
 branchRouter.post("/leave/update/:id", leave.update);

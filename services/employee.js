@@ -74,10 +74,10 @@ async function aggregate(query = {}) {
 async function count(query = {}) {
   try {
     if (query.createdAt) {
-      const createdAt = new Date(query.createdAt);
+      query.createdAt = new Date(query.createdAt).toISOString();
       query.createdAt = {
-        $gte: createdAt,
-        $lt: new Date(createdAt.getTime() + 86400000),
+        $gte: new Date(query.createdAt.replace(/T.*Z/, "T00:00:00Z")),
+        $lte: new Date(query.createdAt.replace(/T.*Z/, "T23:59:59Z")),
       };
     }
     return await Employee.count(query);
