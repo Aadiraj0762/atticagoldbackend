@@ -37,34 +37,22 @@ passport.use(
         .populate("employee")
         .then(async (user) => {
           if (!user) {
-            const employee = await Employee.findOne({
-              phoneNumber: username,
-            }).exec();
-
-            if (!employee) {
-              return cb(null, false, {
-                message: "Incorrect email or password.",
-              });
-            }
-
-            if (employee.status !== "active") {
-              return cb(null, false, {
-                message: "Your account is not active.",
-              });
-            }
-
-            const employeeUser = await User.findOne(
-              {
-                employee: employee._id,
-              },
-              { password: 0 }
-            )
+            const employeeUser = await User.findOne({
+              username: username,
+            })
               .populate("employee")
+              .populate("branch")
               .exec();
 
             if (!employeeUser) {
               return cb(null, false, {
                 message: "Incorrect email or password.",
+              });
+            }
+
+            if (employeeUser?.employee.status !== "active") {
+              return cb(null, false, {
+                message: "Your account is not active.",
               });
             }
 

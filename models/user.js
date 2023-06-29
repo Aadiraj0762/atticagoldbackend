@@ -14,6 +14,10 @@ const User = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "employees",
     },
+    branch: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "branches",
+    },
     userType: {
       type: String,
       required: true,

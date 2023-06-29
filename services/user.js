@@ -14,6 +14,7 @@ async function find(query = {}) {
     }
     return await User.find(query)
       .populate("employee")
+      .populate("branch")
       .sort({ createdAt: -1 })
       .exec();
   } catch (err) {
@@ -23,7 +24,7 @@ async function find(query = {}) {
 
 async function findById(id) {
   try {
-    return await User.findById(id).populate("employee").exec();
+    return await User.findById(id).populate("employee").populate("branch").exec();
   } catch (err) {
     throw err;
   }
