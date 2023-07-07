@@ -43,8 +43,8 @@ async function findOne(query) {
     if (query.date) {
       const date = new Date(query.date);
       query.date = {
-        $gte: date,
-        $lt: new Date(date.getTime() + 86400000),
+        $gte: new Date(query.date.replace(/T.*Z/, "T00:00:00Z")),
+        $lte: new Date(query.date.replace(/T.*Z/, "T23:59:59Z")),
       };
     }
     if (query.state) {
