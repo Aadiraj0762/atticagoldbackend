@@ -1,4 +1,5 @@
 const Customer = require("../models/customer");
+const otpService = require("./otp");
 const mongoose = require("mongoose");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
@@ -7,12 +8,16 @@ async function find(query = {}) {
   try {
     if (query.createdAt && "$gte" in query.createdAt) {
       query.createdAt["$gte"] = new Date(
-        query.createdAt["$gte"].replace(/T.*Z/, "T00:00:00Z")
+        new Date(query.createdAt["$gte"])
+          .toISOString()
+          .replace(/T.*Z/, "T00:00:00Z")
       );
     }
     if (query.createdAt && "$lte" in query.createdAt) {
       query.createdAt["$lte"] = new Date(
-        query.createdAt["$lte"].replace(/T.*Z/, "T23:59:59Z")
+        new Date(query.createdAt["$lte"])
+          .toISOString()
+          .replace(/T.*Z/, "T23:59:59Z")
       );
     }
     if (query.branch) {
@@ -160,7 +165,6 @@ async function sendOtp(payload) {
     let res = await axios.get(
       `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${payload.phoneNumber}&text=Hi.%20Thanks%20for%20choosing%20Benaka%20Gold%20Company%20to%20serve%20you.%20The%20One%20Time%20Password%20to%20verify%20your%20phone%20number%20is%20${otp}.%20Validity%20for%20this%20OTP%20is%205%20minutes%20only.%20Call%20us%20if%20you%20have%20any%20queries%20:%206366111999.%20Visit%20us%20:%20https://www.benakagoldcompany.com%20&dltContentId=1707168655011078843`
     );
-    console.log(res.data);
     if (res.data.statusCode == 200 && res.data.state == "SUBMIT_ACCEPTED") {
       const token = jwt.sign(
         {
@@ -173,6 +177,12 @@ async function sendOtp(payload) {
         process.env.SECRET,
         { expiresIn: "5m" }
       );
+
+      otpService.create({
+        type: "customer",
+        otp: otp,
+        phoneNumber: payload.phoneNumber,
+      });
 
       return {
         status: true,
@@ -187,7 +197,6 @@ async function sendOtp(payload) {
       };
     }
   } catch (err) {
-    console.log(err);
     return {
       status: false,
       message: "OTP not sent",

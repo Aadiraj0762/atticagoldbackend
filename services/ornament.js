@@ -7,14 +7,14 @@ async function find(query = {}) {
     if (query.createdAt && "$gte" in query.createdAt) {
       and.push({
         createdAt: {
-          $gte: new Date(query.createdAt["$gte"].replace(/T.*Z/, "T00:00:00Z")),
+          $gte: new Date(new Date(query.createdAt["$gte"]).toISOString().replace(/T.*Z/, "T00:00:00Z")),
         },
       });
     }
     if (query.createdAt && "$lte" in query.createdAt) {
       and.push({
         createdAt: {
-          $lte: new Date(query.createdAt["$lte"].replace(/T.*Z/, "T23:59:59Z")),
+          $lte: new Date(new Date(query.createdAt["$lte"]).toISOString().replace(/T.*Z/, "T23:59:59Z")),
         },
       });
     }
@@ -148,12 +148,12 @@ async function groupByBranchAndMovedAt(query = {}) {
   try {
     if (query.createdAt && "$gte" in query.createdAt) {
       query.createdAt["$gte"] = new Date(
-        query.createdAt["$gte"].replace(/T.*Z/, "T00:00:00Z")
+        new Date(query.createdAt["$gte"]).toISOString().replace(/T.*Z/, "T00:00:00Z")
       );
     }
     if (query.createdAt && "$lte" in query.createdAt) {
       query.createdAt["$lte"] = new Date(
-        query.createdAt["$lte"].replace(/T.*Z/, "T23:59:59Z")
+        new Date(query.createdAt["$lte"]).toISOString().replace(/T.*Z/, "T23:59:59Z")
       );
     }
     if (query.branch) {
