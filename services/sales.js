@@ -6,12 +6,16 @@ async function find(query = {}) {
     let filter = {};
     if (query.createdAt && "$gte" in query.createdAt) {
       query.createdAt["$gte"] = new Date(
-        new Date(query.createdAt["$gte"]).toISOString().replace(/T.*Z/, "T00:00:00Z")
+        new Date(query.createdAt["$gte"])
+          .toISOString()
+          .replace(/T.*Z/, "T00:00:00Z")
       );
     }
     if (query.createdAt && "$lte" in query.createdAt) {
       query.createdAt["$lte"] = new Date(
-        new Date(query.createdAt["$lte"]).toISOString().replace(/T.*Z/, "T23:59:59Z")
+        new Date(query.createdAt["$lte"])
+          .toISOString()
+          .replace(/T.*Z/, "T23:59:59Z")
       );
     }
     if (query.branch) {
@@ -256,10 +260,18 @@ async function remove(id) {
 async function branchConsolidatedSaleReport(query = {}) {
   try {
     if (query.createdAt && "$gte" in query.createdAt) {
-      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+      query.createdAt["$gte"] = new Date(
+        new Date(query.createdAt["$gte"])
+          .toISOString()
+          .replace(/T.*Z/, "T00:00:00Z")
+      );
     }
     if (query.createdAt && "$lte" in query.createdAt) {
-      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+      query.createdAt["$lte"] = new Date(
+        new Date(query.createdAt["$lte"])
+          .toISOString()
+          .replace(/T.*Z/, "T23:59:59Z")
+      );
     }
     if (query.branch) {
       query.branch = new mongoose.Types.ObjectId(query.branch);
@@ -338,10 +350,18 @@ async function branchConsolidatedSaleReport(query = {}) {
 async function adminConsolidatedSaleReport(query = {}) {
   try {
     if (query.createdAt && "$gte" in query.createdAt) {
-      query.createdAt["$gte"] = new Date(query.createdAt["$gte"]);
+      query.createdAt["$gte"] = new Date(
+        new Date(query.createdAt["$gte"])
+          .toISOString()
+          .replace(/T.*Z/, "T00:00:00Z")
+      );
     }
     if (query.createdAt && "$lte" in query.createdAt) {
-      query.createdAt["$lte"] = new Date(query.createdAt["$lte"]);
+      query.createdAt["$lte"] = new Date(
+        new Date(query.createdAt["$lte"])
+          .toISOString()
+          .replace(/T.*Z/, "T23:59:59Z")
+      );
     }
     if (query.branch) {
       query.branch = new mongoose.Types.ObjectId(query.branch);

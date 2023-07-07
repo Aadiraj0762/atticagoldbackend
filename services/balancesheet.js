@@ -10,11 +10,15 @@ async function find(query = {}) {
     toDate.setUTCHours(23, 59, 59, 0);
 
     if (query.fromDate) {
-      fromDate = new Date(query.fromDate.replace(/T.*Z/, "T00:00:00Z"));
+      fromDate = new Date(
+        new Date(query.fromDate).toISOString().replace(/T.*Z/, "T00:00:00Z")
+      );
       delete query.fromDate;
     }
     if (query.toDate) {
-      toDate = new Date(query.toDate.replace(/T.*Z/, "T23:59:59Z"));
+      toDate = new Date(
+        new Date(query.toDate).toISOString().replace(/T.*Z/, "T23:59:59Z")
+      );
       delete query.toDate;
     }
     if (query.branch) {
@@ -266,7 +270,9 @@ async function calculateClosingBalance(query = {}) {
     date.setUTCHours(0, 0, 0, 0);
 
     if (query.date) {
-      date = new Date(query.date.replace(/T.*Z/, "T00:00:00Z"));
+      date = new Date(
+        new Date(query.date).toISOString().replace(/T.*Z/, "T00:00:00Z")
+      );
       delete query.date;
     }
     if (query.branch) {

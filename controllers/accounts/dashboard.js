@@ -63,7 +63,7 @@ async function get(req, res) {
       }),
       todayPledgeBills: await salesService.count({
         createdAt: date,
-        saleType: "pledge",
+        saleType: "pledged",
       }),
       totalGrossWeight: totalGrossWeight[0]?.total,
       totalNetAmount: totalNetAmount[0]?.total,
