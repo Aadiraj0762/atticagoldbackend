@@ -27,7 +27,7 @@ function login(req, res, next) {
 
         axios
           .get(
-            `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${user.employee?.phoneNumber}&text=Hi.%20Your%20One%20Time%20Password%20to%20login%20Benaka%20Gold%20Company%20is%20${otp}.%20This%20OTP%20is%20valid%20for%205%20minutes%20only.&dltContentId=1707168542360758659`
+            `https://pgapi.vispl.in/fe/api/v1/send?username=benakagold.trans&password=hhwGK&unicode=false&from=BENGLD&to=${user.employee?.phoneNumber}&text=Hi.%20Your%20One%20Time%20Password%20to%20login%20benaka%20Gold%20Company%20is%20${otp}.%20This%20OTP%20is%20valid%20for%205%20minutes%20only.&dltContentId=1707168542360758659`
           )
           .then((data) => {
             if (
