@@ -38,7 +38,8 @@ app.use("/api/v1.0/customer", customerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  const err = createError(404);
+  next(err);
 });
 
 // error handler
@@ -56,4 +57,5 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
 module.exports = app;
